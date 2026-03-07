@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-03-07
+
+### Test
+- Update tests/test_cli.py
+
+### Other
+- Update code2docs/generators/depgraph_gen.py
+
 ## [0.1.6] - 2026-03-07
 
 ### Docs

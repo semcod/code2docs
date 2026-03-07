@@ -1,5 +1,7 @@
 """Dependency graph generator — Mermaid diagram from coupling matrix."""
 
+import ast
+from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
 from code2llm.api import AnalysisResult, ModuleInfo
@@ -37,16 +39,42 @@ class DepGraphGenerator:
         return "\n".join(lines)
 
     def _collect_edges(self) -> List[Tuple[str, str]]:
-        """Build directed edges from module imports."""
-        edges: List[Tuple[str, str]] = []
+        """Build directed edges from module imports.
+
+        Uses ModuleInfo.imports when available, otherwise extracts
+        imports from the source file via AST.
+        """
+        edges: Set[Tuple[str, str]] = set()
         module_names = set(self.result.modules.keys())
 
         for mod_name, mod_info in self.result.modules.items():
-            for imp in mod_info.imports:
+            imports = mod_info.imports
+            if not imports:
+                imports = self._extract_imports_from_file(mod_info.file)
+            for imp in imports:
                 for other in module_names:
                     if mod_name != other and self._import_matches(imp, other):
-                        edges.append((mod_name, other))
-        return sorted(set(edges))
+                        edges.add((mod_name, other))
+        return sorted(edges)
+
+    @staticmethod
+    def _extract_imports_from_file(file_path: str) -> List[str]:
+        """Parse source file AST to extract import targets."""
+        try:
+            source = Path(file_path).read_text(encoding="utf-8")
+            tree = ast.parse(source)
+        except Exception:
+            return []
+
+        imports: List[str] = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    imports.append(alias.name)
+            elif isinstance(node, ast.ImportFrom):
+                if node.module:
+                    imports.append(node.module)
+        return imports
 
     @staticmethod
     def _import_matches(imp: str, module: str) -> bool:
