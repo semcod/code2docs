@@ -1,6 +1,6 @@
 # code2docs
 
-![version](https://img.shields.io/badge/version-0.1.4-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)
+![version](https://img.shields.io/badge/version-0.1.5-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)
 
 > Auto-generate and sync project documentation from source code analysis.
 

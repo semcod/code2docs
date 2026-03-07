@@ -115,6 +115,10 @@ def _run_generate(project_path: str, config: Code2DocsConfig,
     from .generators.module_docs_gen import ModuleDocsGenerator
     from .generators.examples_gen import ExamplesGenerator
     from .generators.architecture_gen import ArchitectureGenerator
+    from .generators.depgraph_gen import DepGraphGenerator
+    from .generators.coverage_gen import CoverageGenerator
+    from .generators.mkdocs_gen import MkDocsGenerator
+    from .generators.api_changelog_gen import ApiChangelogGenerator
 
     project = Path(project_path).resolve()
     click.echo(f"📖 code2docs: analyzing {project.name}...")
@@ -169,13 +173,40 @@ def _run_generate(project_path: str, config: Code2DocsConfig,
         arch_gen = ArchitectureGenerator(config, result)
         content = arch_gen.generate()
         if not dry_run:
-            arch_path = docs_dir / "architecture.md"
-            arch_path.write_text(content, encoding="utf-8")
+            (docs_dir / "architecture.md").write_text(content, encoding="utf-8")
             click.echo(f"  ✅ docs/architecture.md")
         else:
             click.echo(f"  [dry-run] docs/architecture.md")
 
-    # Step 4: Generate examples/
+    # Step 4: Dependency graph
+    depgraph_gen = DepGraphGenerator(config, result)
+    content = depgraph_gen.generate()
+    if not dry_run:
+        (docs_dir / "dependency-graph.md").write_text(content, encoding="utf-8")
+        click.echo(f"  ✅ docs/dependency-graph.md")
+    else:
+        click.echo(f"  [dry-run] docs/dependency-graph.md")
+
+    # Step 5: Docstring coverage
+    cov_gen = CoverageGenerator(config, result)
+    content = cov_gen.generate()
+    if not dry_run:
+        (docs_dir / "coverage.md").write_text(content, encoding="utf-8")
+        click.echo(f"  ✅ docs/coverage.md")
+    else:
+        click.echo(f"  [dry-run] docs/coverage.md")
+
+    # Step 6: API changelog (diff with previous snapshot)
+    api_cl_gen = ApiChangelogGenerator(config, result)
+    content = api_cl_gen.generate(str(project))
+    if not dry_run:
+        (docs_dir / "api-changelog.md").write_text(content, encoding="utf-8")
+        api_cl_gen.save_snapshot(str(project))
+        click.echo(f"  ✅ docs/api-changelog.md")
+    else:
+        click.echo(f"  [dry-run] docs/api-changelog.md")
+
+    # Step 7: Generate examples/
     if config.examples.auto_generate:
         ex_gen = ExamplesGenerator(config, result)
         files = ex_gen.generate_all()
@@ -185,6 +216,15 @@ def _run_generate(project_path: str, config: Code2DocsConfig,
             click.echo(f"  ✅ examples/ ({len(files)} files)")
         else:
             click.echo(f"  [dry-run] examples/ ({len(files)} files)")
+
+    # Step 8: mkdocs.yml
+    mkdocs_gen = MkDocsGenerator(config, result)
+    content = mkdocs_gen.generate(str(docs_dir))
+    if not dry_run:
+        mkdocs_gen.write(str(project / "mkdocs.yml"), content)
+        click.echo(f"  ✅ mkdocs.yml")
+    else:
+        click.echo(f"  [dry-run] mkdocs.yml")
 
     click.echo("📖 Done!")
 

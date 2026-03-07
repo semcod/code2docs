@@ -210,3 +210,4 @@ __marimo__/
 
 # code2docs
 .code2docs.state
+.code2docs.api_snapshot.json

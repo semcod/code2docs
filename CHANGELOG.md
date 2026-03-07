@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-03-07
+
+### Other
+- Update .gitignore
+- Update code2docs/cli.py
+- Update code2docs/generators/__init__.py
+- Update code2docs/generators/api_changelog_gen.py
+- Update code2docs/templates/module_doc.md.j2
+
 ## [0.1.4] - 2026-03-07
 
 ### Other

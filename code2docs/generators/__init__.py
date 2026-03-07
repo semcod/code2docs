@@ -6,6 +6,10 @@ from .module_docs_gen import ModuleDocsGenerator
 from .examples_gen import ExamplesGenerator
 from .architecture_gen import ArchitectureGenerator
 from .changelog_gen import ChangelogGenerator
+from .depgraph_gen import DepGraphGenerator
+from .coverage_gen import CoverageGenerator
+from .mkdocs_gen import MkDocsGenerator
+from .api_changelog_gen import ApiChangelogGenerator
 
 __all__ = [
     "ReadmeGenerator",
@@ -14,6 +18,10 @@ __all__ = [
     "ExamplesGenerator",
     "ArchitectureGenerator",
     "ChangelogGenerator",
+    "DepGraphGenerator",
+    "CoverageGenerator",
+    "MkDocsGenerator",
+    "ApiChangelogGenerator",
     "generate_docs",
 ]
 
@@ -38,5 +46,8 @@ def generate_docs(project_path: str, config=None):
 
     if config.docs.architecture:
         docs["architecture"] = ArchitectureGenerator(config, result).generate()
+
+    docs["dependency_graph"] = DepGraphGenerator(config, result).generate()
+    docs["coverage"] = CoverageGenerator(config, result).generate()
 
     return docs

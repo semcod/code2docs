@@ -1,0 +1,86 @@
+# {{ module_name }}
+
+> Source: `{{ module_info.file }}`{% if file_lines %} | {{ file_lines }} lines{% endif %}{% if avg_cc %} | CC avg: {{ avg_cc }}{% endif %}
+
+{% if module_docstring %}
+## Overview
+
+{{ module_docstring }}
+{% endif %}
+
+{% if classes %}
+## Classes
+
+{% for cls_name, cls_info in classes.items() %}
+### {{ cls_info.name }}
+
+{% if cls_info.bases %}
+*Bases:* {% for b in cls_info.bases %}`{{ b }}`{% if not loop.last %}, {% endif %}{% endfor %}
+
+{% endif %}
+{% if cls_info.docstring %}
+{{ cls_info.docstring }}
+
+{% endif %}
+{% if methods[cls_name] %}
+#### Methods
+
+| Method | Args | Returns | CC |
+|--------|------|---------|----|
+{% for m in methods[cls_name] %}
+{% set args = m.args[:4]|join(', ') %}
+{% set ret = m.returns or '—' %}
+{% set cc = m.complexity.get('cyclomatic', '—') %}
+| `{{ m.name }}` | `{{ args }}` | `{{ ret }}` | {{ cc }} |
+{% endfor %}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if functions %}
+## Functions
+
+{% for func_name, func_info in functions.items() %}
+{% set args = func_info.args|join(', ') %}
+{% set ret = ' → ' ~ func_info.returns if func_info.returns else '' %}
+### `{{ func_info.name }}({{ args }}){{ ret }}`
+
+{% if func_info.docstring %}
+{{ func_info.docstring }}
+
+{% endif %}
+{% if func_info.calls %}
+**Calls:** {% for c in func_info.calls[:10] %}`{{ c }}`{% if not loop.last %}, {% endif %}{% endfor %}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if imports %}
+## Dependencies
+
+{% if internal_imports %}
+**Internal imports:**
+{% for imp in internal_imports %}
+- `{{ imp }}`
+{% endfor %}
+{% endif %}
+
+{% if stdlib_imports %}
+**Standard library:**
+{% for imp in stdlib_imports %}
+- `{{ imp }}`
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% if metrics %}
+## Metrics
+
+| Metric | Value |
+|--------|-------|
+{% for k, v in metrics.items() %}
+| {{ k }} | {{ v }} |
+{% endfor %}
+{% endif %}
