@@ -227,7 +227,7 @@
 | Function | Signature | CC | Description | Source |
 |----------|-----------|----|-----------  |--------|
 | `generate_docs` | `generate_docs(project_path, config)` | 5 | High-level function to generate all documentation. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/__init__.py#L35) |
-| `generate_readme` | `generate_readme(project_path, output, sections, sync_markers, ...)` | 3 | Convenience function to generate a README. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py#L439) |
+| `generate_readme` | `generate_readme(project_path, output, sections, sync_markers, ...)` | 3 | Convenience function to generate a README. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py#L446) |
 
 ### `llm_helper` [source](https://github.com/wronai/code2docs/blob/main/code2docs/llm_helper.py)
 
@@ -540,7 +540,7 @@
 
 | Function | Signature | CC | Description | Source |
 |----------|-----------|----|-----------  |--------|
-| `generate_readme` | `generate_readme(project_path, output, sections, sync_markers, ...)` | 3 | Convenience function to generate a README. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py#L439) |
+| `generate_readme` | `generate_readme(project_path, output, sections, sync_markers, ...)` | 3 | Convenience function to generate a README. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py#L446) |
 
 ## sync
 

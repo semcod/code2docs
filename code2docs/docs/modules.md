@@ -32,7 +32,7 @@
 | `generators.getting_started_gen` | 166 | 0 | 1 | 5.8 | Getting Started guide generator. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/getting_started_gen.py) |
 | `generators.mkdocs_gen` | 70 | 0 | 1 | 2.2 | MkDocs configuration generator — auto-generate mkdocs.yml fr | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/mkdocs_gen.py) |
 | `generators.module_docs_gen` | 198 | 0 | 1 | 8.0 | Module documentation generator — single consolidated modules | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/module_docs_gen.py) |
-| `generators.readme_gen` | 456 | 1 | 1 | 5.7 | README.md generator from AnalysisResult. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py) |
+| `generators.readme_gen` | 463 | 1 | 1 | 5.7 | README.md generator from AnalysisResult. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py) |
 | `llm_helper` | 161 | 1 | 1 | 2.3 | LLM helper — optional LLM-assisted documentation generation  | [source](https://github.com/wronai/code2docs/blob/main/code2docs/llm_helper.py) |
 | `registry` | 39 | 0 | 1 | 2.5 | Generator registry — pluggable generator system. | [source](https://github.com/wronai/code2docs/blob/main/code2docs/registry.py) |
 | `sync.differ` | 125 | 0 | 2 | 3.6 | Detect changes in source code for selective documentation re | [source](https://github.com/wronai/code2docs/blob/main/code2docs/sync/differ.py) |
@@ -494,7 +494,7 @@ README.md generator from AnalysisResult.
 | `generate` | `` | `—` | 3 |
 | `write` | `path, content` | `—` | 4 |
 
-- `generate_readme(project_path, output, sections, sync_markers, config)` — Convenience function to generate a README. [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py#L439)
+- `generate_readme(project_path, output, sections, sync_markers, config)` — Convenience function to generate a README. [source](https://github.com/wronai/code2docs/blob/main/code2docs/generators/readme_gen.py#L446)
 
 ## sync
 

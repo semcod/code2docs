@@ -5,8 +5,8 @@
 
 > Auto-generated project documentation from source code analysis.
 
-**Author:** Tom Softreck <tom@sapletta.com>  
-**License:** MIT[(LICENSE)](./LICENSE)  
+**Author:** Tom Sapletta  
+**License:** Apache-2.0[(LICENSE)](./LICENSE)  
 **Repository:** [https://github.com/wronai/code2docs](https://github.com/wronai/code2docs)
 
 ## Installation
@@ -141,7 +141,7 @@ Content outside the markers is preserved when regenerating. Enable this with `sy
 
 ```
 code2docs/
-├── registry├── llm_helper├── code2docs/    ├── updater├── sync/    ├── watcher    ├── differ    ├── quickstart    ├── advanced_usage    ├── markdown    ├── badges    ├── toc├── formatters/    ├── readme_gen├── base    ├── coverage_gen    ├── _source_links    ├── depgraph_gen    ├── getting_started_gen    ├── config_docs_gen    ├── changelog_gen├── generators/    ├── module_docs_gen    ├── api_reference_gen    ├── mkdocs_gen    ├── examples_gen    ├── _registry_adapters├── cli    ├── api_changelog_gen    ├── contributing_gen├── analyzers/    ├── architecture_gen├── config    ├── project_scanner    ├── dependency_scanner    ├── endpoint_detector    ├── docstring_extractor```
+├── registry├── llm_helper├── code2docs/    ├── updater├── sync/    ├── watcher    ├── differ    ├── quickstart    ├── advanced_usage    ├── markdown    ├── badges    ├── toc├── formatters/├── base    ├── readme_gen    ├── _source_links    ├── coverage_gen    ├── getting_started_gen    ├── depgraph_gen    ├── config_docs_gen├── generators/    ├── changelog_gen    ├── api_reference_gen    ├── module_docs_gen    ├── mkdocs_gen    ├── _registry_adapters    ├── examples_gen    ├── api_changelog_gen    ├── architecture_gen    ├── contributing_gen├── analyzers/├── cli├── config    ├── project_scanner    ├── dependency_scanner    ├── docstring_extractor    ├── endpoint_detector```
 
 ## API Overview
 
@@ -153,20 +153,19 @@ code2docs/
 - **`ChangeInfo`** — Describes a detected change.
 - **`Differ`** — Detect changes between current source and previous state.
 - **`MarkdownFormatter`** — Helper for constructing Markdown documents.
-- **`ReadmeGenerator`** — Generate README.md from AnalysisResult.
 - **`GenerateContext`** — Shared context passed to all generators during a run.
 - **`BaseGenerator`** — Abstract base for all documentation generators.
-- **`CoverageGenerator`** — Generate docs/coverage.md — docstring coverage report.
+- **`ReadmeGenerator`** — Generate README.md from AnalysisResult.
 - **`SourceLinker`** — Build source-code links (relative paths + optional GitHub/GitLab URLs).
-- **`DepGraphGenerator`** — Generate docs/dependency-graph.md with Mermaid diagrams.
+- **`CoverageGenerator`** — Generate docs/coverage.md — docstring coverage report.
 - **`GettingStartedGenerator`** — Generate docs/getting-started.md from entry points and dependencies.
+- **`DepGraphGenerator`** — Generate docs/dependency-graph.md with Mermaid diagrams.
 - **`ConfigDocsGenerator`** — Generate docs/configuration.md from Code2DocsConfig dataclass.
 - **`ChangelogEntry`** — A single changelog entry.
 - **`ChangelogGenerator`** — Generate CHANGELOG.md from git log and analysis diff.
-- **`ModuleDocsGenerator`** — Generate docs/modules.md — consolidated module documentation.
 - **`ApiReferenceGenerator`** — Generate docs/api.md — consolidated API reference.
+- **`ModuleDocsGenerator`** — Generate docs/modules.md — consolidated module documentation.
 - **`MkDocsGenerator`** — Generate mkdocs.yml from the docs/ directory structure.
-- **`ExamplesGenerator`** — Generate examples/ — usage examples from public API signatures.
 - **`ReadmeGeneratorAdapter`** — —
 - **`ApiReferenceAdapter`** — —
 - **`ModuleDocsAdapter`** — —
@@ -179,11 +178,12 @@ code2docs/
 - **`GettingStartedAdapter`** — —
 - **`ConfigDocsAdapter`** — —
 - **`ContributingAdapter`** — —
-- **`DefaultGroup`** — Click Group that routes unknown subcommands to 'generate'.
+- **`ExamplesGenerator`** — Generate examples/ — usage examples from public API signatures.
 - **`ApiChange`** — A single API change between two analysis snapshots.
 - **`ApiChangelogGenerator`** — Generate API changelog by diffing current analysis with a saved snapshot.
-- **`ContributingGenerator`** — Generate CONTRIBUTING.md by detecting dev tools from pyproject.toml.
 - **`ArchitectureGenerator`** — Generate docs/architecture.md — architecture overview with diagrams.
+- **`ContributingGenerator`** — Generate CONTRIBUTING.md by detecting dev tools from pyproject.toml.
+- **`DefaultGroup`** — Click Group that routes unknown subcommands to 'generate'.
 - **`ReadmeConfig`** — Configuration for README generation.
 - **`DocsConfig`** — Configuration for docs/ generation.
 - **`ExamplesConfig`** — Configuration for examples/ generation.
@@ -194,10 +194,10 @@ code2docs/
 - **`DependencyInfo`** — Information about a project dependency.
 - **`ProjectDependencies`** — All detected project dependencies.
 - **`DependencyScanner`** — Scan and parse project dependency files.
-- **`Endpoint`** — Represents a detected web endpoint.
-- **`EndpointDetector`** — Detects web endpoints from decorator patterns in source code.
 - **`DocstringInfo`** — Parsed docstring with sections.
 - **`DocstringExtractor`** — Extract and parse docstrings from AnalysisResult.
+- **`Endpoint`** — Represents a detected web endpoint.
+- **`EndpointDetector`** — Detects web endpoints from decorator patterns in source code.
 
 ### Functions
 
