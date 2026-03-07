@@ -1,6 +1,6 @@
-# code2docs | 31f 3312L | python:31
+# code2docs | 39f 4214L | python:39
 # Keys: M=modules, D=details, i=imports, c=classes, f=functions, m=methods
-M[31]:
+M[39]:
   code2docs/__init__.py,26
   code2docs/__main__.py,4
   code2docs/analyzers/__init__.py,11
@@ -8,29 +8,37 @@ M[31]:
   code2docs/analyzers/docstring_extractor.py,98
   code2docs/analyzers/endpoint_detector.py,91
   code2docs/analyzers/project_scanner.py,30
-  code2docs/cli.py,174
+  code2docs/cli.py,206
   code2docs/config.py,128
   code2docs/formatters/__init__.py,5
   code2docs/formatters/badges.py,38
   code2docs/formatters/markdown.py,57
   code2docs/formatters/toc.py,47
-  code2docs/generators/__init__.py,32
+  code2docs/generators/__init__.py,42
+  code2docs/generators/api_changelog_gen.py,165
   code2docs/generators/api_reference_gen.py,137
   code2docs/generators/architecture_gen.py,149
   code2docs/generators/changelog_gen.py,98
+  code2docs/generators/coverage_gen.py,74
+  code2docs/generators/depgraph_gen.py,121
   code2docs/generators/examples_gen.py,164
+  code2docs/generators/mkdocs_gen.py,59
   code2docs/generators/module_docs_gen.py,193
   code2docs/generators/readme_gen.py,214
   code2docs/sync/__init__.py,4
   code2docs/sync/differ.py,99
   code2docs/sync/updater.py,51
   code2docs/sync/watcher.py,58
+  examples/basic_usage.py,18
+  examples/class_examples.py,22
+  examples/entry_points.py,11
   tests/__init__.py,0
   tests/test_analyzers.py,119
+  tests/test_cli.py,53
   tests/test_code2docs.py,7
   tests/test_config.py,39
   tests/test_formatters.py,72
-  tests/test_generators.py,312
+  tests/test_generators.py,462
   tests/test_sync.py,58
 D:
   code2docs/__init__.py:
@@ -93,9 +101,14 @@ D:
     extract_headings(content:str;max_depth:int=3)->List[Tuple[int, str, str]]
     _slugify(text:str)->str
   code2docs/generators/__init__.py:
-    i: api_reference_gen.ApiReferenceGenerator,architecture_gen.ArchitectureGenerator,changelog_gen.ChangelogGenerator,examples_gen.ExamplesGenerator,module_docs_gen.ModuleDocsGenerator,readme_gen.ReadmeGenerator
+    i: api_changelog_gen.ApiChangelogGenerator,api_reference_gen.ApiReferenceGenerator,architecture_gen.ArchitectureGenerator,changelog_gen.ChangelogGenerator,coverage_gen.CoverageGenerator,depgraph_gen.DepGraphGenerator,examples_gen.ExamplesGenerator,mkdocs_gen.MkDocsGenerator,module_docs_gen.ModuleDocsGenerator,readme_gen.ReadmeGenerator
     e: generate_docs
     generate_docs(project_path:str;config=None)
+  code2docs/generators/api_changelog_gen.py:
+    i: json,code2llm.api.AnalysisResult,config.Code2DocsConfig,dataclasses.{dataclass,field},pathlib.Path,typing.{Dict,List,Optional,Tuple}
+    e: SNAPSHOT_FILE,ApiChange,ApiChangelogGenerator
+    ApiChange: emoji(0)  # A single API change between two analy...
+    ApiChangelogGenerator: __init__(2),generate(1),save_snapshot(1),_build_snapshot(0),_load_snapshot(1)  # Generate API changelog by diffing cur...
   code2docs/generators/api_reference_gen.py:
     i: code2llm.api.{AnalysisResult,ClassInfo,FunctionInfo},jinja2.{Environment,PackageLoader,select_autoescape},pathlib.Path,typing.{Dict,List,Optional}
     e: ApiReferenceGenerator
@@ -109,10 +122,22 @@ D:
     e: ChangelogEntry,ChangelogGenerator
     ChangelogEntry:   # A single changelog entry.
     ChangelogGenerator: __init__(2),generate(2),_get_git_log(2),_classify_message(1),_group_by_type(1)  # Generate CHANGELOG.md from git log an...
+  code2docs/generators/coverage_gen.py:
+    i: analyzers.docstring_extractor.DocstringExtractor,code2llm.api.AnalysisResult,config.Code2DocsConfig,typing.{Dict,List}
+    e: CoverageGenerator
+    CoverageGenerator: __init__(2),generate(0),_render_summary(1),_render_per_module(0),_render_undocumented(0)  # Generate docs/coverage.md — docstring...
+  code2docs/generators/depgraph_gen.py:
+    i: ast,code2llm.api.{AnalysisResult,ModuleInfo},config.Code2DocsConfig,pathlib.Path,typing.{Dict,List,Set,Tuple}
+    e: DepGraphGenerator
+    DepGraphGenerator: __init__(2),generate(0),_collect_edges(0),_extract_imports_from_file(1),_import_matches(2)  # Generate docs/dependency-graph.md wit...
   code2docs/generators/examples_gen.py:
     i: code2llm.api.{AnalysisResult,ClassInfo,FunctionInfo},config.Code2DocsConfig,pathlib.Path,typing.{Dict,List}
     e: ExamplesGenerator
     ExamplesGenerator: __init__(2),generate_all(0),_generate_basic_usage(0),_generate_import_section(3),_generate_class_usage_section(1)  # Generate examples/ — usage examples f...
+  code2docs/generators/mkdocs_gen.py:
+    i: yaml,code2llm.api.AnalysisResult,config.Code2DocsConfig,pathlib.Path,typing.{Dict,List,Optional}
+    e: MkDocsGenerator
+    MkDocsGenerator: __init__(2),generate(1),_build_nav(1),write(2)  # Generate mkdocs.yml from the docs/ di...
   code2docs/generators/module_docs_gen.py:
     i: code2llm.api.{AnalysisResult,ClassInfo,FunctionInfo,ModuleInfo},config.Code2DocsConfig,pathlib.Path,typing.{Dict,List}
     e: ModuleDocsGenerator
@@ -141,6 +166,10 @@ D:
     TestDocstringExtractor: test_parse_simple(0),test_parse_with_params(0),test_parse_empty(0),test_coverage_report(0)
     TestDependencyScanner: test_parse_requirements_txt(0),test_parse_pyproject_toml(0),test_empty_project(0)
     TestEndpointDetector: test_parse_flask_decorator(0),test_parse_fastapi_decorator(0),test_no_match(0)
+  tests/test_cli.py:
+    i: tempfile,click.testing.CliRunner,code2docs.cli.main,pathlib.Path
+    e: TestCLI
+    TestCLI: setup_method(0),test_help(0),test_generate_help(0),test_sync_help(0),test_init_creates_config(0)
   tests/test_code2docs.py:
     e: test_placeholder,test_import
     test_placeholder()
@@ -157,7 +186,7 @@ D:
     TestToc: test_extract_headings(0),test_extract_headings_skips_code_blocks(0),test_generate_toc(0),test_generate_toc_empty(0)
   tests/test_generators.py:
     i: tempfile,pytest,code2docs.config.Code2DocsConfig,code2llm.core.models.{AnalysisResult,ClassInfo,FunctionInfo,ModuleInfo},pathlib.Path
-    e: TestReadmeGenerator,TestApiReferenceGenerator,TestModuleDocsGenerator,TestExamplesGenerator,TestArchitectureGenerator,TestChangelogGenerator
+    e: TestReadmeGenerator,TestApiReferenceGenerator,TestModuleDocsGenerator,TestExamplesGenerator,TestArchitectureGenerator,TestChangelogGenerator,TestDepGraphGenerator,TestCoverageGenerator
     TestReadmeGenerator: test_manual_fallback_contains_sections(0),test_manual_fallback_sync_markers(0),test_generate_produces_output(0),test_build_api_section_lists_classes(0),test_build_endpoints_section_empty(0)
     TestApiReferenceGenerator: test_generate_all_produces_files(0),test_index_lists_modules(0),test_module_api_contains_class(0),test_module_api_contains_functions(0),test_render_api_imports(0)
     TestModuleDocsGenerator: test_generate_all_produces_files(0),test_render_header(0),test_render_classes_section(0),test_render_functions_section(0),test_render_dependencies_section(0)

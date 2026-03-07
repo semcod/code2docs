@@ -1,6 +1,6 @@
-# code2docs/flow | 127 func | 12 pipelines | 3 hub-types | 2026-03-07
+# code2docs/flow | 154 func | 12 pipelines | 5 hub-types | 2026-03-07
 
-PIPELINES[12] (Analysis:3, Core:2, Export:3, IO:2, Unknown:2):
+PIPELINES[12] (Analysis:3, Core:1, Export:3, IO:2, NLP:1, Unknown:2):
   Code2docs [Analysis]: ? → float
               → generate_all() → Dict[str, str]         CC=2    pure ▶
               → _generate_module(mod_name:str, mod_info:ModuleInfo) → str CC=3    pure
@@ -30,19 +30,19 @@ PIPELINES[12] (Analysis:3, Core:2, Export:3, IO:2, Unknown:2):
               → _get_public_methods(cls:ClassInfo) → List[FunctionInfo] CC=6    mutation ■
               PURITY: 2/4 pure  BOTTLENECK: _generate_basic_usage(CC=10)
 
-  Code2docs [Analysis]: AnalysisResult → Optional[str]
-              → extract_all(result:AnalysisResult) → Dict[str, DocstringInfo] CC=5    pure ▶
-              → parse(docstring:str) → DocstringInfo    CC=2    pure
-              → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=15   mutation  !!
-              → _classify_section(line:str) → Optional[str] CC=5    pure ■
-              PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=15)
-
   Code2docs [Analysis]: str → DependencyInfo
               → scan(project_path:str) → ProjectDependencies CC=4    pure ▶
               → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
               → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
               → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
               PURITY: 2/4 pure  BOTTLENECK: _parse_pyproject(CC=8)
+
+  Code2docs [Analysis]: AnalysisResult → Optional[str]
+              → extract_all(result:AnalysisResult) → Dict[str, DocstringInfo] CC=5    pure ▶
+              → parse(docstring:str) → DocstringInfo    CC=2    pure
+              → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=15   mutation  !!
+              → _classify_section(line:str) → Optional[str] CC=5    pure ■
+              PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=15)
 
   Code2docs [Export]: ? → List[FunctionInfo]
               → generate_all() → Dict[str, str]         CC=2    pure ▶
@@ -57,11 +57,23 @@ PIPELINES[12] (Analysis:3, Core:2, Export:3, IO:2, Unknown:2):
               → _slugify(text:str) → str                CC=1    pure ■
               PURITY: 1/3 pure  BOTTLENECK: extract_headings(CC=6)
 
+  Code2docs [NLP]: ? → bool
+              → generate() → str                        CC=2    pure ▶
+              → _collect_edges() → List[Tuple[str, str]] CC=7    mutation
+              → _import_matches(imp:str, module:str) → bool CC=2    pure ■
+              PURITY: 2/3 pure  BOTTLENECK: _collect_edges(CC=7)
+
   Code2docs [Unknown]: Optional[str] → str
               → generate(project_path:Optional[str], max_entries:int) → str CC=3    pure ▶
               → _get_git_log(project_path:Path, max_entries:int) → List[ChangelogEntry] CC=5    mutation
               → _classify_message(message:str) → str    CC=4    pure ■
               PURITY: 2/3 pure  BOTTLENECK: _get_git_log(CC=5)
+
+  Code2docs [Unknown]: str → None
+              → generate(project_path:str) → str        CC=2    pure ▶
+              → _diff(old:Optional[Dict], new:Dict) → List[ApiChange] CC=2    pure
+              → _diff_classes(old:Dict, new:Dict, changes:List[ApiChange]) → None CC=10   mutation ■
+              PURITY: 2/3 pure  BOTTLENECK: _diff_classes(CC=10)
 
   Code2docs [Core]: project_path → Code2DocsConfig
               → generate(project_path, config_path, readme_only, sections, output, verbose, dry_run) CC=5    pure ▶
@@ -69,24 +81,14 @@ PIPELINES[12] (Analysis:3, Core:2, Export:3, IO:2, Unknown:2):
               → from_yaml(cls, path:str) → Code2DocsConfig CC=7    IO ■
               PURITY: 2/3 pure  BOTTLENECK: from_yaml(CC=7)
 
-  Code2docs [Core]: project_path → Code2DocsConfig
-              → sync(project_path, config_path, verbose, dry_run) CC=2    pure ▶
-              → _load_config(project_path:str, config_path:Optional[str]) → Code2DocsConfig CC=4    pure
-              → from_yaml(cls, path:str) → Code2DocsConfig CC=7    IO ■
-              PURITY: 2/3 pure  BOTTLENECK: from_yaml(CC=7)
-
-  Code2docs [Unknown]: project_path → None
-              → watch(project_path, config_path, verbose) CC=2    pure ▶
-              → _run_watch(project_path:str, config:Code2DocsConfig) CC=2    pure
-              → start_watcher(project_path:str, config:Optional[Code2DocsConfig]) → None CC=5    IO ■
-              PURITY: 2/3 pure  BOTTLENECK: start_watcher(CC=5)
-
 
 TRANSFORMS (fan-out ≥10):
-  _run_generate(project_path:str, config:Code2DocsConfig, readme_only:bool, dry_run:bool) fan=24   !! side-effects
+  _run_generate(project_path:str, config:Code2DocsConfig, readme_only:bool, dry_run:bool) fan=34   !! mutation-heavy
   start_watcher(project_path:str, config:Optional[Code2DocsConfig]) → None fan=22   !! side-effects
   apply(project_path:str, changes:List[ChangeInfo]) → None fan=20   !! side-effects
   from_yaml(cls, path:str) → Code2DocsConfig              fan=15   PIPELINE:Code2DocsConfig.entry
+  _diff_classes(old:Dict, new:Dict, changes:List[ApiChange]) → None fan=12   PIPELINE:ApiChangelogGenerator.entry
+  generate_docs(project_path:str, config)                 fan=11   fan=11
   _render_api_classes(mod_name:str) → str                 fan=11   PIPELINE:ApiReferenceGenerator.entry
   generate() → str                                        fan=11   PIPELINE:ArchitectureGenerator.entry
   _parse_sections(lines:List[str], info:DocstringInfo) → None fan=11   PIPELINE:DocstringExtractor.entry
@@ -174,25 +176,6 @@ CONTRACTS:
       SIDE-EFFECT: pure
 
   Pipeline: Code2docs
-    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
-      IN:  result:AnalysisResult
-      OUT: Dict[str, DocstringInfo]
-
-    parse(docstring:str) → DocstringInfo
-      IN:  docstring:str
-      OUT: DocstringInfo
-
-    _parse_sections(lines:List[str], info:DocstringInfo) → None
-      IN:  lines:List[str], info:DocstringInfo
-      OUT: None
-      SIDE-EFFECT: pure
-      SMELL: CC=15 → split
-
-    _classify_section(line:str) → Optional[str]
-      IN:  line:str
-      OUT: Optional[str]
-
-  Pipeline: Code2docs
     scan(project_path:str) → ProjectDependencies
       IN:  project_path:str
       OUT: ProjectDependencies
@@ -210,6 +193,25 @@ CONTRACTS:
     _parse_dep_string(dep_str:str) → DependencyInfo
       IN:  dep_str:str
       OUT: DependencyInfo
+
+  Pipeline: Code2docs
+    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
+      IN:  result:AnalysisResult
+      OUT: Dict[str, DocstringInfo]
+
+    parse(docstring:str) → DocstringInfo
+      IN:  docstring:str
+      OUT: DocstringInfo
+
+    _parse_sections(lines:List[str], info:DocstringInfo) → None
+      IN:  lines:List[str], info:DocstringInfo
+      OUT: None
+      SIDE-EFFECT: pure
+      SMELL: CC=15 → split
+
+    _classify_section(line:str) → Optional[str]
+      IN:  line:str
+      OUT: Optional[str]
 
   Pipeline: Code2docs
     generate_all() → Dict[str, str]
@@ -246,6 +248,20 @@ CONTRACTS:
       OUT: str
 
   Pipeline: Code2docs
+    generate() → str
+      IN:  ()
+      OUT: str
+
+    _collect_edges() → List[Tuple[str, str]]
+      IN:  ()
+      OUT: List[Tuple[str, str]]
+      SIDE-EFFECT: pure
+
+    _import_matches(imp:str, module:str) → bool
+      IN:  imp:str, module:str
+      OUT: bool
+
+  Pipeline: Code2docs
     generate(project_path:Optional[str], max_entries:int) → str
       IN:  project_path:Optional[str], max_entries:int
       OUT: str
@@ -258,6 +274,20 @@ CONTRACTS:
     _classify_message(message:str) → str
       IN:  message:str
       OUT: str
+
+  Pipeline: Code2docs
+    generate(project_path:str) → str
+      IN:  project_path:str
+      OUT: str
+
+    _diff(old:Optional[Dict], new:Dict) → List[ApiChange]
+      IN:  old:Optional[Dict], new:Dict
+      OUT: List[ApiChange]
+
+    _diff_classes(old:Dict, new:Dict, changes:List[ApiChange]) → None
+      IN:  old:Dict, new:Dict, changes:List[ApiChange]
+      OUT: None
+      SIDE-EFFECT: pure
 
   Pipeline: Code2docs
     generate(project_path, config_path, readme_only, sections, output, verbose, dry_run)
@@ -273,67 +303,45 @@ CONTRACTS:
       OUT: Code2DocsConfig
       SIDE-EFFECT: IO(open)
 
-  Pipeline: Code2docs
-    sync(project_path, config_path, verbose, dry_run)
-      IN:  project_path, config_path, verbose, dry_run
-      OUT: None
 
-    _load_config(project_path:str, config_path:Optional[str]) → Code2DocsConfig
-      IN:  project_path:str, config_path:Optional[str]
-      OUT: Code2DocsConfig
-
-    from_yaml(cls, path:str) → Code2DocsConfig
-      IN:  cls, path:str
-      OUT: Code2DocsConfig
-      SIDE-EFFECT: IO(open)
-
-  Pipeline: Code2docs
-    watch(project_path, config_path, verbose)
-      IN:  project_path, config_path, verbose
-      OUT: None
-
-    _run_watch(project_path:str, config:Code2DocsConfig)
-      IN:  project_path:str, config:Code2DocsConfig
-      OUT: None
-
-    start_watcher(project_path:str, config:Optional[Code2DocsConfig]) → None
-      IN:  project_path:str, config:Optional[Code2DocsConfig]
-      OUT: None
-      SIDE-EFFECT: IO(print, print, print); mutates self._last_trigger, self._debounce_seconds, self._last_trigger
-
-
-DATA_TYPES (by cross-function usage) [124 annotated, 0 inferred / 127 functions]:
-  str                  consumed:76  produced:51   !! HUB-TYPE → split interface
-  Code2DocsConfig      consumed:15  produced:2    !! HUB-TYPE → split interface
-  AnalysisResult       consumed:9   produced:2  
+DATA_TYPES (by cross-function usage) [151 annotated, 0 inferred / 154 functions]:
+  str                  consumed:86  produced:63   !! HUB-TYPE → split interface
+  Code2DocsConfig      consumed:19  produced:2    !! HUB-TYPE → split interface
+  Dict                 consumed:15  produced:3    !! HUB-TYPE → split interface
+  AnalysisResult       consumed:13  produced:2    !! HUB-TYPE → split interface
+  str, str             consumed:6   produced:7  
   ModuleInfo           consumed:10  produced:0    !! HUB-TYPE → split interface
-  Dict                 consumed:9   produced:1    input-heavy (read-only flow)
-  str, str             consumed:3   produced:6  
-  ClassInfo            consumed:7   produced:1    input-heavy (read-only flow)
+  Path                 consumed:9   produced:0    input-heavy (read-only flow)
   MarkdownFormatter    consumed:0   produced:8    output-heavy
-  Path                 consumed:8   produced:0    input-heavy (read-only flow)
-  FunctionInfo         consumed:4   produced:3  
+  ClassInfo            consumed:7   produced:1    input-heavy (read-only flow)
   int                  consumed:6   produced:1    input-heavy (read-only flow)
+  FunctionInfo         consumed:4   produced:3  
+  bool                 consumed:5   produced:1    input-heavy (read-only flow)
   ProjectDependencies  consumed:0   produced:5    output-heavy
-  bool                 consumed:4   produced:0    narrow scope
+  ApiChange            consumed:3   produced:1    narrow scope
   Endpoint             consumed:0   produced:3    narrow scope
-  ChangelogEntry       consumed:1   produced:1    narrow scope
-  str, List[ChangelogEntry] consumed:1   produced:1    narrow scope
-  float                consumed:0   produced:2    narrow scope
   ChangeInfo           consumed:1   produced:1    narrow scope
+  ChangelogEntry       consumed:1   produced:1    narrow scope
   DocstringInfo        consumed:1   produced:1    narrow scope
-  str, float           consumed:0   produced:1    narrow scope
+  str, List[ChangelogEntry] consumed:1   produced:1    narrow scope
+  str, float           consumed:1   produced:1    narrow scope
 
   HUB TYPES (consumed ≥10):
-    str → 76 consumers → split into:
+    str → 86 consumers → split into:
       - (analyze consumers to suggest sub-interfaces)
-    Code2DocsConfig → 15 consumers → split into:
+    Code2DocsConfig → 19 consumers → split into:
       - (analyze consumers to suggest sub-interfaces)
+    Dict → 15 consumers → split into:
+      - (analyze consumers to suggest sub-interfaces)
+    AnalysisResult → 13 consumers → split into:
+      - StructureResult (modules, classes, functions)
+      - MetricsResult (complexity, coupling)
+      - FlowResult (call_graph, cfg, dfg)
     ModuleInfo → 10 consumers → split into:
       - (analyze consumers to suggest sub-interfaces)
 
 SIDE_EFFECTS:
-  IO:        Updater.apply, start_watcher, ReadmeGenerator.write, generate_readme, Differ.save_state, Differ._load_state, Differ._compute_state, ModuleDocsGenerator._count_file_lines, ModuleDocsGenerator._get_module_docstring, ModuleDocsGenerator.write_all
+  IO:        Updater.apply, start_watcher, ReadmeGenerator.write, generate_readme, Differ.save_state, Differ._load_state, Differ._compute_state, DepGraphGenerator._extract_imports_from_file, ApiReferenceGenerator.write_all, ModuleDocsGenerator._count_file_lines
   Mutation:  Updater.__init__, MarkdownFormatter.__init__, MarkdownFormatter.heading, MarkdownFormatter.paragraph, MarkdownFormatter.blockquote, MarkdownFormatter.code_block, MarkdownFormatter.list_item, MarkdownFormatter.table, MarkdownFormatter.separator, MarkdownFormatter.blank
   Pure:      __getattr__, MarkdownFormatter.inline_code, MarkdownFormatter.bold, MarkdownFormatter.link, MarkdownFormatter.render, _make_badge, _slugify, ReadmeGenerator.generate, ReadmeGenerator._build_context, ReadmeGenerator._build_structure_section
 
@@ -342,8 +350,8 @@ SIDE_EFFECTS:
     Code2docs       ███░ 75% pure
     Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
-    Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
+    Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
     Code2docs       █░░░ 33% pure
     Code2docs       ██░░ 66% pure

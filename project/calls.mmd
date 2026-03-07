@@ -1,22 +1,22 @@
 flowchart LR
     subgraph code2docs_cli
-        code2docs__cli___run_sync["_run_sync"]
         code2docs__cli__watch["watch"]
-        code2docs__cli___run_generate["_run_generate"]
-        code2docs__cli__sync["sync"]
-        code2docs__cli___load_config["_load_config"]
+        code2docs__cli___run_sync["_run_sync"]
         code2docs__cli__generate["generate"]
+        code2docs__cli___load_config["_load_config"]
         code2docs__cli___run_watch["_run_watch"]
+        code2docs__cli__sync["sync"]
+        code2docs__cli___run_generate["_run_generate"]
     end
     subgraph code2docs_config
         code2docs__config__Code2DocsConfig__from_yaml["from_yaml"]
     end
     subgraph code2docs_formatters
+        code2docs__formatters__toc__extract_headings["extract_headings"]
         code2docs__formatters__badges___make_badge["_make_badge"]
+        code2docs__formatters__badges__generate_badges["generate_badges"]
         code2docs__formatters__toc__generate_toc["generate_toc"]
         code2docs__formatters__toc___slugify["_slugify"]
-        code2docs__formatters__badges__generate_badges["generate_badges"]
-        code2docs__formatters__toc__extract_headings["extract_headings"]
     end
     subgraph code2docs_generators
         code2docs___build_context["_build_context"]

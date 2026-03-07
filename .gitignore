@@ -208,6 +208,9 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# code2docs
+# code2docs generated outputs
 .code2docs.state
 .code2docs.api_snapshot.json
+docs/
+examples/
+mkdocs.yml
