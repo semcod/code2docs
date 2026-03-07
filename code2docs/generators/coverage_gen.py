@@ -49,27 +49,46 @@ class CoverageGenerator:
         return "\n".join(lines)
 
     def _render_per_module(self) -> str:
-        """Render per-module coverage table."""
-        rows: List[str] = [
-            "| Module | Functions | Classes | Coverage |",
-            "|--------|-----------|---------|----------|",
-        ]
+        """Render per-module coverage table (orchestrator)."""
+        stats = self._collect_module_stats()
+        return self._format_coverage_table(stats)
+
+    def _collect_module_stats(self) -> List[Dict]:
+        """Collect coverage data per module."""
+        rows = []
         for mod_name in sorted(self.result.modules.keys()):
             funcs = [f for f in self.result.functions.values()
                      if f.module == mod_name and not f.is_method]
             classes = [c for c in self.result.classes.values()
                        if c.module == mod_name]
             total = len(funcs) + len(classes)
-            documented = (sum(1 for f in funcs if f.docstring) +
-                          sum(1 for c in classes if c.docstring))
+            doc_funcs = sum(1 for f in funcs if f.docstring)
+            doc_classes = sum(1 for c in classes if c.docstring)
+            documented = doc_funcs + doc_classes
             pct = (documented / total * 100) if total else 100.0
-            badge = "🟢" if pct >= 80 else "🟡" if pct >= 50 else "🔴"
-            rows.append(
-                f"| `{mod_name}` | {sum(1 for f in funcs if f.docstring)}/{len(funcs)} "
-                f"| {sum(1 for c in classes if c.docstring)}/{len(classes)} "
-                f"| {badge} {pct:.0f}% |"
+            rows.append({
+                "module": mod_name,
+                "doc_funcs": doc_funcs, "total_funcs": len(funcs),
+                "doc_classes": doc_classes, "total_classes": len(classes),
+                "pct": pct,
+            })
+        return rows
+
+    @staticmethod
+    def _format_coverage_table(stats: List[Dict]) -> str:
+        """Format coverage stats as a Markdown table."""
+        lines = [
+            "| Module | Functions | Classes | Coverage |",
+            "|--------|-----------|---------|----------|",
+        ]
+        for row in stats:
+            badge = "🟢" if row["pct"] >= 80 else "🟡" if row["pct"] >= 50 else "🔴"
+            lines.append(
+                f"| `{row['module']}` | {row['doc_funcs']}/{row['total_funcs']} "
+                f"| {row['doc_classes']}/{row['total_classes']} "
+                f"| {badge} {row['pct']:.0f}% |"
             )
-        return "\n".join(rows)
+        return "\n".join(lines)
 
     def _render_undocumented(self) -> str:
         """List all undocumented public functions and classes."""

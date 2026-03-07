@@ -67,6 +67,13 @@ class DocstringExtractor:
             return "examples"
         return None
 
+    _SECTION_PARSERS = {
+        "params": "_parse_param_line",
+        "returns": "_parse_returns_line",
+        "raises": "_parse_raises_line",
+        "examples": "_parse_examples_line",
+    }
+
     def _parse_sections(self, lines: List[str], info: DocstringInfo) -> None:
         """Walk remaining lines, dispatching content to the right section."""
         current_section = "description"
@@ -84,18 +91,32 @@ class DocstringExtractor:
 
             if current_section == "description":
                 desc_lines.append(stripped)
-            elif current_section == "params" and stripped:
-                if ":" in stripped:
-                    pname, pdesc = stripped.split(":", 1)
-                    info.params[pname.strip()] = pdesc.strip()
-            elif current_section == "returns" and stripped:
-                info.returns = stripped
-            elif current_section == "raises" and stripped:
-                info.raises.append(stripped)
-            elif current_section == "examples" and stripped:
-                info.examples.append(stripped)
+            elif stripped and current_section in self._SECTION_PARSERS:
+                getattr(self, self._SECTION_PARSERS[current_section])(info, stripped)
 
         info.description = "\n".join(desc_lines).strip()
+
+    @staticmethod
+    def _parse_param_line(info: DocstringInfo, line: str) -> None:
+        """Parse a single param line: 'name: description'."""
+        if ":" in line:
+            pname, pdesc = line.split(":", 1)
+            info.params[pname.strip()] = pdesc.strip()
+
+    @staticmethod
+    def _parse_returns_line(info: DocstringInfo, line: str) -> None:
+        """Parse a returns line."""
+        info.returns = line
+
+    @staticmethod
+    def _parse_raises_line(info: DocstringInfo, line: str) -> None:
+        """Parse a raises line."""
+        info.raises.append(line)
+
+    @staticmethod
+    def _parse_examples_line(info: DocstringInfo, line: str) -> None:
+        """Parse an examples line."""
+        info.examples.append(line)
 
     def coverage_report(self, result: AnalysisResult) -> Dict[str, float]:
         """Calculate docstring coverage statistics."""

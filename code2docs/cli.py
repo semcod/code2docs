@@ -108,17 +108,11 @@ def _load_config(project_path: str, config_path: Optional[str] = None) -> Code2D
 
 def _run_generate(project_path: str, config: Code2DocsConfig,
                   readme_only: bool = False, dry_run: bool = False):
-    """Run full documentation generation."""
+    """Run full documentation generation via the generator registry."""
     from .analyzers.project_scanner import ProjectScanner
-    from .generators.readme_gen import ReadmeGenerator
-    from .generators.api_reference_gen import ApiReferenceGenerator
-    from .generators.module_docs_gen import ModuleDocsGenerator
-    from .generators.examples_gen import ExamplesGenerator
-    from .generators.architecture_gen import ArchitectureGenerator
-    from .generators.depgraph_gen import DepGraphGenerator
-    from .generators.coverage_gen import CoverageGenerator
-    from .generators.mkdocs_gen import MkDocsGenerator
-    from .generators.api_changelog_gen import ApiChangelogGenerator
+    from .base import GenerateContext
+    from .registry import GeneratorRegistry
+    from .generators._registry_adapters import ALL_ADAPTERS
 
     project = Path(project_path).resolve()
     click.echo(f"📖 code2docs: analyzing {project.name}...")
@@ -132,99 +126,22 @@ def _run_generate(project_path: str, config: Code2DocsConfig,
         click.echo(f"  Classes: {len(result.classes)}")
         click.echo(f"  Modules: {len(result.modules)}")
 
-    # Step 2: Generate README
-    readme_gen = ReadmeGenerator(config, result)
-    readme_content = readme_gen.generate()
-
-    if dry_run:
-        click.echo(f"\n--- README.md ({len(readme_content)} chars) ---")
-        click.echo(readme_content[:500] + "..." if len(readme_content) > 500 else readme_content)
-    else:
-        readme_path = project / config.readme_output
-        readme_gen.write(str(readme_path), readme_content)
-        click.echo(f"  ✅ {readme_path.relative_to(project)}")
-
-    if readme_only:
-        return
-
-    # Step 3: Generate docs/
+    # Step 2: Build context and registry
     docs_dir = project / config.output
-    docs_dir.mkdir(parents=True, exist_ok=True)
+    if not dry_run and not readme_only:
+        docs_dir.mkdir(parents=True, exist_ok=True)
 
-    if config.docs.api_reference:
-        api_gen = ApiReferenceGenerator(config, result)
-        files = api_gen.generate_all()
-        if not dry_run:
-            api_gen.write_all(str(docs_dir / "api"), files)
-            click.echo(f"  ✅ docs/api/ ({len(files)} files)")
-        else:
-            click.echo(f"  [dry-run] docs/api/ ({len(files)} files)")
+    ctx = GenerateContext(
+        project=project, docs_dir=docs_dir,
+        dry_run=dry_run, verbose=config.verbose,
+    )
 
-    if config.docs.module_docs:
-        mod_gen = ModuleDocsGenerator(config, result)
-        files = mod_gen.generate_all()
-        if not dry_run:
-            mod_gen.write_all(str(docs_dir / "modules"), files)
-            click.echo(f"  ✅ docs/modules/ ({len(files)} files)")
-        else:
-            click.echo(f"  [dry-run] docs/modules/ ({len(files)} files)")
+    registry = GeneratorRegistry()
+    for adapter_cls in ALL_ADAPTERS:
+        registry.add(adapter_cls(config, result))
 
-    if config.docs.architecture:
-        arch_gen = ArchitectureGenerator(config, result)
-        content = arch_gen.generate()
-        if not dry_run:
-            (docs_dir / "architecture.md").write_text(content, encoding="utf-8")
-            click.echo(f"  ✅ docs/architecture.md")
-        else:
-            click.echo(f"  [dry-run] docs/architecture.md")
-
-    # Step 4: Dependency graph
-    depgraph_gen = DepGraphGenerator(config, result)
-    content = depgraph_gen.generate()
-    if not dry_run:
-        (docs_dir / "dependency-graph.md").write_text(content, encoding="utf-8")
-        click.echo(f"  ✅ docs/dependency-graph.md")
-    else:
-        click.echo(f"  [dry-run] docs/dependency-graph.md")
-
-    # Step 5: Docstring coverage
-    cov_gen = CoverageGenerator(config, result)
-    content = cov_gen.generate()
-    if not dry_run:
-        (docs_dir / "coverage.md").write_text(content, encoding="utf-8")
-        click.echo(f"  ✅ docs/coverage.md")
-    else:
-        click.echo(f"  [dry-run] docs/coverage.md")
-
-    # Step 6: API changelog (diff with previous snapshot)
-    api_cl_gen = ApiChangelogGenerator(config, result)
-    content = api_cl_gen.generate(str(project))
-    if not dry_run:
-        (docs_dir / "api-changelog.md").write_text(content, encoding="utf-8")
-        api_cl_gen.save_snapshot(str(project))
-        click.echo(f"  ✅ docs/api-changelog.md")
-    else:
-        click.echo(f"  [dry-run] docs/api-changelog.md")
-
-    # Step 7: Generate examples/
-    if config.examples.auto_generate:
-        ex_gen = ExamplesGenerator(config, result)
-        files = ex_gen.generate_all()
-        if not dry_run:
-            examples_dir = project / "examples"
-            ex_gen.write_all(str(examples_dir), files)
-            click.echo(f"  ✅ examples/ ({len(files)} files)")
-        else:
-            click.echo(f"  [dry-run] examples/ ({len(files)} files)")
-
-    # Step 8: mkdocs.yml
-    mkdocs_gen = MkDocsGenerator(config, result)
-    content = mkdocs_gen.generate(str(docs_dir))
-    if not dry_run:
-        mkdocs_gen.write(str(project / "mkdocs.yml"), content)
-        click.echo(f"  ✅ mkdocs.yml")
-    else:
-        click.echo(f"  [dry-run] mkdocs.yml")
+    # Step 3: Run all generators
+    registry.run_all(ctx, readme_only=readme_only)
 
     click.echo("📖 Done!")
 
