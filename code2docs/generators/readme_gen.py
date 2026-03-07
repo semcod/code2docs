@@ -255,10 +255,21 @@ class ReadmeGenerator:
                 pass
 
         # Find LICENSE file
-        for license_file in ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"]:
-            license_path = Path(self.result.project_path) / license_file
+        license_paths = [
+            Path(self.result.project_path) / lf
+            for lf in ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"]
+        ]
+        # Also check parent directory if project_path is a nested package (e.g., code2docs/code2docs)
+        parent_path = Path(self.result.project_path).parent
+        if parent_path != Path(self.result.project_path):
+            license_paths += [
+                parent_path / lf
+                for lf in ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"]
+            ]
+
+        for license_path in license_paths:
             if license_path.exists():
-                metadata["license_file"] = license_file
+                metadata["license_file"] = license_path.name
                 # Try to extract license name from file content
                 if not metadata["license"]:
                     try:

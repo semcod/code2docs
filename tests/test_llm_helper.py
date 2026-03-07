@@ -235,7 +235,7 @@ class TestGeneratorFallback:
         gen = ReadmeGenerator(config, result)
         content = gen.generate()
         assert "mylib" in content
-        assert "How It Works" in content
+        assert "Installation" in content  # New default section instead of "How It Works"
 
     def test_architecture_without_llm(self):
         from code2docs.generators.architecture_gen import ArchitectureGenerator
