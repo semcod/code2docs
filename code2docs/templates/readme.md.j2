@@ -11,6 +11,13 @@
 {% endif %}
 {% endif %}
 
+{% if author or license %}
+**Author:** {% if author %}{{ author }}{% else %}Not specified{% endif %}  
+**License:** {% if license %}{{ license }}{% if license_file %}[({{ license_file }})](./{{ license_file }}){% endif %}{% else %}Not specified{% endif %}  
+{% if repo_url %}**Repository:** [{{ repo_url }}]({{ repo_url }}){% endif %}
+
+{% endif %}
+
 {% if "how_it_works" in sections %}
 ## How It Works
 
@@ -140,25 +147,71 @@ generate_docs("./my-project", config=config)
 {% endfor %}
 {% endif %}
 
+{% if "contributing" in sections %}
+## Contributing
+
+{% if contributors %}
+**Contributors:**
+{% for contributor in contributors %}
+- {{ contributor }}
+{% endfor %}
+{% endif %}
+
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone {{ repo_url or '<repository-url>' }}
+cd {{ project_name }}
+
+# Install in development mode
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+```
+
+{% endif %}
+
 {% if "generated_docs" in sections %}
-## Generated Documentation
+## Documentation
+
+This project includes comprehensive auto-generated documentation:
+
+### Quick Links
+{% if repo_url %}
+- 📖 [Full Documentation]({{ repo_url }}/tree/main/docs) — API reference, module docs, architecture
+- 🚀 [Getting Started]({{ repo_url }}/blob/main/docs/getting-started.md) — Quick start guide
+- 📚 [API Reference]({{ repo_url }}/blob/main/docs/api.md) — Complete API documentation
+- 🔧 [Configuration]({{ repo_url }}/blob/main/docs/configuration.md) — Configuration options
+{% else %}
+- 📖 [Full Documentation](./docs) — API reference, module docs, architecture
+- 🚀 [Getting Started](./docs/getting-started.md) — Quick start guide
+- 📚 [API Reference](./docs/api.md) — Complete API documentation
+- 🔧 [Configuration](./docs/configuration.md) — Configuration options
+{% endif %}
+- 💡 [Examples](./examples) — Usage examples and code samples
+
+### Generated Files
 
 When you run `{{ project_name }}`, the following files are produced:
 
-| Output | Description |
-|--------|-------------|
-| `README.md` | Project overview with badges, stats, and API summary |
-| `docs/api.md` | Consolidated API reference with signatures and complexity |
-| `docs/modules.md` | Module reference with metrics and class/function details |
-| `docs/architecture.md` | Architecture overview with Mermaid diagrams |
-| `docs/dependency-graph.md` | Module dependency graph and coupling matrix |
-| `docs/coverage.md` | Docstring coverage report |
-| `docs/getting-started.md` | Getting started guide |
-| `docs/configuration.md` | Configuration reference |
-| `docs/api-changelog.md` | API change tracking between runs |
-| `CONTRIBUTING.md` | Contribution guidelines |
-| `examples/` | Auto-generated usage examples |
-| `mkdocs.yml` | MkDocs site configuration |
+| Output | Description | Link |
+|--------|-------------|------|
+| `README.md` | Project overview (this file) | — |
+| `docs/api.md` | Consolidated API reference | [View](./docs/api.md) |
+| `docs/modules.md` | Module reference with metrics | [View](./docs/modules.md) |
+| `docs/architecture.md` | Architecture with diagrams | [View](./docs/architecture.md) |
+| `docs/dependency-graph.md` | Dependency graphs | [View](./docs/dependency-graph.md) |
+| `docs/coverage.md` | Docstring coverage report | [View](./docs/coverage.md) |
+| `docs/getting-started.md` | Getting started guide | [View](./docs/getting-started.md) |
+| `docs/configuration.md` | Configuration reference | [View](./docs/configuration.md) |
+| `docs/api-changelog.md` | API change tracking | [View](./docs/api-changelog.md) |
+| `CONTRIBUTING.md` | Contribution guidelines | [View](./CONTRIBUTING.md) |
+| `examples/` | Usage examples | [Browse](./examples) |
+| `mkdocs.yml` | MkDocs configuration | — |
 {% endif %}
 
 {% if sync_markers %}<!-- code2docs:end -->{% endif %}

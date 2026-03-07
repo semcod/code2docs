@@ -87,6 +87,9 @@ class ReadmeGenerator:
         # Project description: LLM if available, else package docstring
         project_description = self._generate_description(project_name, entry_points)
 
+        # Metadata: author, license, contributors
+        metadata = self._extract_project_metadata()
+
         return {
             "project_name": project_name,
             "project_path": self.result.project_path,
@@ -102,6 +105,13 @@ class ReadmeGenerator:
             "module_tree": module_tree,
             "modules": self.result.modules,
             "sync_markers": self.config.readme.sync_markers,
+            # New metadata fields
+            "author": metadata.get("author", ""),
+            "license": metadata.get("license", ""),
+            "license_file": metadata.get("license_file", ""),
+            "contributors": metadata.get("contributors", []),
+            "repo_url": self.config.repo_url,
+            "version": metadata.get("version", "0.1.0"),
         }
 
     def _calc_avg_complexity(self) -> float:
@@ -164,6 +174,100 @@ class ReadmeGenerator:
             if mod_info.is_package and doc:
                 return doc.strip()
         return ""
+
+    def _extract_project_metadata(self) -> Dict:
+        """Extract project metadata (author, license, version) from pyproject.toml or git."""
+        metadata = {
+            "author": "",
+            "license": "",
+            "license_file": "",
+            "contributors": [],
+            "version": "0.1.0",
+        }
+
+        # Try pyproject.toml
+        try:
+            import tomllib
+            pyproject_path = Path(self.result.project_path) / "pyproject.toml"
+            if pyproject_path.exists():
+                with open(pyproject_path, "rb") as f:
+                    data = tomllib.load(f)
+
+                project = data.get("project", {})
+                metadata["version"] = project.get("version", metadata["version"])
+
+                # Authors
+                authors = project.get("authors", [])
+                if authors:
+                    if isinstance(authors[0], dict):
+                        metadata["author"] = authors[0].get("name", "")
+                        metadata["contributors"] = [a.get("name", "") for a in authors[1:] if a.get("name")]
+                    else:
+                        metadata["author"] = str(authors[0])
+
+                # License
+                metadata["license"] = project.get("license", {}).get("text", "")
+                if not metadata["license"]:
+                    metadata["license"] = project.get("license", "")
+        except Exception:
+            pass
+
+        # Try git for contributors if not found
+        if not metadata["contributors"]:
+            try:
+                import subprocess
+                result = subprocess.run(
+                    ["git", "shortlog", "-sne", "HEAD"],
+                    capture_output=True, text=True, cwd=self.result.project_path
+                )
+                if result.returncode == 0:
+                    contributors = []
+                    for line in result.stdout.strip().split("\n")[:5]:
+                        parts = line.split("\t")
+                        if len(parts) >= 2:
+                            contributors.append(parts[1])
+                    metadata["contributors"] = contributors
+            except Exception:
+                pass
+
+        # Try git config for author if not found
+        if not metadata["author"]:
+            try:
+                import subprocess
+                name = subprocess.run(
+                    ["git", "config", "user.name"],
+                    capture_output=True, text=True, cwd=self.result.project_path
+                )
+                email = subprocess.run(
+                    ["git", "config", "user.email"],
+                    capture_output=True, text=True, cwd=self.result.project_path
+                )
+                if name.returncode == 0 and name.stdout.strip():
+                    author = name.stdout.strip()
+                    if email.returncode == 0 and email.stdout.strip():
+                        author += f" <{email.stdout.strip()}>"
+                    metadata["author"] = author
+            except Exception:
+                pass
+
+        # Find LICENSE file
+        for license_file in ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"]:
+            license_path = Path(self.result.project_path) / license_file
+            if license_path.exists():
+                metadata["license_file"] = license_file
+                # Try to extract license name from file content
+                if not metadata["license"]:
+                    try:
+                        content = license_path.read_text(encoding="utf-8").lower()
+                        for license_type in ["mit", "apache", "gpl", "bsd", "mpl", "lgpl"]:
+                            if license_type in content:
+                                metadata["license"] = license_type.upper()
+                                break
+                    except Exception:
+                        pass
+                break
+
+        return metadata
 
     def _build_manual(self, project_name: str, sections: List[str], context: Dict) -> str:
         """Fallback manual README builder (orchestrator)."""
