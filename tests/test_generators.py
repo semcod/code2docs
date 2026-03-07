@@ -364,3 +364,187 @@ class TestChangelogGenerator:
             content = gen.generate(tmpdir)
             # No git repo → should still return a valid string
             assert isinstance(content, str)
+
+
+# --------------- DepGraphGenerator ---------------
+
+class TestDepGraphGenerator:
+    def test_generate_produces_mermaid(self):
+        from code2docs.generators.depgraph_gen import DepGraphGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = DepGraphGenerator(config, result)
+        content = gen.generate()
+        assert "```mermaid" in content
+        assert "Dependency Graph" in content
+
+    def test_contains_coupling_matrix(self):
+        from code2docs.generators.depgraph_gen import DepGraphGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = DepGraphGenerator(config, result)
+        content = gen.generate()
+        assert "Coupling Matrix" in content
+
+    def test_contains_fan_in_fan_out(self):
+        from code2docs.generators.depgraph_gen import DepGraphGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = DepGraphGenerator(config, result)
+        content = gen.generate()
+        assert "Fan-in" in content
+        assert "Fan-out" in content
+
+    def test_edge_detection(self):
+        from code2docs.generators.depgraph_gen import DepGraphGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = DepGraphGenerator(config, result)
+        edges = gen._collect_edges()
+        # mylib.core imports mylib.utils
+        assert ("mylib.core", "mylib.utils") in edges
+
+
+# --------------- CoverageGenerator ---------------
+
+class TestCoverageGenerator:
+    def test_generate_produces_report(self):
+        from code2docs.generators.coverage_gen import CoverageGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = CoverageGenerator(config, result)
+        content = gen.generate()
+        assert "Coverage" in content
+
+    def test_shows_per_module_breakdown(self):
+        from code2docs.generators.coverage_gen import CoverageGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = CoverageGenerator(config, result)
+        content = gen.generate()
+        assert "mylib.core" in content
+        assert "mylib.utils" in content
+
+    def test_shows_undocumented(self):
+        from code2docs.generators.coverage_gen import CoverageGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = CoverageGenerator(config, result)
+        content = gen.generate()
+        # sanitize has no docstring
+        assert "sanitize" in content
+
+    def test_badge_emoji(self):
+        from code2docs.generators.coverage_gen import CoverageGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = CoverageGenerator(config, result)
+        content = gen.generate()
+        # Should contain at least one badge emoji
+        assert any(e in content for e in ("🟢", "🟡", "🔴"))
+
+
+# --------------- MkDocsGenerator ---------------
+
+class TestMkDocsGenerator:
+    def test_generate_produces_yaml(self):
+        from code2docs.generators.mkdocs_gen import MkDocsGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = MkDocsGenerator(config, result)
+        content = gen.generate()
+        assert "site_name" in content
+        assert "nav" in content
+
+    def test_nav_contains_modules(self):
+        from code2docs.generators.mkdocs_gen import MkDocsGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = MkDocsGenerator(config, result)
+        content = gen.generate()
+        assert "mylib.core" in content
+        assert "mylib.utils" in content
+
+    def test_write(self):
+        from code2docs.generators.mkdocs_gen import MkDocsGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = MkDocsGenerator(config, result)
+        content = gen.generate()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out = str(Path(tmpdir) / "mkdocs.yml")
+            gen.write(out, content)
+            assert Path(out).exists()
+            assert "site_name" in Path(out).read_text()
+
+
+# --------------- ApiChangelogGenerator ---------------
+
+class TestApiChangelogGenerator:
+    def test_no_baseline_message(self):
+        from code2docs.generators.api_changelog_gen import ApiChangelogGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = ApiChangelogGenerator(config, result)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            content = gen.generate(tmpdir)
+            assert "No previous API snapshot" in content
+
+    def test_no_changes_after_snapshot(self):
+        from code2docs.generators.api_changelog_gen import ApiChangelogGenerator
+        config = _make_config()
+        result = _make_result()
+        gen = ApiChangelogGenerator(config, result)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            gen.save_snapshot(tmpdir)
+            content = gen.generate(tmpdir)
+            assert "No API changes" in content
+
+    def test_detect_added_function(self):
+        from code2docs.generators.api_changelog_gen import ApiChangelogGenerator
+        config = _make_config()
+        result1 = _make_result()
+        gen1 = ApiChangelogGenerator(config, result1)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            gen1.save_snapshot(tmpdir)
+            # Add a new function to result
+            result2 = _make_result()
+            result2.functions["mylib.core.new_func"] = FunctionInfo(
+                name="new_func", qualified_name="mylib.core.new_func",
+                file="/tmp/mockproject/mylib/core.py", line=100,
+                module="mylib.core", args=["x"],
+                returns="int",
+            )
+            gen2 = ApiChangelogGenerator(config, result2)
+            content = gen2.generate(tmpdir)
+            assert "Added" in content
+            assert "new_func" in content
+
+    def test_detect_removed_function(self):
+        from code2docs.generators.api_changelog_gen import ApiChangelogGenerator
+        config = _make_config()
+        result1 = _make_result()
+        gen1 = ApiChangelogGenerator(config, result1)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            gen1.save_snapshot(tmpdir)
+            # Remove a function
+            result2 = _make_result()
+            del result2.functions["mylib.core.process"]
+            gen2 = ApiChangelogGenerator(config, result2)
+            content = gen2.generate(tmpdir)
+            assert "Removed" in content
+            assert "process" in content
+
+    def test_detect_changed_signature(self):
+        from code2docs.generators.api_changelog_gen import ApiChangelogGenerator
+        config = _make_config()
+        result1 = _make_result()
+        gen1 = ApiChangelogGenerator(config, result1)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            gen1.save_snapshot(tmpdir)
+            # Change a function signature
+            result2 = _make_result()
+            result2.functions["mylib.core.process"].args = ["data", "config", "verbose"]
+            gen2 = ApiChangelogGenerator(config, result2)
+            content = gen2.generate(tmpdir)
+            assert "Changed" in content

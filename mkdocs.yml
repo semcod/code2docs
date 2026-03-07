@@ -1,0 +1,77 @@
+site_name: code2docs Documentation
+theme:
+  name: material
+nav:
+- Home: index.md
+- Architecture: architecture.md
+- API Reference:
+  - Overview: api/index.md
+  - code2docs: api/module_code2docs.md
+  - code2docs.__main__: api/module_code2docs___main__.md
+  - code2docs.analyzers: api/module_code2docs_analyzers.md
+  - code2docs.analyzers.dependency_scanner: api/module_code2docs_analyzers_dependency_scanner.md
+  - code2docs.analyzers.docstring_extractor: api/module_code2docs_analyzers_docstring_extractor.md
+  - code2docs.analyzers.endpoint_detector: api/module_code2docs_analyzers_endpoint_detector.md
+  - code2docs.analyzers.project_scanner: api/module_code2docs_analyzers_project_scanner.md
+  - code2docs.cli: api/module_code2docs_cli.md
+  - code2docs.config: api/module_code2docs_config.md
+  - code2docs.formatters: api/module_code2docs_formatters.md
+  - code2docs.formatters.badges: api/module_code2docs_formatters_badges.md
+  - code2docs.formatters.markdown: api/module_code2docs_formatters_markdown.md
+  - code2docs.formatters.toc: api/module_code2docs_formatters_toc.md
+  - code2docs.generators: api/module_code2docs_generators.md
+  - code2docs.generators.api_changelog_gen: api/module_code2docs_generators_api_changelog_gen.md
+  - code2docs.generators.api_reference_gen: api/module_code2docs_generators_api_reference_gen.md
+  - code2docs.generators.architecture_gen: api/module_code2docs_generators_architecture_gen.md
+  - code2docs.generators.changelog_gen: api/module_code2docs_generators_changelog_gen.md
+  - code2docs.generators.coverage_gen: api/module_code2docs_generators_coverage_gen.md
+  - code2docs.generators.depgraph_gen: api/module_code2docs_generators_depgraph_gen.md
+  - code2docs.generators.examples_gen: api/module_code2docs_generators_examples_gen.md
+  - code2docs.generators.mkdocs_gen: api/module_code2docs_generators_mkdocs_gen.md
+  - code2docs.generators.module_docs_gen: api/module_code2docs_generators_module_docs_gen.md
+  - code2docs.generators.readme_gen: api/module_code2docs_generators_readme_gen.md
+  - code2docs.sync: api/module_code2docs_sync.md
+  - code2docs.sync.differ: api/module_code2docs_sync_differ.md
+  - code2docs.sync.updater: api/module_code2docs_sync_updater.md
+  - code2docs.sync.watcher: api/module_code2docs_sync_watcher.md
+- Modules:
+  - code2docs: modules/code2docs.md
+  - code2docs.__main__: modules/code2docs___main__.md
+  - code2docs.analyzers: modules/code2docs_analyzers.md
+  - code2docs.analyzers.dependency_scanner: modules/code2docs_analyzers_dependency_scanner.md
+  - code2docs.analyzers.docstring_extractor: modules/code2docs_analyzers_docstring_extractor.md
+  - code2docs.analyzers.endpoint_detector: modules/code2docs_analyzers_endpoint_detector.md
+  - code2docs.analyzers.project_scanner: modules/code2docs_analyzers_project_scanner.md
+  - code2docs.cli: modules/code2docs_cli.md
+  - code2docs.config: modules/code2docs_config.md
+  - code2docs.formatters: modules/code2docs_formatters.md
+  - code2docs.formatters.badges: modules/code2docs_formatters_badges.md
+  - code2docs.formatters.markdown: modules/code2docs_formatters_markdown.md
+  - code2docs.formatters.toc: modules/code2docs_formatters_toc.md
+  - code2docs.generators: modules/code2docs_generators.md
+  - code2docs.generators.api_changelog_gen: modules/code2docs_generators_api_changelog_gen.md
+  - code2docs.generators.api_reference_gen: modules/code2docs_generators_api_reference_gen.md
+  - code2docs.generators.architecture_gen: modules/code2docs_generators_architecture_gen.md
+  - code2docs.generators.changelog_gen: modules/code2docs_generators_changelog_gen.md
+  - code2docs.generators.coverage_gen: modules/code2docs_generators_coverage_gen.md
+  - code2docs.generators.depgraph_gen: modules/code2docs_generators_depgraph_gen.md
+  - code2docs.generators.examples_gen: modules/code2docs_generators_examples_gen.md
+  - code2docs.generators.mkdocs_gen: modules/code2docs_generators_mkdocs_gen.md
+  - code2docs.generators.module_docs_gen: modules/code2docs_generators_module_docs_gen.md
+  - code2docs.generators.readme_gen: modules/code2docs_generators_readme_gen.md
+  - code2docs.sync: modules/code2docs_sync.md
+  - code2docs.sync.differ: modules/code2docs_sync_differ.md
+  - code2docs.sync.updater: modules/code2docs_sync_updater.md
+  - code2docs.sync.watcher: modules/code2docs_sync_watcher.md
+- Dependency Graph: dependency-graph.md
+- Coverage: coverage.md
+- Changelog: changelog.md
+markdown_extensions:
+- admonition
+- pymdownx.highlight
+- pymdownx.superfences
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: '!!python/name:pymdownx.superfences.fence_code_format'
