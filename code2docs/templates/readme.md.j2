@@ -8,59 +8,42 @@
 
 {% if project_description %}
 {{ project_description }}
+{% else %}
+> Auto-generated project documentation from source code analysis.
 {% endif %}
 {% endif %}
 
-{% if author or license %}
+{% if author or license or repo_url %}
 **Author:** {% if author %}{{ author }}{% else %}Not specified{% endif %}  
 **License:** {% if license %}{{ license }}{% if license_file %}[({{ license_file }})](./{{ license_file }}){% endif %}{% else %}Not specified{% endif %}  
 {% if repo_url %}**Repository:** [{{ repo_url }}]({{ repo_url }}){% endif %}
 
 {% endif %}
 
-{% if "how_it_works" in sections %}
-## How It Works
-
-{{ project_name }} uses static code analysis to automatically generate human-readable documentation from your source code.
-
-```
-Source Code  →  code2llm (AST + tree-sitter)  →  AnalysisResult  →  code2docs generators  →  Docs
-```
-
-**Analysis pipeline:**
-
-1. **Parsing** — source files are parsed using language-specific AST parsers (tree-sitter) to extract functions, classes, modules, and their relationships
-2. **Metric collection** — cyclomatic complexity, fan-in/fan-out coupling, and dependency graphs are computed per function and module
-3. **Docstring extraction** — existing docstrings are parsed into structured sections (params, returns, raises, examples)
-4. **Documentation generation** — 12 specialized generators transform the analysis into Markdown, YAML, and Python examples
-
-### Supported Languages & Frameworks
-
-| Category | Languages / Frameworks |
-|----------|----------------------|
-| **Backend** | Python, Java, Go, Rust, C#, Ruby, PHP, Node.js |
-| **Frontend** | JavaScript, TypeScript, React, Vue, Angular |
-| **Firmware** | C, C++, Embedded C |
-| **Frameworks** | Django, Flask, FastAPI, Express, Spring, Rails |
-
-{% endif %}
-
-{% if "install" in sections and dependencies and dependencies.install_command %}
+{% if "install" in sections %}
 ## Installation
 
+### From PyPI
+
 ```bash
-{{ dependencies.install_command }}
+pip install {{ project_name }}
 ```
-{% if dependencies.python_version %}
-Requires Python {{ dependencies.python_version }}
-{% endif %}
 
-{% if dependencies.dependencies %}
-### Dependencies
+### From Source
 
-{% for dep in dependencies.dependencies %}
-- `{{ dep.name }}` {{ dep.version_spec }}
+```bash
+git clone {{ repo_url or '<repository-url>' }}
+cd {{ project_name }}
+pip install -e .
+```
+
+{% if extras %}
+### Optional Extras
+
+```bash
+{% for extra in extras %}pip install {{ project_name }}[{{ extra.name }}]    # {{ extra.description }}
 {% endfor %}
+```
 {% endif %}
 {% endif %}
 
@@ -96,7 +79,75 @@ generate_readme("./my-project")
 
 # Full: generate all documentation
 config = Code2DocsConfig(project_name="mylib", verbose=True)
-generate_docs("./my-project", config=config)
+docs = generate_docs("./my-project", config=config)
+```
+{% endif %}
+
+{% if "generated_output" in sections %}
+## Generated Output
+
+When you run `{{ project_name }}`, the following files are produced:
+
+```
+<project>/
+├── README.md                 # Main project README (auto-generated sections)
+├── docs/
+│   ├── api.md               # Consolidated API reference
+│   ├── modules.md           # Module documentation with metrics
+│   ├── architecture.md      # Architecture overview with diagrams
+│   ├── dependency-graph.md  # Module dependency graphs
+│   ├── coverage.md          # Docstring coverage report
+│   ├── getting-started.md   # Getting started guide
+│   ├── configuration.md    # Configuration reference
+│   └── api-changelog.md    # API change tracking
+├── examples/
+│   ├── quickstart.py       # Basic usage examples
+│   └── advanced_usage.py   # Advanced usage examples
+├── CONTRIBUTING.md         # Contribution guidelines
+└── mkdocs.yml             # MkDocs site configuration
+```
+{% endif %}
+
+{% if "config" in sections %}
+## Configuration
+
+Create `{{ project_name }}.yaml` in your project root (or run `{{ project_name }} init`):
+
+```yaml
+project:
+  name: my-project
+  source: ./
+  output: ./docs/
+
+readme:
+  sections:
+    - overview
+    - install
+    - quickstart
+    - api
+    - structure
+  badges:
+    - version
+    - python
+    - coverage
+  sync_markers: true
+
+docs:
+  api_reference: true
+  module_docs: true
+  architecture: true
+  changelog: true
+
+examples:
+  auto_generate: true
+  from_entry_points: true
+
+sync:
+  strategy: markers    # markers | full | git-diff
+  watch: false
+  ignore:
+    - "tests/"
+    - "__pycache__"
 ```
 {% endif %}
 
@@ -104,27 +155,21 @@ generate_docs("./my-project", config=config)
 ## API Overview
 
 {% if public_classes %}
-### Key Classes
+### Classes
 
-| Class | Description |
-|-------|-------------|
 {% for name, cls in public_classes.items()|list %}
 {% if not cls.name.startswith('_') %}
-| `{{ cls.name }}` | {{ cls.docstring.split('\n')[0] if cls.docstring else '—' }} |
+- **`{{ cls.name }}`** — {{ cls.docstring.split('\n')[0] if cls.docstring else '—' }}
 {% endif %}
 {% endfor %}
 
 {% endif %}
 {% if public_functions %}
-### Public Functions
+### Functions
 
-| Function | Signature | Description |
-|----------|-----------|-------------|
 {% for name, func in public_functions.items()|list %}
 {% if not func.name.startswith('_') %}
-{% set args = func.args[:4]|join(', ') %}
-{% set ret = ' → ' ~ func.returns if func.returns else '' %}
-| `{{ func.name }}` | `({{ args }}){{ ret }}` | {{ func.docstring.split('\n')[0] if func.docstring else '—' }} |
+- `{{ func.name }}({{ func.args[:4]|join(', ') }})`{% if func.returns %} → {{ func.returns }}{% endif %} — {{ func.docstring.split('\n')[0] if func.docstring else '—' }}
 {% endif %}
 {% endfor %}
 
@@ -135,6 +180,19 @@ generate_docs("./my-project", config=config)
 ## Project Structure
 
 {{ module_tree }}
+{% endif %}
+
+{% if "requirements" in sections and dependencies %}
+## Requirements
+
+{% if dependencies.python_version %}
+- Python >= {{ dependencies.python_version }}
+{% endif %}
+{% if dependencies.dependencies %}
+{% for dep in dependencies.dependencies %}
+- {{ dep.name }}{% if dep.version_spec %} {{ dep.version_spec }}{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 
 {% if "endpoints" in sections and endpoints %}
@@ -172,15 +230,11 @@ pip install -e ".[dev]"
 # Run tests
 pytest
 ```
-
 {% endif %}
 
-{% if "generated_docs" in sections %}
+{% if "docs_nav" in sections %}
 ## Documentation
 
-This project includes comprehensive auto-generated documentation:
-
-### Quick Links
 {% if repo_url %}
 - 📖 [Full Documentation]({{ repo_url }}/tree/main/docs) — API reference, module docs, architecture
 - 🚀 [Getting Started]({{ repo_url }}/blob/main/docs/getting-started.md) — Quick start guide
@@ -195,8 +249,6 @@ This project includes comprehensive auto-generated documentation:
 - 💡 [Examples](./examples) — Usage examples and code samples
 
 ### Generated Files
-
-When you run `{{ project_name }}`, the following files are produced:
 
 | Output | Description | Link |
 |--------|-------------|------|

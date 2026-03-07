@@ -20,8 +20,8 @@ except ImportError:
 class ReadmeConfig:
     """Configuration for README generation."""
     sections: List[str] = field(default_factory=lambda: [
-        "overview", "how_it_works", "install", "quickstart", "api",
-        "structure", "endpoints", "contributing", "generated_docs",
+        "overview", "install", "quickstart", "generated_output", "config",
+        "api", "structure", "requirements", "contributing", "docs_nav",
     ])
     badges: List[str] = field(default_factory=lambda: [
         "version", "python", "coverage", "complexity",

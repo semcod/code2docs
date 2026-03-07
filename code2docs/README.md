@@ -1,8 +1,12 @@
 <!-- code2docs:start --># code2docs
 
-![version](https://img.shields.io/badge/version-0.1.0-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-227-green)
-> **227** functions | **51** classes | **38** files | CC̄ = 3.9
+![version](https://img.shields.io/badge/version-0.1.0-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-228-green)
+> **228** functions | **51** classes | **38** files | CC̄ = 4.0
 
+
+**Author:** Tom Softreck <tom@sapletta.com>  
+**License:** Not specified  
+**Repository:** [https://github.com/wronai/code2docs](https://github.com/wronai/code2docs)
 
 ## How It Works
 
@@ -83,18 +87,20 @@ generate_docs("./my-project", config=config)
 | `Differ` | Detect changes between current source and previous state. |
 | `MarkdownFormatter` | Helper for constructing Markdown documents. |
 | `ReadmeGenerator` | Generate README.md from AnalysisResult. |
-| `GenerateContext` | Shared context passed to all generators during a run. |
-| `BaseGenerator` | Abstract base for all documentation generators. |
 | `CoverageGenerator` | Generate docs/coverage.md — docstring coverage report. |
 | `SourceLinker` | Build source-code links (relative paths + optional GitHub/GitLab URLs). |
 | `DepGraphGenerator` | Generate docs/dependency-graph.md with Mermaid diagrams. |
 | `GettingStartedGenerator` | Generate docs/getting-started.md from entry points and dependencies. |
+| `GenerateContext` | Shared context passed to all generators during a run. |
+| `BaseGenerator` | Abstract base for all documentation generators. |
 | `ConfigDocsGenerator` | Generate docs/configuration.md from Code2DocsConfig dataclass. |
 | `ChangelogEntry` | A single changelog entry. |
 | `ChangelogGenerator` | Generate CHANGELOG.md from git log and analysis diff. |
-| `ApiReferenceGenerator` | Generate docs/api.md — consolidated API reference. |
 | `ModuleDocsGenerator` | Generate docs/modules.md — consolidated module documentation. |
+| `ApiReferenceGenerator` | Generate docs/api.md — consolidated API reference. |
 | `MkDocsGenerator` | Generate mkdocs.yml from the docs/ directory structure. |
+| `ExamplesGenerator` | Generate examples/ — usage examples from public API signatures. |
+| `DefaultGroup` | Click Group that routes unknown subcommands to 'generate'. |
 | `ReadmeGeneratorAdapter` | — |
 | `ApiReferenceAdapter` | — |
 | `ModuleDocsAdapter` | — |
@@ -107,12 +113,10 @@ generate_docs("./my-project", config=config)
 | `GettingStartedAdapter` | — |
 | `ConfigDocsAdapter` | — |
 | `ContributingAdapter` | — |
-| `ExamplesGenerator` | Generate examples/ — usage examples from public API signatures. |
 | `ApiChange` | A single API change between two analysis snapshots. |
 | `ApiChangelogGenerator` | Generate API changelog by diffing current analysis with a saved snapshot. |
 | `ContributingGenerator` | Generate CONTRIBUTING.md by detecting dev tools from pyproject.toml. |
 | `ArchitectureGenerator` | Generate docs/architecture.md — architecture overview with diagrams. |
-| `DefaultGroup` | Click Group that routes unknown subcommands to 'generate'. |
 | `ReadmeConfig` | Configuration for README generation. |
 | `DocsConfig` | Configuration for docs/ generation. |
 | `ExamplesConfig` | Configuration for examples/ generation. |
@@ -120,13 +124,13 @@ generate_docs("./my-project", config=config)
 | `LLMConfig` | Configuration for optional LLM-assisted documentation generation. |
 | `Code2DocsConfig` | Main configuration for code2docs. |
 | `ProjectScanner` | Wraps code2llm's ProjectAnalyzer with code2docs-specific defaults. |
+| `Endpoint` | Represents a detected web endpoint. |
+| `EndpointDetector` | Detects web endpoints from decorator patterns in source code. |
 | `DocstringInfo` | Parsed docstring with sections. |
 | `DocstringExtractor` | Extract and parse docstrings from AnalysisResult. |
 | `DependencyInfo` | Information about a project dependency. |
 | `ProjectDependencies` | All detected project dependencies. |
 | `DependencyScanner` | Scan and parse project dependency files. |
-| `Endpoint` | Represents a detected web endpoint. |
-| `EndpointDetector` | Detects web endpoints from decorator patterns in source code. |
 
 ### Public Functions
 
@@ -181,7 +185,7 @@ generate_docs("./my-project", config=config)
 📄 `generators.getting_started_gen` (8 functions, 1 classes)
 📄 `generators.mkdocs_gen` (4 functions, 1 classes)
 📄 `generators.module_docs_gen` (9 functions, 1 classes)
-📄 `generators.readme_gen` (16 functions, 1 classes)
+📄 `generators.readme_gen` (17 functions, 1 classes)
 📄 `llm_helper` (7 functions, 1 classes)
 📄 `registry` (4 functions, 1 classes)
 📦 `sync`
@@ -190,23 +194,57 @@ generate_docs("./my-project", config=config)
 📄 `sync.watcher` (1 functions)
 
 
-## Generated Documentation
+## Contributing
+
+**Contributors:**
+- Tom Softreck <tom@sapletta.com>
+- Tom Sapletta <tom-sapletta-com@users.noreply.github.com>
+
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/wronai/code2docs
+cd code2docs
+
+# Install in development mode
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+```
+
+
+## Documentation
+
+This project includes comprehensive auto-generated documentation:
+
+### Quick Links
+- 📖 [Full Documentation](https://github.com/wronai/code2docs/tree/main/docs) — API reference, module docs, architecture
+- 🚀 [Getting Started](https://github.com/wronai/code2docs/blob/main/docs/getting-started.md) — Quick start guide
+- 📚 [API Reference](https://github.com/wronai/code2docs/blob/main/docs/api.md) — Complete API documentation
+- 🔧 [Configuration](https://github.com/wronai/code2docs/blob/main/docs/configuration.md) — Configuration options
+- 💡 [Examples](./examples) — Usage examples and code samples
+
+### Generated Files
 
 When you run `code2docs`, the following files are produced:
 
-| Output | Description |
-|--------|-------------|
-| `README.md` | Project overview with badges, stats, and API summary |
-| `docs/api.md` | Consolidated API reference with signatures and complexity |
-| `docs/modules.md` | Module reference with metrics and class/function details |
-| `docs/architecture.md` | Architecture overview with Mermaid diagrams |
-| `docs/dependency-graph.md` | Module dependency graph and coupling matrix |
-| `docs/coverage.md` | Docstring coverage report |
-| `docs/getting-started.md` | Getting started guide |
-| `docs/configuration.md` | Configuration reference |
-| `docs/api-changelog.md` | API change tracking between runs |
-| `CONTRIBUTING.md` | Contribution guidelines |
-| `examples/` | Auto-generated usage examples |
-| `mkdocs.yml` | MkDocs site configuration |
+| Output | Description | Link |
+|--------|-------------|------|
+| `README.md` | Project overview (this file) | — |
+| `docs/api.md` | Consolidated API reference | [View](./docs/api.md) |
+| `docs/modules.md` | Module reference with metrics | [View](./docs/modules.md) |
+| `docs/architecture.md` | Architecture with diagrams | [View](./docs/architecture.md) |
+| `docs/dependency-graph.md` | Dependency graphs | [View](./docs/dependency-graph.md) |
+| `docs/coverage.md` | Docstring coverage report | [View](./docs/coverage.md) |
+| `docs/getting-started.md` | Getting started guide | [View](./docs/getting-started.md) |
+| `docs/configuration.md` | Configuration reference | [View](./docs/configuration.md) |
+| `docs/api-changelog.md` | API change tracking | [View](./docs/api-changelog.md) |
+| `CONTRIBUTING.md` | Contribution guidelines | [View](./CONTRIBUTING.md) |
+| `examples/` | Usage examples | [Browse](./examples) |
+| `mkdocs.yml` | MkDocs configuration | — |
 
 <!-- code2docs:end -->

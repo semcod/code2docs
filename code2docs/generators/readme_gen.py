@@ -90,6 +90,9 @@ class ReadmeGenerator:
         # Metadata: author, license, contributors
         metadata = self._extract_project_metadata()
 
+        # Extras from pyproject.toml
+        extras = self._extract_extras()
+
         return {
             "project_name": project_name,
             "project_path": self.result.project_path,
@@ -112,6 +115,7 @@ class ReadmeGenerator:
             "contributors": metadata.get("contributors", []),
             "repo_url": self.config.repo_url,
             "version": metadata.get("version", "0.1.0"),
+            "extras": extras,
         }
 
     def _calc_avg_complexity(self) -> float:
@@ -268,6 +272,40 @@ class ReadmeGenerator:
                 break
 
         return metadata
+
+    def _extract_extras(self) -> List[Dict]:
+        """Extract optional dependencies (extras) from pyproject.toml."""
+        extras = []
+        try:
+            import tomllib
+            pyproject_path = Path(self.result.project_path) / "pyproject.toml"
+            if pyproject_path.exists():
+                with open(pyproject_path, "rb") as f:
+                    data = tomllib.load(f)
+
+                project = data.get("project", {})
+                optional_deps = project.get("optional-dependencies", {})
+
+                for name, deps in optional_deps.items():
+                    description = {
+                        "dev": "development tools",
+                        "test": "testing tools",
+                        "docs": "documentation tools",
+                        "watch": "file watcher (watchdog)",
+                        "mkdocs": "MkDocs integration",
+                        "llm": "LLM integration (litellm)",
+                        "git": "Git integration (GitPython)",
+                        "all": "all optional features",
+                    }.get(name, f"{name} features")
+
+                    extras.append({
+                        "name": name,
+                        "description": description,
+                        "dependencies": deps,
+                    })
+        except Exception:
+            pass
+        return extras
 
     def _build_manual(self, project_name: str, sections: List[str], context: Dict) -> str:
         """Fallback manual README builder (orchestrator)."""

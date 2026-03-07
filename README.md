@@ -1,6 +1,6 @@
 # code2docs
 
-![version](https://img.shields.io/badge/version-0.2.3-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)
+![version](https://img.shields.io/badge/version-0.2.4-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)
 
 > Auto-generate and sync project documentation from source code analysis.
 
@@ -140,7 +140,7 @@ code2docs can update only specific sections of an existing README using markers:
 ```markdown
 <!-- code2docs:start --># code2docs
 
-![version](https://img.shields.io/badge/version-0.2.3-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-153-green)
+![version](https://img.shields.io/badge/version-0.2.4-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-153-green)
 > **153** functions | **30** classes | **28** files | CC̄ = 0.0
 
 ## Installation
