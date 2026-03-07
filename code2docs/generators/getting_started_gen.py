@@ -6,6 +6,7 @@ from code2llm.api import AnalysisResult
 
 from ..config import Code2DocsConfig
 from ..analyzers.dependency_scanner import DependencyScanner
+from ..llm_helper import LLMHelper
 
 
 class GettingStartedGenerator:
@@ -14,12 +15,20 @@ class GettingStartedGenerator:
     def __init__(self, config: Code2DocsConfig, result: AnalysisResult):
         self.config = config
         self.result = result
+        self.llm = LLMHelper(config.llm)
 
     def generate(self) -> str:
         """Generate getting-started.md content."""
         project = self.config.project_name or "Project"
         lines = [
             f"# Getting Started with {project}\n",
+        ]
+        # LLM-generated intro if available
+        intro = self._generate_intro(project)
+        if intro:
+            lines.append(intro)
+            lines.append("")
+        lines += [
             self._render_prerequisites(),
             "",
             self._render_installation(),
@@ -114,6 +123,27 @@ class GettingStartedGenerator:
 
         lines.append("```")
         return "\n".join(lines)
+
+    def _generate_intro(self, project: str) -> str:
+        """Generate LLM-enhanced intro paragraph. Returns '' if unavailable."""
+        if not self.llm.available:
+            return ""
+        # Gather CLI commands
+        cli_funcs = [
+            f for f in self.result.functions.values()
+            if not f.is_private and not f.is_method
+            and f.module and "cli" in f.module
+        ]
+        cli_str = ", ".join(f.name for f in cli_funcs[:8]) or "N/A"
+        # Gather public API
+        public_funcs = [
+            f for f in self.result.functions.values()
+            if not f.is_private and not f.is_method
+            and not f.name.startswith("_")
+        ]
+        api_str = ", ".join(f"{f.name}()" for f in public_funcs[:8]) or "N/A"
+        result = self.llm.generate_getting_started_summary(project, cli_str, api_str)
+        return result or ""
 
     def _render_next_steps(self) -> str:
         """Render next steps with links to other docs."""
