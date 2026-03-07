@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "code2docs"
+version = "2.1.93"
+description = "Auto-generate and sync project documentation from source code analysis"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+authors = [
+    {name = "Tom Sapletta", email = "tom@sapletta.com"},
+]
+keywords = [
+    "documentation",
+    "auto-docs",
+    "readme-generator",
+    "api-reference",
+    "code-analysis",
+    "static-analysis",
+    "markdown",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Code Generators",
+]
+dependencies = [
+    "code2llm>=0.5.0",
+    "jinja2>=3.1",
+    "click>=8.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+watch = ["watchdog>=3.0"]
+mkdocs = ["mkdocs>=1.5", "mkdocs-material>=9.0"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1",
+    "mypy>=1.0",
+]
+
+[project.scripts]
+code2docs = "code2docs.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/wronai/code2docs"
+Repository = "https://github.com/wronai/code2docs"
+Issues = "https://github.com/wronai/code2docs/issues"
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[tool.setuptools.packages.find]
+include = ["code2docs*"]
+
+[tool.setuptools.package-data]
+code2docs = ["templates/*.j2"]
