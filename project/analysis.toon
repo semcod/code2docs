@@ -91,9 +91,9 @@ FUNCTIONS (CC≥10, 25 of 252):
    11.0  ArchitectureGenerator._generate_class_diagram   12n   2exit  loops+cond+ret
    10.0  ConfigDocsGenerator._render_section        14n   2exit  loops+cond+ret
    10.0  ApiReferenceGenerator._has_content          6n   3exit  cond+ret
-   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
    10.0  ApiChangelogGenerator._diff_functions       9n   1exit  loops+cond
    10.0  ApiChangelogGenerator._diff_classes        15n   1exit  loops+cond
+   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
    10.0  _run_check                                 11n   1exit  loops+cond
 
   summary:
@@ -159,16 +159,16 @@ CLASSES:
   DefaultGroup                   █                          1m  CC̄=4.0   max=4   
   GenerateContext                                           0m  CC̄=0.0   max=0.0 
   ChangelogEntry                                            0m  CC̄=0.0   max=0.0 
+  ApiChange                                                 0m  CC̄=0.0   max=0.0 
   ReadmeConfig                                              0m  CC̄=0.0   max=0.0 
   DocsConfig                                                0m  CC̄=0.0   max=0.0 
   ExamplesConfig                                            0m  CC̄=0.0   max=0.0 
   SyncConfig                                                0m  CC̄=0.0   max=0.0 
   Code2LlmConfig                                            0m  CC̄=0.0   max=0.0 
-  ApiChange                                                 0m  CC̄=0.0   max=0.0 
-  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
-  Endpoint                                                  0m  CC̄=0.0   max=0.0 
   DependencyInfo                                            0m  CC̄=0.0   max=0.0 
   ProjectDependencies                                       0m  CC̄=0.0   max=0.0 
+  Endpoint                                                  0m  CC̄=0.0   max=0.0 
+  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
 
 D:
   code2docs/generators/readme_gen.py:
@@ -280,15 +280,6 @@ Thi...
     e: ContributingGenerator
     ContributingGenerator  # Generate CONTRIBUTING.md by detecting dev tools from pyproje...
       __init__(2)  CC=1.0
-  code2docs/analyzers/docstring_extractor.py:
-    e: DocstringInfo,DocstringExtractor
-    DocstringInfo  # Parsed docstring with sections....
-    DocstringExtractor  # Extract and parse docstrings from AnalysisResult....
-      extract_all(1)  CC=5.0
-        → parse(1)  CC=2.0
-        → _extract_summary(0)  CC=2.0
-        → _parse_sections(2)  CC=8.0
-        → _classify_section(0)  CC=5.0
   code2docs/analyzers/dependency_scanner.py:
     e: DependencyInfo,ProjectDependencies,DependencyScanner
     DependencyInfo  # Information about a project dependency....
@@ -301,6 +292,15 @@ Thi...
         → _parse_dep_string(0)  CC=2.0
         → _parse_setup_py(1)  CC=4.0
         → _parse_requirements_txt(1)  CC=5.0
+  code2docs/analyzers/docstring_extractor.py:
+    e: DocstringInfo,DocstringExtractor
+    DocstringInfo  # Parsed docstring with sections....
+    DocstringExtractor  # Extract and parse docstrings from AnalysisResult....
+      extract_all(1)  CC=5.0
+        → parse(1)  CC=2.0
+        → _extract_summary(0)  CC=2.0
+        → _parse_sections(2)  CC=8.0
+        → _classify_section(0)  CC=5.0
   code2docs/llm_helper.py:
     e: LLMHelper,_get_litellm
     LLMHelper  # Thin wrapper around litellm for documentation generation.

@@ -420,6 +420,33 @@ Filters out:
 > Format a function signature string.
 - **Output to**: None.join, len
 
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
+> Parse pyproject.toml for dependencies.
+- **Output to**: ProjectDependencies, data.get, project.get, project.get, project.get
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject_regex
+> Fallback regex-based pyproject.toml parser.
+- **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.findall
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_setup_py
+> Parse setup.py for dependencies (regex-based, no exec).
+- **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.findall
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_requirements_txt
+> Parse requirements.txt.
+- **Output to**: ProjectDependencies, None.splitlines, line.strip, deps.dependencies.append, path.read_text
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_dep_string
+> Parse a dependency string like 'package>=1.0'.
+- **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
+
+### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
+> Try to parse a route decorator string.
+- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
+
+### code2docs.cli.DefaultGroup.parse_args
+- **Output to**: None.parse_args, super
+
 ### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
 > Parse a docstring into structured sections (orchestrator).
 - **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
@@ -442,33 +469,6 @@ Filters out:
 ### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line
 > Parse an examples line.
 - **Output to**: info.examples.append
-
-### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
-> Try to parse a route decorator string.
-- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
-
-### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
-> Parse pyproject.toml for dependencies.
-- **Output to**: ProjectDependencies, data.get, project.get, project.get, project.get
-
-### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject_regex
-> Fallback regex-based pyproject.toml parser.
-- **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.findall
-
-### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_setup_py
-> Parse setup.py for dependencies (regex-based, no exec).
-- **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.findall
-
-### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_requirements_txt
-> Parse requirements.txt.
-- **Output to**: ProjectDependencies, None.splitlines, line.strip, deps.dependencies.append, path.read_text
-
-### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_dep_string
-> Parse a dependency string like 'package>=1.0'.
-- **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
-
-### code2docs.cli.DefaultGroup.parse_args
-- **Output to**: None.parse_args, super
 
 ## Behavioral Patterns
 
