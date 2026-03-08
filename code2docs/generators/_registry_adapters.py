@@ -212,6 +212,28 @@ class ContributingAdapter(BaseGenerator):
         return "✅ CONTRIBUTING.md"
 
 
+class Code2LlmAdapter(BaseGenerator):
+    """Adapter for code2llm analysis generation."""
+    name = "code2llm"
+
+    def should_run(self, *, readme_only: bool = False) -> bool:
+        return not readme_only
+
+    def run(self, ctx: GenerateContext) -> Optional[str]:
+        from .code2llm_gen import Code2LlmGenerator
+        gen = Code2LlmGenerator(self.config, self.result)
+        results = gen.generate_all()
+        
+        if ctx.dry_run:
+            return "[dry-run] project/ (code2llm analysis)"
+        
+        # Report what was generated
+        files = [k for k in results.keys() if k != "status" and not k.startswith("[")]
+        if files:
+            return f"✅ project/ ({len(files)} files: {', '.join(files[:3])}{'...' if len(files) > 3 else ''})"
+        return "⚠️ project/ (no files generated)"
+
+
 ALL_ADAPTERS = [
     ReadmeGeneratorAdapter,
     ApiReferenceAdapter,
@@ -225,4 +247,5 @@ ALL_ADAPTERS = [
     ConfigDocsAdapter,
     ContributingAdapter,
     MkDocsAdapter,
+    Code2LlmAdapter,
 ]

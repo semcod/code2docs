@@ -54,6 +54,17 @@ class SyncConfig:
 
 
 @dataclass
+class Code2LlmConfig:
+    """Configuration for code2llm analysis generation."""
+    enabled: bool = True  # Generate code2llm analysis files
+    formats: List[str] = field(default_factory=lambda: ["all"])  # toon, map, flow, context, evolution, all
+    strategy: str = "standard"  # quick, standard, deep
+    output_dir: str = "project"  # Relative to project root
+    chunk: bool = False  # Enable chunking for large repos
+    no_png: bool = True  # Skip PNG generation (faster)
+
+
+@dataclass
 class LLMConfig:
     """Configuration for optional LLM-assisted documentation generation."""
     enabled: bool = False
@@ -92,6 +103,7 @@ class Code2DocsConfig:
     examples: ExamplesConfig = field(default_factory=ExamplesConfig)
     sync: SyncConfig = field(default_factory=SyncConfig)
     llm: LLMConfig = field(default_factory=LLMConfig.from_env)
+    code2llm: Code2LlmConfig = field(default_factory=Code2LlmConfig)
 
     # code2llm analysis options
     verbose: bool = False
@@ -192,6 +204,18 @@ class Code2DocsConfig:
                 temperature=llm_data.get("temperature", env_llm.temperature),
             )
 
+        # Code2Llm config
+        code2llm_data = data.get("code2llm", {})
+        if code2llm_data:
+            config.code2llm = Code2LlmConfig(
+                enabled=code2llm_data.get("enabled", True),
+                formats=code2llm_data.get("formats", ["all"]),
+                strategy=code2llm_data.get("strategy", "standard"),
+                output_dir=code2llm_data.get("output_dir", "project"),
+                chunk=code2llm_data.get("chunk", False),
+                no_png=code2llm_data.get("no_png", True),
+            )
+
         return config
 
     def to_yaml(self, path: str) -> None:
@@ -234,6 +258,14 @@ class Code2DocsConfig:
                 "max_tokens": self.llm.max_tokens,
                 "temperature": self.llm.temperature,
                 # Note: api_key is intentionally excluded from YAML serialization
+            },
+            "code2llm": {
+                "enabled": self.code2llm.enabled,
+                "formats": self.code2llm.formats,
+                "strategy": self.code2llm.strategy,
+                "output_dir": self.code2llm.output_dir,
+                "chunk": self.code2llm.chunk,
+                "no_png": self.code2llm.no_png,
             },
         }
         with open(path, "w", encoding="utf-8") as f:
