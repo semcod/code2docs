@@ -1,14 +1,14 @@
 flowchart LR
     subgraph cli
-        cli__watch["watch"]
-        cli__check["check"]
         cli___run_sync["_run_sync"]
+        cli___run_watch["_run_watch"]
+        cli___load_config["_load_config"]
+        cli__check["check"]
+        cli___run_diff["_run_diff"]
+        cli__watch["watch"]
+        cli__diff["diff"]
         cli___run_check["_run_check"]
         cli__sync["sync"]
-        cli___run_watch["_run_watch"]
-        cli__diff["diff"]
-        cli___load_config["_load_config"]
-        cli___run_diff["_run_diff"]
     end
     subgraph config_Code2DocsConfig
         config__Code2DocsConfig__from_yaml["from_yaml"]
@@ -19,8 +19,8 @@ flowchart LR
     end
     subgraph formatters_toc
         formatters__toc__generate_toc["generate_toc"]
-        formatters__toc___slugify["_slugify"]
         formatters__toc__extract_headings["extract_headings"]
+        formatters__toc___slugify["_slugify"]
     end
     subgraph generators_code2llm_gen
         generators__code2llm_gen__parse_gitignore["parse_gitignore"]

@@ -175,17 +175,6 @@ classDiagram
         -_generate_class_diagram(self) None
         ... +2 more
     }
-    class DependencyScanner {
-        +scan(self, project_path) None
-        -_parse_pyproject(self, path) None
-        -_parse_pyproject_regex(self, path) None
-        -_parse_setup_py(self, path) None
-        -_parse_requirements_txt(self, path) None
-        -_parse_package_json(self, path) None
-        -_parse_cargo_toml(self, path) None
-        -_parse_go_mod(self, path) None
-        ... +2 more
-    }
     class DocstringExtractor {
         +extract_all(self, result) None
         +parse(self, docstring) None
@@ -195,6 +184,17 @@ classDiagram
         -_parse_param_line(info, line) None
         -_parse_returns_line(info, line) None
         -_parse_raises_line(info, line) None
+        ... +2 more
+    }
+    class DependencyScanner {
+        +scan(self, project_path) None
+        -_parse_pyproject(self, path) None
+        -_parse_pyproject_regex(self, path) None
+        -_parse_setup_py(self, path) None
+        -_parse_requirements_txt(self, path) None
+        -_parse_package_json(self, path) None
+        -_parse_cargo_toml(self, path) None
+        -_parse_go_mod(self, path) None
         ... +2 more
     }
     class DepGraphGenerator {
@@ -309,4 +309,4 @@ classDiagram
 | CFG Nodes | 1606 |
 | Patterns | 2 |
 | Avg Complexity | 4.4 |
-| Analysis Time | 1.42s |
+| Analysis Time | 1.03s |

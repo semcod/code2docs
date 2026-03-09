@@ -23,6 +23,13 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _slugify(text:str) → str                CC=1    pure ■
               PURITY: 1/4 pure  BOTTLENECK: extract_headings(CC=6)
 
+  Code2docs [IO]: ? → Optional[str]
+              → generate() → str                        CC=3    pure ▶
+              → _build_context(project_name:str) → Dict CC=12   pure
+              → generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str CC=4    mutation
+              → _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str] CC=11   pure ■
+              PURITY: 3/4 pure  BOTTLENECK: _build_context(CC=12)
+
   Code2docs [Unknown]: ? → Optional[ClassInfo]
               → generate_all() → Dict[str, str]         CC=1    pure ▶
               → _generate_advanced() → str              CC=22   mutation  !!
@@ -36,13 +43,6 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=8    mutation
               → _classify_section(line:str) → Optional[str] CC=5    pure ■
               PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=8)
-
-  Code2docs [IO]: ? → Optional[str]
-              → generate() → str                        CC=3    pure ▶
-              → _build_context(project_name:str) → Dict CC=12   pure
-              → generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str CC=4    mutation
-              → _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str] CC=11   pure ■
-              PURITY: 3/4 pure  BOTTLENECK: _build_context(CC=12)
 
   Code2docs [Analysis]: str → DependencyInfo
               → scan(project_path:str) → ProjectDependencies CC=8    pure ▶
@@ -167,6 +167,24 @@ CONTRACTS:
       OUT: str
 
   Pipeline: Code2docs
+    generate() → str
+      IN:  ()
+      OUT: str
+
+    _build_context(project_name:str) → Dict
+      IN:  project_name:str
+      OUT: Dict
+
+    generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str
+      IN:  project_name:str, badge_types:List[str], stats:Dict, deps
+      OUT: str
+      SIDE-EFFECT: pure
+
+    _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str]
+      IN:  badge_type:str, project_name:str, stats:Dict, deps
+      OUT: Optional[str]
+
+  Pipeline: Code2docs
     generate_all() → Dict[str, str]
       IN:  ()
       OUT: Dict[str, str]
@@ -202,24 +220,6 @@ CONTRACTS:
 
     _classify_section(line:str) → Optional[str]
       IN:  line:str
-      OUT: Optional[str]
-
-  Pipeline: Code2docs
-    generate() → str
-      IN:  ()
-      OUT: str
-
-    _build_context(project_name:str) → Dict
-      IN:  project_name:str
-      OUT: Dict
-
-    generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str
-      IN:  project_name:str, badge_types:List[str], stats:Dict, deps
-      OUT: str
-      SIDE-EFFECT: pure
-
-    _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str]
-      IN:  badge_type:str, project_name:str, stats:Dict, deps
       OUT: Optional[str]
 
   Pipeline: Code2docs
@@ -332,16 +332,16 @@ DATA_TYPES (by cross-function usage) [290 annotated, 0 inferred / 295 functions]
   int                  consumed:10  produced:1    !! HUB-TYPE → split interface
   str, str             consumed:4   produced:6  
   FunctionInfo         consumed:4   produced:5  
-  MarkdownFormatter    consumed:0   produced:8    output-heavy
   ProjectDependencies  consumed:0   produced:8    output-heavy
+  MarkdownFormatter    consumed:0   produced:8    output-heavy
   ClassInfo            consumed:3   produced:3  
   DocstringInfo        consumed:5   produced:1    input-heavy (read-only flow)
   str, List[str]       consumed:1   produced:4  
   str, bool            consumed:4   produced:1  
-  ApiChange            consumed:3   produced:1    narrow scope
   str, int             consumed:3   produced:1    narrow scope
-  ChangeInfo           consumed:1   produced:2    narrow scope
+  ApiChange            consumed:3   produced:1    narrow scope
   Endpoint             consumed:0   produced:3    narrow scope
+  ChangeInfo           consumed:1   produced:2    narrow scope
 
   HUB TYPES (consumed ≥10):
     str → 144 consumers → split into:
@@ -370,8 +370,8 @@ SIDE_EFFECTS:
     Code2docs       █░░░ 40% pure
     Code2docs       █░░░ 25% pure
     Code2docs       █░░░ 25% pure
-    Code2docs       ██░░ 50% pure
     Code2docs       ███░ 75% pure
+    Code2docs       ██░░ 50% pure
     Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
     Code2docs       ██░░ 50% pure

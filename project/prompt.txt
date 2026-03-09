@@ -1,7 +1,7 @@
 You are an AI assistant helping me understand and improve a codebase.
 Use the attached/generated files as the authoritative context.
 
-we are in project path: code2docs
+we are in project path: .
 
 Files for analysis:
 - project/analysis.toon  (Health diagnostics - complexity metrics, god modules, coupling issues, refactoring priorities) [24KB]

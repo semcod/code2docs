@@ -2,6 +2,7 @@
 # CC̄=4.4 | critical:27/295 | dups:0 | cycles:1
 
 HEALTH[11]:
+  🟡 CC    _extract_project_metadata CC=29 (limit:15)
   🟡 CC    _render_first_usage CC=15 (limit:15)
   🟡 CC    _generate_intro CC=16 (limit:15)
   🟡 CC    parse_gitignore CC=15 (limit:15)
@@ -12,7 +13,6 @@ HEALTH[11]:
   🟡 CC    _render_module_section CC=25 (limit:15)
   🟡 CC    _generate_advanced CC=22 (limit:15)
   🟡 CC    _render_code_style CC=16 (limit:15)
-  🟡 CC    _extract_project_metadata CC=29 (limit:15)
 
 REFACTOR[2]:
   1. split 11 high-CC methods  (CC>15)
@@ -88,8 +88,8 @@ FUNCTIONS (CC≥10, 27 of 255):
    14.0  ApiChangelogGenerator._render              17n   4exit  loops+cond+ret
    13.0  ExamplesGenerator._generate_quickstart     17n   2exit  loops+cond+ret
    13.0  ArchitectureGenerator.generate             15n   2exit  loops+cond+ret
-   12.0  CoverageGenerator._collect_module_stats     4n   2exit  loops+ret
    12.0  ReadmeGenerator._build_context              3n   2exit  ret
+   12.0  CoverageGenerator._collect_module_stats     4n   2exit  loops+ret
    11.0  _make_badge                                21n   6exit  cond+ret
    11.0  ApiReferenceGenerator.generate             10n   2exit  loops+cond+ret
    11.0  ExamplesGenerator._example_from_type       18n   7exit  cond+ret
@@ -97,9 +97,9 @@ FUNCTIONS (CC≥10, 27 of 255):
    10.0  GettingStartedGenerator._render_prerequisites   15n   2exit  cond+ret
    10.0  ConfigDocsGenerator._render_section        14n   2exit  loops+cond+ret
    10.0  ApiReferenceGenerator._has_content          6n   3exit  cond+ret
-   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
    10.0  ApiChangelogGenerator._diff_functions       9n   1exit  loops+cond
    10.0  ApiChangelogGenerator._diff_classes        15n   1exit  loops+cond
+   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
    10.0  _run_check                                 11n   1exit  loops+cond
 
   summary:
@@ -165,12 +165,12 @@ CLASSES:
   DefaultGroup                   █                          1m  CC̄=4.0   max=4   
   GenerateContext                                           0m  CC̄=0.0   max=0.0 
   ChangelogEntry                                            0m  CC̄=0.0   max=0.0 
+  ApiChange                                                 0m  CC̄=0.0   max=0.0 
   ReadmeConfig                                              0m  CC̄=0.0   max=0.0 
   DocsConfig                                                0m  CC̄=0.0   max=0.0 
   ExamplesConfig                                            0m  CC̄=0.0   max=0.0 
   SyncConfig                                                0m  CC̄=0.0   max=0.0 
   Code2LlmConfig                                            0m  CC̄=0.0   max=0.0 
-  ApiChange                                                 0m  CC̄=0.0   max=0.0 
   DocstringInfo                                             0m  CC̄=0.0   max=0.0 
   Endpoint                                                  0m  CC̄=0.0   max=0.0 
   DependencyInfo                                            0m  CC̄=0.0   max=0.0 
@@ -347,17 +347,17 @@ I...
       should_run(0)  CC=1.0
     OrgReadmeAdapter  # Adapter for organization README generation....
       should_run(0)  CC=2.0
+  code2docs/formatters/toc.py:
+    e: generate_toc,extract_headings,_slugify
+    generate_toc(markdown_content,max_depth)
+    extract_headings(content,max_depth)
+    _slugify(text)
   code2docs/sync/differ.py:
     e: ChangeInfo,Differ
     ChangeInfo  # Describes a detected change....
       __str__(0)  CC=1.0
     Differ  # Detect changes between current source and previous state....
       __init__(1)  CC=2.0
-  code2docs/formatters/toc.py:
-    e: generate_toc,extract_headings,_slugify
-    generate_toc(markdown_content,max_depth)
-    extract_headings(content,max_depth)
-    _slugify(text)
   code2docs/generators/changelog_gen.py:
     e: ChangelogEntry,ChangelogGenerator
     ChangelogEntry  # A single changelog entry....

@@ -16,10 +16,6 @@ flowchart TD
         code2docs__detect["detect"]
         code2docs___parse_decorator["_parse_decorator"]
         code2docs___scan_django_urls["_scan_django_urls"]
-        code2docs____init__["__init__"]
-        code2docs___build_llm_config["_build_llm_config"]
-        code2docs__analyze["analyze"]
-        code2docs__analyze_and_document["analyze_and_document"]
         code2docs__scan("scan CC=8")
         code2docs___parse_pyproject("_parse_pyproject CC=8")
         code2docs___parse_pyproject_regex["_parse_pyproject_regex"]
@@ -30,6 +26,10 @@ flowchart TD
         code2docs___parse_go_mod("_parse_go_mod CC=8")
         code2docs___parse_dep_string["_parse_dep_string"]
         code2docs___detect_version["_detect_version"]
+        code2docs____init__["__init__"]
+        code2docs___build_llm_config["_build_llm_config"]
+        code2docs__analyze["analyze"]
+        code2docs__analyze_and_document["analyze_and_document"]
     end
     subgraph code2docs_base
         code2docs__base__BaseGenerator____init__["__init__"]
@@ -82,6 +82,24 @@ flowchart TD
     subgraph code2docs_generators
         code2docs____init__["__init__"]
         code2docs__generate["generate"]
+        code2docs___build_context("_build_context CC=12")
+        code2docs___calc_avg_complexity["_calc_avg_complexity"]
+        code2docs___build_module_tree["_build_module_tree"]
+        code2docs___generate_description["_generate_description"]
+        code2docs___extract_project_description("_extract_project_description CC=8")
+        code2docs___extract_project_metadata{{_extract_project_metadata CC=29}}
+        code2docs___extract_extras["_extract_extras"]
+        code2docs___build_manual["_build_manual"]
+        code2docs___build_overview_section["_build_overview_section"]
+        code2docs___build_install_section("_build_install_section CC=8")
+        code2docs___build_quickstart_section["_build_quickstart_section"]
+        code2docs___build_api_section["_build_api_section"]
+        code2docs___build_structure_section["_build_structure_section"]
+        code2docs___build_endpoints_section["_build_endpoints_section"]
+        code2docs__write["write"]
+        code2docs__generators__readme_gen__generate_readme["generate_readme"]
+        code2docs____init__["__init__"]
+        code2docs__generate["generate"]
         code2docs___render_summary["_render_summary"]
         code2docs___render_per_module["_render_per_module"]
         code2docs___collect_module_stats("_collect_module_stats CC=12")
@@ -114,32 +132,14 @@ flowchart TD
         code2docs__generate["generate"]
         code2docs___render_section("_render_section CC=10")
         code2docs___render_example["_render_example"]
+        code2docs__generators__generate_docs["generate_docs"]
         code2docs____init__["__init__"]
         code2docs__generate["generate"]
         code2docs___get_git_log["_get_git_log"]
         code2docs___classify_message["_classify_message"]
         code2docs___group_by_type["_group_by_type"]
         code2docs___render["_render"]
-        code2docs__generators__generate_docs["generate_docs"]
         code2docs__parse_gitignore{{parse_gitignore CC=15}}
-        code2docs____init__["__init__"]
-        code2docs__generate_all["generate_all"]
-        code2docs___run_code2llm{{_run_code2llm CC=17}}
-        code2docs__get_analysis_summary["get_analysis_summary"]
-        code2docs__generate_code2llm_analysis["generate_code2llm_analysis"]
-        code2docs____init__["__init__"]
-        code2docs__generate{{generate CC=18}}
-        code2docs___group_modules["_group_modules"]
-        code2docs___has_content["_has_content"]
-        code2docs___render_module_detail{{_render_module_detail CC=25}}
-        code2docs___get_public_methods["_get_public_methods"]
-        code2docs___count_file_lines["_count_file_lines"]
-        code2docs___calc_module_avg_cc["_calc_module_avg_cc"]
-        code2docs___get_module_docstring["_get_module_docstring"]
-        code2docs____init__["__init__"]
-        code2docs__generate["generate"]
-        code2docs___discover_projects["_discover_projects"]
-        code2docs___analyze_project["_analyze_project"]
     end
     subgraph code2docs_llm_helper
         code2docs__llm_helper___get_litellm["_get_litellm"]
@@ -244,8 +244,8 @@ flowchart TD
     code2docs__formatters__badges__generate_badges --> code2docs__formatters__badges___make_badge
     code2docs__formatters__toc__generate_toc --> code2docs__formatters__toc__extract_headings
     code2docs__formatters__toc__extract_headings --> code2docs__formatters__toc___slugify
-    code2docs___run_code2llm --> code2docs__parse_gitignore
     code2docs___build_context --> code2docs__formatters__badges__generate_badges
+    code2docs___run_code2llm --> code2docs__parse_gitignore
     code2docs__cli__generate --> code2docs__cli___load_config
     code2docs__cli__generate --> code2docs__cli___run_generate
     code2docs__cli__sync --> code2docs__cli___load_config
@@ -261,5 +261,5 @@ flowchart TD
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class code2docs___render_first_usage,code2docs___generate_intro,code2docs__parse_gitignore,code2docs___run_code2llm,code2docs__generate,code2docs___render_module_detail,code2docs___extract_description,code2docs___render_module_section,code2docs___generate_advanced,code2docs___render_code_style,code2docs___extract_project_metadata highCC
-    class examples__generate,examples__generate_api_docs_from_endpoints,code2docs__formatters__badges___make_badge,code2docs___collect_module_stats,code2docs___render_undocumented,code2docs___render_matrix,code2docs___render_prerequisites,code2docs___render_installation,code2docs___render_section,code2docs___truncate_description,code2docs__generate,code2docs___has_content,code2docs___generate_quickstart,code2docs___build_realistic_args,code2docs___example_from_type,code2docs__config__Code2DocsConfig__from_yaml,code2docs___diff_functions,code2docs___diff_classes,code2docs___render,code2docs__generate,code2docs___get_public_entry_points,code2docs___generate_module_graph,code2docs___generate_class_diagram,code2docs___detect_layers,code2docs___parse_sections,code2docs__coverage_report,code2docs___build_context,code2docs___extract_project_description,code2docs___build_install_section,code2docs__cli___run_check medCC
+    class code2docs___extract_project_metadata,code2docs___render_first_usage,code2docs___generate_intro,code2docs__parse_gitignore,code2docs___run_code2llm,code2docs__generate,code2docs___render_module_detail,code2docs___extract_description,code2docs___render_module_section,code2docs___generate_advanced,code2docs___render_code_style highCC
+    class examples__generate,examples__generate_api_docs_from_endpoints,code2docs__formatters__badges___make_badge,code2docs___build_context,code2docs___extract_project_description,code2docs___build_install_section,code2docs___collect_module_stats,code2docs___render_undocumented,code2docs___render_matrix,code2docs___render_prerequisites,code2docs___render_installation,code2docs___render_section,code2docs___truncate_description,code2docs__generate,code2docs___has_content,code2docs___generate_quickstart,code2docs___build_realistic_args,code2docs___example_from_type,code2docs___diff_functions,code2docs___diff_classes,code2docs___render,code2docs__generate,code2docs___get_public_entry_points,code2docs___generate_module_graph,code2docs___generate_class_diagram,code2docs___detect_layers,code2docs__config__Code2DocsConfig__from_yaml,code2docs___parse_sections,code2docs__coverage_report,code2docs__cli___run_check medCC

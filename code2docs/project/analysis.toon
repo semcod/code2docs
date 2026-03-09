@@ -105,8 +105,8 @@ FUNCTIONS (CC≥10, 27 of 255):
    10.0  ApiReferenceGenerator._has_content          6n   3exit  cond+ret
    10.0  ApiChangelogGenerator._diff_functions       9n   1exit  loops+cond
    10.0  ApiChangelogGenerator._diff_classes        15n   1exit  loops+cond
-   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
    10.0  _run_check                                 11n   1exit  loops+cond
+   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
 
   summary:
     critical(≥10): 27 | high(5-10): 58 | medium(2-5): 100 | low(<2): 70
@@ -130,8 +130,8 @@ CLASSES:
   MarkdownFormatter              ██████████████████        13m  CC̄=1.2   max=4   
   OrgReadmeGenerator             ██████████████            10m  CC̄=5.2   max=17    !!
   ArchitectureGenerator          ██████████████            10m  CC̄=6.9   max=13  
-  DocstringExtractor             ██████████████            10m  CC̄=3.5   max=8   
   DependencyScanner              ██████████████            10m  CC̄=6.0   max=9   
+  DocstringExtractor             ██████████████            10m  CC̄=3.5   max=8   
   DepGraphGenerator              ████████████               9m  CC̄=3.9   max=9   
   ModuleDocsGenerator            ████████████               9m  CC̄=8.0   max=25    !!
   ApiChangelogGenerator          ████████████               9m  CC̄=5.4   max=14  
@@ -149,8 +149,8 @@ CLASSES:
   Code2LlmGenerator              █████                      4m  CC̄=6.2   max=17    !!
   Code2DocsConfig                █████                      4m  CC̄=4.0   max=10  
   BaseGenerator                  ████                       3m  CC̄=1.0   max=1   
-  EndpointDetector               ████                       3m  CC̄=4.0   max=5   
   ProjectScanner                 ████                       3m  CC̄=1.3   max=2   
+  EndpointDetector               ████                       3m  CC̄=4.0   max=5   
   Updater                        ██                         2m  CC̄=3.0   max=4   
   ReadmeGeneratorAdapter         ██                         2m  CC̄=2.5   max=4   
   ApiReferenceAdapter            ██                         2m  CC̄=2.0   max=2   
@@ -167,20 +167,20 @@ CLASSES:
   Code2LlmAdapter                ██                         2m  CC̄=4.0   max=7   
   OrgReadmeAdapter               ██                         2m  CC̄=3.0   max=4   
   ChangeInfo                     █                          1m  CC̄=1.0   max=1   
-  LLMConfig                      █                          1m  CC̄=1.0   max=1   
   DefaultGroup                   █                          1m  CC̄=4.0   max=4   
-  ChangelogEntry                                            0m  CC̄=0.0   max=0.0 
+  LLMConfig                      █                          1m  CC̄=1.0   max=1   
   GenerateContext                                           0m  CC̄=0.0   max=0.0 
+  ChangelogEntry                                            0m  CC̄=0.0   max=0.0 
   ApiChange                                                 0m  CC̄=0.0   max=0.0 
   ReadmeConfig                                              0m  CC̄=0.0   max=0.0 
   DocsConfig                                                0m  CC̄=0.0   max=0.0 
   ExamplesConfig                                            0m  CC̄=0.0   max=0.0 
   SyncConfig                                                0m  CC̄=0.0   max=0.0 
   Code2LlmConfig                                            0m  CC̄=0.0   max=0.0 
-  Endpoint                                                  0m  CC̄=0.0   max=0.0 
-  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
   DependencyInfo                                            0m  CC̄=0.0   max=0.0 
   ProjectDependencies                                       0m  CC̄=0.0   max=0.0 
+  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
+  Endpoint                                                  0m  CC̄=0.0   max=0.0 
 
 D:
   generators/readme_gen.py:
@@ -242,18 +242,6 @@ Thi...
     e: ConfigDocsGenerator
     ConfigDocsGenerator  # Generate docs/configuration.md from Code2DocsConfig dataclas...
       __init__(2)  CC=1.0
-  config.py:
-    e: ReadmeConfig,DocsConfig,ExamplesConfig,SyncConfig,Code2LlmConfig,LLMConfig,Code2DocsConfig
-    ReadmeConfig  # Configuration for README generation....
-    DocsConfig  # Configuration for docs/ generation....
-    ExamplesConfig  # Configuration for examples/ generation....
-    SyncConfig  # Configuration for synchronization....
-    Code2LlmConfig  # Configuration for code2llm analysis generation....
-    LLMConfig  # Configuration for optional LLM-assisted documentation genera...
-      from_env(0)  CC=1.0
-    Code2DocsConfig  # Main configuration for code2docs....
-      __post_init__(0)  CC=2.0
-        → _detect_repo_url(-1)  CC=3.0
   cli.py:
     e: DefaultGroup,main,generate,sync,watch,init,check,diff,_load_config,_run_generate,_run_sync,_run_watch,_run_check,_run_diff
     DefaultGroup  # Click Group that routes unknown subcommands to 'generate'....
@@ -272,6 +260,18 @@ Thi...
     _run_watch(project_path,config)
     _run_check(project_path,config,target)
     _run_diff(project_path,config)
+  config.py:
+    e: ReadmeConfig,DocsConfig,ExamplesConfig,SyncConfig,Code2LlmConfig,LLMConfig,Code2DocsConfig
+    ReadmeConfig  # Configuration for README generation....
+    DocsConfig  # Configuration for docs/ generation....
+    ExamplesConfig  # Configuration for examples/ generation....
+    SyncConfig  # Configuration for synchronization....
+    Code2LlmConfig  # Configuration for code2llm analysis generation....
+    LLMConfig  # Configuration for optional LLM-assisted documentation genera...
+      from_env(0)  CC=1.0
+    Code2DocsConfig  # Main configuration for code2docs....
+      __post_init__(0)  CC=2.0
+        → _detect_repo_url(-1)  CC=3.0
   generators/depgraph_gen.py:
     e: DepGraphGenerator
     DepGraphGenerator  # Generate docs/dependency-graph.md with Mermaid diagrams....
