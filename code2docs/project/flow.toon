@@ -23,19 +23,19 @@ PIPELINES[12] (Analysis:2, Core:4, Export:1, IO:4, Unknown:1):
               → _find_class_by_name(name:str) → Optional[ClassInfo] CC=3    pure ■
               PURITY: 2/4 pure  BOTTLENECK: _generate_advanced(CC=22)
 
-  Analyzers [Analysis]: str → DependencyInfo
-              → scan(project_path:str) → ProjectDependencies CC=8    pure ▶
-              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
-              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
-              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
-              PURITY: 2/4 pure  BOTTLENECK: scan(CC=8)
-
   Analyzers [Analysis]: AnalysisResult → Optional[str]
               → extract_all(result:AnalysisResult) → Dict[str, DocstringInfo] CC=5    pure ▶
               → parse(docstring:str) → DocstringInfo    CC=2    pure
               → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=8    mutation
               → _classify_section(line:str) → Optional[str] CC=5    pure ■
               PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=8)
+
+  Analyzers [Analysis]: str → DependencyInfo
+              → scan(project_path:str) → ProjectDependencies CC=8    pure ▶
+              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
+              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
+              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
+              PURITY: 2/4 pure  BOTTLENECK: scan(CC=8)
 
   Generators [IO]: ? → str
               → generate() → str                        CC=3    pure ▶
@@ -164,6 +164,24 @@ CONTRACTS:
       OUT: Optional[ClassInfo]
 
   Pipeline: Analyzers
+    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
+      IN:  result:AnalysisResult
+      OUT: Dict[str, DocstringInfo]
+
+    parse(docstring:str) → DocstringInfo
+      IN:  docstring:str
+      OUT: DocstringInfo
+
+    _parse_sections(lines:List[str], info:DocstringInfo) → None
+      IN:  lines:List[str], info:DocstringInfo
+      OUT: None
+      SIDE-EFFECT: pure
+
+    _classify_section(line:str) → Optional[str]
+      IN:  line:str
+      OUT: Optional[str]
+
+  Pipeline: Analyzers
     scan(project_path:str) → ProjectDependencies
       IN:  project_path:str
       OUT: ProjectDependencies
@@ -181,24 +199,6 @@ CONTRACTS:
     _parse_dep_string(dep_str:str) → DependencyInfo
       IN:  dep_str:str
       OUT: DependencyInfo
-
-  Pipeline: Analyzers
-    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
-      IN:  result:AnalysisResult
-      OUT: Dict[str, DocstringInfo]
-
-    parse(docstring:str) → DocstringInfo
-      IN:  docstring:str
-      OUT: DocstringInfo
-
-    _parse_sections(lines:List[str], info:DocstringInfo) → None
-      IN:  lines:List[str], info:DocstringInfo
-      OUT: None
-      SIDE-EFFECT: pure
-
-    _classify_section(line:str) → Optional[str]
-      IN:  line:str
-      OUT: Optional[str]
 
   Pipeline: Generators
     generate() → str
@@ -320,8 +320,8 @@ DATA_TYPES (by cross-function usage) [250 annotated, 0 inferred / 255 functions]
   AnalysisResult       consumed:20  produced:2    !! HUB-TYPE → split interface
   Path                 consumed:21  produced:1    !! HUB-TYPE → split interface
   GenerateContext      consumed:17  produced:0    !! HUB-TYPE → split interface
-  int                  consumed:9   produced:1    input-heavy (read-only flow)
   str, str             consumed:4   produced:6  
+  int                  consumed:9   produced:1    input-heavy (read-only flow)
   FunctionInfo         consumed:4   produced:5  
   MarkdownFormatter    consumed:0   produced:8    output-heavy
   ProjectDependencies  consumed:0   produced:8    output-heavy
@@ -332,7 +332,7 @@ DATA_TYPES (by cross-function usage) [250 annotated, 0 inferred / 255 functions]
   str, List[str]       consumed:1   produced:3    narrow scope
   Endpoint             consumed:0   produced:3    narrow scope
   ModuleInfo           consumed:3   produced:0    narrow scope
-  str, float           consumed:1   produced:1    narrow scope
+  str, int             consumed:2   produced:0    narrow scope
 
   HUB TYPES (consumed ≥10):
     str → 119 consumers → split into:
@@ -359,8 +359,8 @@ SIDE_EFFECTS:
     Generators      █░░░ 40% pure
     Generators      ███░ 75% pure
     Generators      ██░░ 50% pure
-    Analyzers       ██░░ 50% pure
     Analyzers       ███░ 75% pure
+    Analyzers       ██░░ 50% pure
     Generators      ████ 100% pure
     Generators      ██░░ 50% pure
     Llm_helper      █░░░ 33% pure

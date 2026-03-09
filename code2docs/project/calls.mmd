@@ -1,21 +1,21 @@
 flowchart LR
     subgraph cli
-        cli___run_sync["_run_sync"]
-        cli___run_watch["_run_watch"]
         cli___load_config["_load_config"]
-        cli__check["check"]
-        cli___run_diff["_run_diff"]
-        cli__watch["watch"]
-        cli__diff["diff"]
         cli___run_check["_run_check"]
         cli__sync["sync"]
+        cli___run_watch["_run_watch"]
+        cli___run_diff["_run_diff"]
+        cli__diff["diff"]
+        cli__check["check"]
+        cli___run_sync["_run_sync"]
+        cli__watch["watch"]
     end
     subgraph config_Code2DocsConfig
         config__Code2DocsConfig__from_yaml["from_yaml"]
     end
     subgraph formatters_badges
-        formatters__badges__generate_badges["generate_badges"]
         formatters__badges___make_badge["_make_badge"]
+        formatters__badges__generate_badges["generate_badges"]
     end
     subgraph formatters_toc
         formatters__toc__generate_toc["generate_toc"]
