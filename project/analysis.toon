@@ -124,8 +124,8 @@ CLASSES:
   MarkdownFormatter              ██████████████████        13m  CC̄=1.2   max=4   
   OrgReadmeGenerator             ██████████████            10m  CC̄=5.2   max=17    !!
   ArchitectureGenerator          ██████████████            10m  CC̄=6.9   max=13  
-  DependencyScanner              ██████████████            10m  CC̄=6.0   max=9   
   DocstringExtractor             ██████████████            10m  CC̄=3.5   max=8   
+  DependencyScanner              ██████████████            10m  CC̄=6.0   max=9   
   DepGraphGenerator              ████████████               9m  CC̄=3.9   max=9   
   ModuleDocsGenerator            ████████████               9m  CC̄=8.0   max=25    !!
   ApiChangelogGenerator          ████████████               9m  CC̄=5.4   max=14  
@@ -171,10 +171,10 @@ CLASSES:
   SyncConfig                                                0m  CC̄=0.0   max=0.0 
   Code2LlmConfig                                            0m  CC̄=0.0   max=0.0 
   ApiChange                                                 0m  CC̄=0.0   max=0.0 
+  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
+  Endpoint                                                  0m  CC̄=0.0   max=0.0 
   DependencyInfo                                            0m  CC̄=0.0   max=0.0 
   ProjectDependencies                                       0m  CC̄=0.0   max=0.0 
-  Endpoint                                                  0m  CC̄=0.0   max=0.0 
-  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
 
 D:
   code2docs/generators/readme_gen.py:

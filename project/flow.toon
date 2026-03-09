@@ -30,6 +30,13 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _find_class_by_name(name:str) → Optional[ClassInfo] CC=3    pure ■
               PURITY: 2/4 pure  BOTTLENECK: _generate_advanced(CC=22)
 
+  Code2docs [Analysis]: AnalysisResult → Optional[str]
+              → extract_all(result:AnalysisResult) → Dict[str, DocstringInfo] CC=5    pure ▶
+              → parse(docstring:str) → DocstringInfo    CC=2    pure
+              → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=8    mutation
+              → _classify_section(line:str) → Optional[str] CC=5    pure ■
+              PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=8)
+
   Code2docs [IO]: ? → Optional[str]
               → generate() → str                        CC=3    pure ▶
               → _build_context(project_name:str) → Dict CC=12   pure
@@ -43,13 +50,6 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
               → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
               PURITY: 2/4 pure  BOTTLENECK: scan(CC=8)
-
-  Code2docs [Analysis]: AnalysisResult → Optional[str]
-              → extract_all(result:AnalysisResult) → Dict[str, DocstringInfo] CC=5    pure ▶
-              → parse(docstring:str) → DocstringInfo    CC=2    pure
-              → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=8    mutation
-              → _classify_section(line:str) → Optional[str] CC=5    pure ■
-              PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=8)
 
   Code2docs [IO]: ? → Optional[FunctionInfo]
               → generate_all() → Dict[str, str]         CC=1    pure ▶
@@ -187,6 +187,24 @@ CONTRACTS:
       OUT: Optional[ClassInfo]
 
   Pipeline: Code2docs
+    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
+      IN:  result:AnalysisResult
+      OUT: Dict[str, DocstringInfo]
+
+    parse(docstring:str) → DocstringInfo
+      IN:  docstring:str
+      OUT: DocstringInfo
+
+    _parse_sections(lines:List[str], info:DocstringInfo) → None
+      IN:  lines:List[str], info:DocstringInfo
+      OUT: None
+      SIDE-EFFECT: pure
+
+    _classify_section(line:str) → Optional[str]
+      IN:  line:str
+      OUT: Optional[str]
+
+  Pipeline: Code2docs
     generate() → str
       IN:  ()
       OUT: str
@@ -222,24 +240,6 @@ CONTRACTS:
     _parse_dep_string(dep_str:str) → DependencyInfo
       IN:  dep_str:str
       OUT: DependencyInfo
-
-  Pipeline: Code2docs
-    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
-      IN:  result:AnalysisResult
-      OUT: Dict[str, DocstringInfo]
-
-    parse(docstring:str) → DocstringInfo
-      IN:  docstring:str
-      OUT: DocstringInfo
-
-    _parse_sections(lines:List[str], info:DocstringInfo) → None
-      IN:  lines:List[str], info:DocstringInfo
-      OUT: None
-      SIDE-EFFECT: pure
-
-    _classify_section(line:str) → Optional[str]
-      IN:  line:str
-      OUT: Optional[str]
 
   Pipeline: Code2docs
     generate_all() → Dict[str, str]
@@ -338,10 +338,10 @@ DATA_TYPES (by cross-function usage) [290 annotated, 0 inferred / 295 functions]
   DocstringInfo        consumed:5   produced:1    input-heavy (read-only flow)
   str, List[str]       consumed:1   produced:4  
   str, bool            consumed:4   produced:1  
-  ApiChange            consumed:3   produced:1    narrow scope
   str, int             consumed:3   produced:1    narrow scope
+  ApiChange            consumed:3   produced:1    narrow scope
+  Endpoint             consumed:0   produced:3    narrow scope
   ModuleInfo           consumed:3   produced:0    narrow scope
-  ChangeInfo           consumed:1   produced:2    narrow scope
 
   HUB TYPES (consumed ≥10):
     str → 144 consumers → split into:
@@ -372,8 +372,8 @@ SIDE_EFFECTS:
     Code2docs       █░░░ 25% pure
     Code2docs       ██░░ 50% pure
     Code2docs       ███░ 75% pure
-    Code2docs       ██░░ 50% pure
     Code2docs       ███░ 75% pure
+    Code2docs       ██░░ 50% pure
     Code2docs       ██░░ 50% pure
     Code2docs       █░░░ 33% pure
     Code2docs       █░░░ 33% pure
