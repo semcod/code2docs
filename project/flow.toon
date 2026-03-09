@@ -30,13 +30,6 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _find_class_by_name(name:str) → Optional[ClassInfo] CC=3    pure ■
               PURITY: 2/4 pure  BOTTLENECK: _generate_advanced(CC=22)
 
-  Code2docs [Analysis]: str → DependencyInfo
-              → scan(project_path:str) → ProjectDependencies CC=4    pure ▶
-              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
-              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
-              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
-              PURITY: 2/4 pure  BOTTLENECK: _parse_pyproject(CC=8)
-
   Code2docs [IO]: ? → Optional[str]
               → generate() → str                        CC=3    pure ▶
               → _build_context(project_name:str) → Dict CC=12   pure
@@ -50,6 +43,13 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=8    mutation
               → _classify_section(line:str) → Optional[str] CC=5    pure ■
               PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=8)
+
+  Code2docs [Analysis]: str → DependencyInfo
+              → scan(project_path:str) → ProjectDependencies CC=4    pure ▶
+              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
+              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
+              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
+              PURITY: 2/4 pure  BOTTLENECK: _parse_pyproject(CC=8)
 
   Code2docs [IO]: ? → Optional[FunctionInfo]
               → generate_all() → Dict[str, str]         CC=1    pure ▶
@@ -187,25 +187,6 @@ CONTRACTS:
       OUT: Optional[ClassInfo]
 
   Pipeline: Code2docs
-    scan(project_path:str) → ProjectDependencies
-      IN:  project_path:str
-      OUT: ProjectDependencies
-
-    _parse_pyproject(path:Path) → ProjectDependencies
-      IN:  path:Path
-      OUT: ProjectDependencies
-      SIDE-EFFECT: IO(open, load)
-
-    _parse_pyproject_regex(path:Path) → ProjectDependencies
-      IN:  path:Path
-      OUT: ProjectDependencies
-      SIDE-EFFECT: IO(read_text)
-
-    _parse_dep_string(dep_str:str) → DependencyInfo
-      IN:  dep_str:str
-      OUT: DependencyInfo
-
-  Pipeline: Code2docs
     generate() → str
       IN:  ()
       OUT: str
@@ -240,6 +221,25 @@ CONTRACTS:
     _classify_section(line:str) → Optional[str]
       IN:  line:str
       OUT: Optional[str]
+
+  Pipeline: Code2docs
+    scan(project_path:str) → ProjectDependencies
+      IN:  project_path:str
+      OUT: ProjectDependencies
+
+    _parse_pyproject(path:Path) → ProjectDependencies
+      IN:  path:Path
+      OUT: ProjectDependencies
+      SIDE-EFFECT: IO(open, load)
+
+    _parse_pyproject_regex(path:Path) → ProjectDependencies
+      IN:  path:Path
+      OUT: ProjectDependencies
+      SIDE-EFFECT: IO(read_text)
+
+    _parse_dep_string(dep_str:str) → DependencyInfo
+      IN:  dep_str:str
+      OUT: DependencyInfo
 
   Pipeline: Code2docs
     generate_all() → Dict[str, str]
@@ -333,15 +333,15 @@ DATA_TYPES (by cross-function usage) [287 annotated, 0 inferred / 292 functions]
   str, str             consumed:4   produced:6  
   FunctionInfo         consumed:4   produced:5  
   MarkdownFormatter    consumed:0   produced:8    output-heavy
-  ClassInfo            consumed:3   produced:3  
   DocstringInfo        consumed:5   produced:1    input-heavy (read-only flow)
+  ClassInfo            consumed:3   produced:3  
+  str, bool            consumed:4   produced:1  
   str, List[str]       consumed:1   produced:4  
   ProjectDependencies  consumed:0   produced:5    output-heavy
-  str, bool            consumed:4   produced:1  
   ApiChange            consumed:3   produced:1    narrow scope
   str, int             consumed:3   produced:1    narrow scope
-  ModuleInfo           consumed:3   produced:0    narrow scope
   dict                 consumed:0   produced:3    narrow scope
+  Endpoint             consumed:0   produced:3    narrow scope
 
   HUB TYPES (consumed ≥10):
     str → 144 consumers → split into:
@@ -371,9 +371,9 @@ SIDE_EFFECTS:
     Code2docs       █░░░ 25% pure
     Code2docs       █░░░ 25% pure
     Code2docs       ██░░ 50% pure
+    Code2docs       ███░ 75% pure
+    Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
-    Code2docs       ███░ 75% pure
-    Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
     Code2docs       █░░░ 33% pure
     Code2docs       █░░░ 33% pure

@@ -117,8 +117,8 @@ CLASSES:
   ExamplesGenerator              █████████████████████     15m  CC̄=6.1   max=22    !!
   MarkdownFormatter              ██████████████████        13m  CC̄=1.2   max=4   
   OrgReadmeGenerator             ██████████████            10m  CC̄=5.2   max=17    !!
-  ArchitectureGenerator          ██████████████            10m  CC̄=6.9   max=13  
   DocstringExtractor             ██████████████            10m  CC̄=3.5   max=8   
+  ArchitectureGenerator          ██████████████            10m  CC̄=6.9   max=13  
   DepGraphGenerator              ████████████               9m  CC̄=3.9   max=9   
   ModuleDocsGenerator            ████████████               9m  CC̄=8.0   max=25    !!
   ApiChangelogGenerator          ████████████               9m  CC̄=5.4   max=14  
@@ -165,10 +165,10 @@ CLASSES:
   ExamplesConfig                                            0m  CC̄=0.0   max=0.0 
   SyncConfig                                                0m  CC̄=0.0   max=0.0 
   Code2LlmConfig                                            0m  CC̄=0.0   max=0.0 
+  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
   DependencyInfo                                            0m  CC̄=0.0   max=0.0 
   ProjectDependencies                                       0m  CC̄=0.0   max=0.0 
   Endpoint                                                  0m  CC̄=0.0   max=0.0 
-  DocstringInfo                                             0m  CC̄=0.0   max=0.0 
 
 D:
   code2docs/generators/readme_gen.py:
@@ -280,6 +280,15 @@ Thi...
     e: ContributingGenerator
     ContributingGenerator  # Generate CONTRIBUTING.md by detecting dev tools from pyproje...
       __init__(2)  CC=1.0
+  code2docs/analyzers/docstring_extractor.py:
+    e: DocstringInfo,DocstringExtractor
+    DocstringInfo  # Parsed docstring with sections....
+    DocstringExtractor  # Extract and parse docstrings from AnalysisResult....
+      extract_all(1)  CC=5.0
+        → parse(1)  CC=2.0
+        → _extract_summary(0)  CC=2.0
+        → _parse_sections(2)  CC=8.0
+        → _classify_section(0)  CC=5.0
   code2docs/analyzers/dependency_scanner.py:
     e: DependencyInfo,ProjectDependencies,DependencyScanner
     DependencyInfo  # Information about a project dependency....
@@ -292,15 +301,6 @@ Thi...
         → _parse_dep_string(0)  CC=2.0
         → _parse_setup_py(1)  CC=4.0
         → _parse_requirements_txt(1)  CC=5.0
-  code2docs/analyzers/docstring_extractor.py:
-    e: DocstringInfo,DocstringExtractor
-    DocstringInfo  # Parsed docstring with sections....
-    DocstringExtractor  # Extract and parse docstrings from AnalysisResult....
-      extract_all(1)  CC=5.0
-        → parse(1)  CC=2.0
-        → _extract_summary(0)  CC=2.0
-        → _parse_sections(2)  CC=8.0
-        → _classify_section(0)  CC=5.0
   code2docs/llm_helper.py:
     e: LLMHelper,_get_litellm
     LLMHelper  # Thin wrapper around litellm for documentation generation.
@@ -338,17 +338,17 @@ I...
       should_run(0)  CC=1.0
     OrgReadmeAdapter  # Adapter for organization README generation....
       should_run(0)  CC=2.0
+  code2docs/formatters/toc.py:
+    e: generate_toc,extract_headings,_slugify
+    generate_toc(markdown_content,max_depth)
+    extract_headings(content,max_depth)
+    _slugify(text)
   code2docs/sync/differ.py:
     e: ChangeInfo,Differ
     ChangeInfo  # Describes a detected change....
       __str__(0)  CC=1.0
     Differ  # Detect changes between current source and previous state....
       __init__(1)  CC=2.0
-  code2docs/formatters/toc.py:
-    e: generate_toc,extract_headings,_slugify
-    generate_toc(markdown_content,max_depth)
-    extract_headings(content,max_depth)
-    _slugify(text)
   code2docs/generators/changelog_gen.py:
     e: ChangelogEntry,ChangelogGenerator
     ChangelogEntry  # A single changelog entry....
