@@ -51,15 +51,15 @@
 - **Classes**: 1
 - **File**: `architecture_gen.py`
 
-### code2docs.analyzers.docstring_extractor
-- **Functions**: 10
-- **Classes**: 2
-- **File**: `docstring_extractor.py`
-
 ### code2docs.analyzers.dependency_scanner
 - **Functions**: 10
 - **Classes**: 3
 - **File**: `dependency_scanner.py`
+
+### code2docs.analyzers.docstring_extractor
+- **Functions**: 10
+- **Classes**: 2
+- **File**: `docstring_extractor.py`
 
 ### code2docs.generators.depgraph_gen
 - **Functions**: 9
@@ -315,15 +315,15 @@ _diff_classes [code2docs.generators.api_changelog_gen.ApiChangelogGenerator]
 - **Methods**: 10
 - **Key Methods**: code2docs.generators.architecture_gen.ArchitectureGenerator.__init__, code2docs.generators.architecture_gen.ArchitectureGenerator.generate, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_pipeline_overview, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_layer_diagram, code2docs.generators.architecture_gen.ArchitectureGenerator._get_public_entry_points, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_llm_summary, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_module_graph, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_class_diagram, code2docs.generators.architecture_gen.ArchitectureGenerator._detect_layers, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_metrics_table
 
-### code2docs.analyzers.docstring_extractor.DocstringExtractor
-> Extract and parse docstrings from AnalysisResult.
-- **Methods**: 10
-- **Key Methods**: code2docs.analyzers.docstring_extractor.DocstringExtractor.extract_all, code2docs.analyzers.docstring_extractor.DocstringExtractor.parse, code2docs.analyzers.docstring_extractor.DocstringExtractor._extract_summary, code2docs.analyzers.docstring_extractor.DocstringExtractor._classify_section, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line, code2docs.analyzers.docstring_extractor.DocstringExtractor.coverage_report
-
 ### code2docs.analyzers.dependency_scanner.DependencyScanner
 > Scan and parse project dependency files.
 - **Methods**: 10
 - **Key Methods**: code2docs.analyzers.dependency_scanner.DependencyScanner.scan, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject_regex, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_setup_py, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_requirements_txt, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_package_json, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_cargo_toml, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_go_mod, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_dep_string, code2docs.analyzers.dependency_scanner.DependencyScanner._detect_version
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor
+> Extract and parse docstrings from AnalysisResult.
+- **Methods**: 10
+- **Key Methods**: code2docs.analyzers.docstring_extractor.DocstringExtractor.extract_all, code2docs.analyzers.docstring_extractor.DocstringExtractor.parse, code2docs.analyzers.docstring_extractor.DocstringExtractor._extract_summary, code2docs.analyzers.docstring_extractor.DocstringExtractor._classify_section, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line, code2docs.analyzers.docstring_extractor.DocstringExtractor.coverage_report
 
 ### code2docs.generators.depgraph_gen.DepGraphGenerator
 > Generate docs/dependency-graph.md with Mermaid diagrams.
@@ -420,36 +420,6 @@ Filters out:
 > Format a function signature string.
 - **Output to**: None.join, len
 
-### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
-> Parse a docstring into structured sections (orchestrator).
-- **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections
-> Walk remaining lines, dispatching content to the right section.
-- **Output to**: None.strip, line.strip, self._classify_section, desc_lines.append, None.join
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line
-> Parse a single param line: 'name: description'.
-- **Output to**: line.split, pdesc.strip, pname.strip
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line
-> Parse a returns line.
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line
-> Parse a raises line.
-- **Output to**: info.raises.append
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line
-> Parse an examples line.
-- **Output to**: info.examples.append
-
-### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
-> Try to parse a route decorator string.
-- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
-
-### code2docs.cli.DefaultGroup.parse_args
-- **Output to**: None.parse_args, super
-
 ### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
 > Parse pyproject.toml for dependencies.
 - **Output to**: ProjectDependencies, data.get, project.get, project.get, project.get
@@ -482,6 +452,36 @@ Filters out:
 > Parse a dependency string like 'package>=1.0'.
 - **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
 
+### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
+> Try to parse a route decorator string.
+- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
+
+### code2docs.cli.DefaultGroup.parse_args
+- **Output to**: None.parse_args, super
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
+> Parse a docstring into structured sections (orchestrator).
+- **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections
+> Walk remaining lines, dispatching content to the right section.
+- **Output to**: None.strip, line.strip, self._classify_section, desc_lines.append, None.join
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line
+> Parse a single param line: 'name: description'.
+- **Output to**: line.split, pdesc.strip, pname.strip
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line
+> Parse a returns line.
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line
+> Parse a raises line.
+- **Output to**: info.raises.append
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line
+> Parse an examples line.
+- **Output to**: info.examples.append
+
 ## Behavioral Patterns
 
 ### recursion_analyze
@@ -513,8 +513,8 @@ Functions exposed as public API (no underscore prefix):
 - `examples.03_programmatic_api.inspect_project_structure` - 16 calls
 - `code2docs.sync.differ.Differ.detect_changes` - 16 calls
 - `code2docs.generators.generate_docs` - 15 calls
-- `code2docs.cli.generate` - 15 calls
 - `code2docs.analyzers.dependency_scanner.DependencyScanner.scan` - 15 calls
+- `code2docs.cli.generate` - 15 calls
 - `examples.05_custom_generators.APIChangelogGenerator.generate` - 14 calls
 - `examples.04_sync_and_watch.detect_changes_example` - 12 calls
 - `examples.03_programmatic_api.generate_full_documentation` - 12 calls
