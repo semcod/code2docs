@@ -1,10 +1,10 @@
-# code2docs | 64f 9010L | python:64
+# code2docs | 64f 9275L | python:64
 # Keys: M=modules, D=details, i=imports, c=classes, f=functions, m=methods
 M[64]:
   code2docs/__init__.py,26
   code2docs/__main__.py,4
   code2docs/analyzers/__init__.py,11
-  code2docs/analyzers/dependency_scanner.py,145
+  code2docs/analyzers/dependency_scanner.py,242
   code2docs/analyzers/docstring_extractor.py,114
   code2docs/analyzers/endpoint_detector.py,91
   code2docs/analyzers/project_scanner.py,30
@@ -26,15 +26,15 @@ M[64]:
   code2docs/generators/changelog_gen.py,98
   code2docs/generators/code2llm_gen.py,148
   code2docs/generators/config_docs_gen.py,109
-  code2docs/generators/contributing_gen.py,124
+  code2docs/generators/contributing_gen.py,211
   code2docs/generators/coverage_gen.py,91
   code2docs/generators/depgraph_gen.py,121
   code2docs/generators/examples_gen.py,374
-  code2docs/generators/getting_started_gen.py,147
+  code2docs/generators/getting_started_gen.py,171
   code2docs/generators/mkdocs_gen.py,75
   code2docs/generators/module_docs_gen.py,171
   code2docs/generators/org_readme_gen.py,171
-  code2docs/generators/readme_gen.py,381
+  code2docs/generators/readme_gen.py,395
   code2docs/llm_helper.py,138
   code2docs/registry.py,29
   code2docs/sync/__init__.py,4

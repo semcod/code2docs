@@ -1,10 +1,10 @@
-# code2docs | 54f 7100L | python:53,shell:1
+# code2docs | 54f 7365L | python:53,shell:1
 # Keys: M=modules, D=details, i=imports, c=classes, f=functions, m=methods
 M[54]:
   code2docs/__init__.py,32
   code2docs/__main__.py,6
   code2docs/analyzers/__init__.py,13
-  code2docs/analyzers/dependency_scanner.py,197
+  code2docs/analyzers/dependency_scanner.py,325
   code2docs/analyzers/docstring_extractor.py,140
   code2docs/analyzers/endpoint_detector.py,113
   code2docs/analyzers/project_scanner.py,42
@@ -26,15 +26,15 @@ M[54]:
   code2docs/generators/changelog_gen.py,121
   code2docs/generators/code2llm_gen.py,206
   code2docs/generators/config_docs_gen.py,125
-  code2docs/generators/contributing_gen.py,137
+  code2docs/generators/contributing_gen.py,231
   code2docs/generators/coverage_gen.py,104
   code2docs/generators/depgraph_gen.py,140
   code2docs/generators/examples_gen.py,443
-  code2docs/generators/getting_started_gen.py,167
+  code2docs/generators/getting_started_gen.py,196
   code2docs/generators/mkdocs_gen.py,110
   code2docs/generators/module_docs_gen.py,198
   code2docs/generators/org_readme_gen.py,227
-  code2docs/generators/readme_gen.py,463
+  code2docs/generators/readme_gen.py,477
   code2docs/llm_helper.py,161
   code2docs/registry.py,39
   code2docs/sync/__init__.py,6
@@ -82,6 +82,9 @@ Thi...
   code2docs/generators/getting_started_gen.py:
     e: GettingStartedGenerator
     GettingStartedGenerator: __init__(2),generate(0),_render_prerequisites(0),_render_installation(0),_render_first_usage(0),_generate_intro(1),_render_next_steps(0),_get_top_level_modules(0)  # Generate docs/getting-started.md from entry points and depen...
+  code2docs/generators/contributing_gen.py:
+    e: ContributingGenerator
+    ContributingGenerator: __init__(2),generate(0),_detect_dev_tools(0),_render_setup(1),_render_development(0),_render_testing(0),_render_code_style(0),_render_pull_request(-1)  # Generate CONTRIBUTING.md by detecting dev tools from pyproje...
   code2docs/generators/api_changelog_gen.py:
     e: ApiChange,ApiChangelogGenerator
     ApiChange:  # A single API change between two analysis snapshots...
@@ -134,20 +137,17 @@ Thi...
   code2docs/generators/depgraph_gen.py:
     e: DepGraphGenerator
     DepGraphGenerator: __init__(2),generate(0),_collect_edges(0),_extract_imports_from_file(0),_import_matches(1),_render_mermaid(1),_render_matrix(1),_calc_degrees(0),_render_degree_table(2)  # Generate docs/dependency-graph.md with Mermaid diagrams...
+  code2docs/analyzers/dependency_scanner.py:
+    e: DependencyInfo,ProjectDependencies,DependencyScanner
+    DependencyInfo:  # Information about a project dependency...
+    ProjectDependencies:  # All detected project dependencies...
+    DependencyScanner: scan(1),_parse_pyproject(1),_parse_pyproject_regex(1),_parse_setup_py(1),_parse_requirements_txt(1),_parse_package_json(1),_parse_cargo_toml(1),_parse_go_mod(1),_parse_dep_string(0),_detect_version(2)  # Scan and parse project dependency files...
   examples/05_custom_generators.py:
     e: MetricsReportGenerator,APIChangelogGenerator,CustomGenerator,generate_custom_report
     MetricsReportGenerator: __init__(2),generate(0),_calculate_stats(0),_format_stats_table(1),_list_largest_files(0),_analyze_functions(0)  # Generate a metrics report from code analysis...
     APIChangelogGenerator: __init__(2),generate(1),_list_new_apis(0),_compare_apis(1)  # Generate changelog based on API changes...
     CustomGenerator(BaseGenerator): generate(0),write(2)  # Example of extending the base generator class...
     generate_custom_report(project_path)
-  code2docs/generators/contributing_gen.py:
-    e: ContributingGenerator
-    ContributingGenerator: __init__(2),generate(0),_detect_dev_tools(0),_render_setup(1),_render_development(0),_render_testing(0),_render_code_style(0),_render_pull_request(-1)  # Generate CONTRIBUTING.md by detecting dev tools from pyproje...
-  code2docs/analyzers/dependency_scanner.py:
-    e: DependencyInfo,ProjectDependencies,DependencyScanner
-    DependencyInfo:  # Information about a project dependency...
-    ProjectDependencies:  # All detected project dependencies...
-    DependencyScanner: scan(1),_parse_pyproject(1),_parse_pyproject_regex(1),_parse_setup_py(1),_parse_requirements_txt(1),_parse_dep_string(0),_detect_version(2)  # Scan and parse project dependency files...
   code2docs/analyzers/docstring_extractor.py:
     e: DocstringInfo,DocstringExtractor
     DocstringInfo:  # Parsed docstring with sections...
@@ -270,5 +270,5 @@ Subclasses ...
   code2docs/examples/advanced_usage.py:
   code2docs/formatters/__init__.py:
   code2docs/analyzers/__init__.py:
-  project.sh:
   docs/examples/quickstart.py:
+  project.sh:

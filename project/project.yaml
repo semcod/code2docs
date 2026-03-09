@@ -3,16 +3,16 @@ project:
   name: code2docs
   repo: /home/tom/github/wronai/code2docs
   language: python
-  analyzed_at: '2026-03-09T16:17:50Z'
+  analyzed_at: '2026-03-09T17:35:13Z'
   tool: code2llm
   stats:
     files: 34
-    lines: 7167
-    functions: 252
+    lines: 7432
+    functions: 255
     classes: 56
 health:
-  cc_avg: 4.2
-  critical_count: 25
+  cc_avg: 4.4
+  critical_count: 27
   critical_limit: 10
   duplicates: 0
   cycles: 1
@@ -97,6 +97,11 @@ health:
     value: 16
     limit: 10
     severity: error
+  - type: high_fan_out
+    target: DependencyScanner.scan
+    value: 15
+    limit: 10
+    severity: error
   - type: cc_exceeded
     target: ModuleDocsGenerator.generate
     value: 18
@@ -112,14 +117,9 @@ health:
     value: 17
     limit: 15
     severity: warning
-  - type: cc_exceeded
-    target: GettingStartedGenerator._generate_intro
-    value: 16
-    limit: 15
-    severity: warning
 modules:
 - path: code2docs/generators/readme_gen.py
-  lines: 463
+  lines: 477
   classes: 1
   methods: 18
   cc_max: 29
@@ -127,7 +127,7 @@ modules:
   exports:
   - name: ReadmeGenerator
     type: class
-    cc_avg: 5.9
+    cc_avg: 6.2
     methods:
     - name: _build_context
       cc: 12
@@ -238,8 +238,22 @@ modules:
     - name: _get_repo_url
       cc: 7
       fan_out: 13
+- path: code2docs/generators/contributing_gen.py
+  lines: 231
+  classes: 1
+  methods: 8
+  cc_max: 16
+  inbound_deps: 0
+  exports:
+  - name: ContributingGenerator
+    type: class
+    cc_avg: 4.6
+    methods:
+    - name: _render_code_style
+      cc: 16
+      flag: split
 - path: code2docs/generators/getting_started_gen.py
-  lines: 167
+  lines: 196
   classes: 1
   methods: 8
   cc_max: 16
@@ -247,8 +261,10 @@ modules:
   exports:
   - name: GettingStartedGenerator
     type: class
-    cc_avg: 5.9
+    cc_avg: 7.1
     methods:
+    - name: _render_prerequisites
+      cc: 10
     - name: _render_first_usage
       cc: 15
       flag: split
@@ -393,21 +409,11 @@ modules:
     - name: _render_section
       cc: 10
       fan_out: 11
-- path: code2docs/generators/depgraph_gen.py
-  lines: 140
-  classes: 1
-  methods: 9
-  cc_max: 9
-  inbound_deps: 0
-  exports:
-  - name: DepGraphGenerator
-    type: class
-    cc_avg: 3.9
 - path: code2docs/analyzers/dependency_scanner.py
-  lines: 197
+  lines: 325
   classes: 3
-  methods: 7
-  cc_max: 8
+  methods: 10
+  cc_max: 9
   inbound_deps: 0
   exports:
   - name: DependencyInfo
@@ -418,11 +424,33 @@ modules:
     cc_avg: 0.0
   - name: DependencyScanner
     type: class
-    cc_avg: 4.6
+    cc_avg: 6.0
     methods:
+    - name: scan
+      cc: 8
+      fan_out: 15
     - name: _parse_pyproject
       cc: 8
       fan_out: 10
+    - name: _parse_package_json
+      cc: 7
+      fan_out: 11
+    - name: _parse_cargo_toml
+      cc: 9
+      fan_out: 12
+    - name: _parse_go_mod
+      cc: 8
+      fan_out: 14
+- path: code2docs/generators/depgraph_gen.py
+  lines: 140
+  classes: 1
+  methods: 9
+  cc_max: 9
+  inbound_deps: 0
+  exports:
+  - name: DepGraphGenerator
+    type: class
+    cc_avg: 3.9
 - path: code2docs/analyzers/docstring_extractor.py
   lines: 140
   classes: 2
@@ -436,16 +464,6 @@ modules:
   - name: DocstringExtractor
     type: class
     cc_avg: 3.5
-- path: code2docs/generators/contributing_gen.py
-  lines: 137
-  classes: 1
-  methods: 8
-  cc_max: 8
-  inbound_deps: 0
-  exports:
-  - name: ContributingGenerator
-    type: class
-    cc_avg: 2.6
 - path: code2docs/generators/_registry_adapters.py
   lines: 287
   classes: 14
@@ -780,6 +798,10 @@ refactoring:
     impact: medium
     effort: low
     module: examples_gen.py
+  - action: Split ContributingGenerator._render_code_style (CC=16 → target CC<10)
+    impact: medium
+    effort: low
+    module: contributing_gen.py
   - action: 'Break circular dependency: code2docs.analyzers.project_scanner.ProjectScanner.analyze'
     impact: medium
     effort: low
@@ -799,7 +821,7 @@ evolution:
   lines: 7148
   note: Automated analysis
 - date: '2026-03-09'
-  cc_avg: 4.2
-  critical: 25
-  lines: 7167
+  cc_avg: 4.4
+  critical: 27
+  lines: 7432
   note: Automated analysis

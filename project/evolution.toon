@@ -1,4 +1,4 @@
-# code2llm/evolution | 292 func | 41f | 2026-03-09
+# code2llm/evolution | 295 func | 41f | 2026-03-09
 
 NEXT[10] (ranked by impact):
   [1] !! SPLIT-FUNC      ReadmeGenerator._extract_project_metadata  CC=29  fan=23
@@ -46,11 +46,11 @@ RISKS[1]:
   ⚠ Splitting tests/test_generators.py may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.0 → ≤2.8
+  CC̄:          4.1 → ≤2.9
   max-CC:      29 → ≤14
   god-modules: 1 → 0
-  high-CC(≥15): 10 → ≤5
+  high-CC(≥15): 11 → ≤5
   hub-types:   0 → ≤0
 
 HISTORY:
-  prev CC̄=4.0 → now CC̄=4.0
+  prev CC̄=4.1 → now CC̄=4.1

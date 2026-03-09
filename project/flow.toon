@@ -1,4 +1,4 @@
-# code2docs/flow | 292 func | 12 pipelines | 7 hub-types | 2026-03-09
+# code2docs/flow | 295 func | 12 pipelines | 7 hub-types | 2026-03-09
 
 PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
   Code2docs [IO]: ? → str
@@ -30,13 +30,6 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _find_class_by_name(name:str) → Optional[ClassInfo] CC=3    pure ■
               PURITY: 2/4 pure  BOTTLENECK: _generate_advanced(CC=22)
 
-  Code2docs [Analysis]: str → DependencyInfo
-              → scan(project_path:str) → ProjectDependencies CC=4    pure ▶
-              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
-              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
-              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
-              PURITY: 2/4 pure  BOTTLENECK: _parse_pyproject(CC=8)
-
   Code2docs [Analysis]: AnalysisResult → Optional[str]
               → extract_all(result:AnalysisResult) → Dict[str, DocstringInfo] CC=5    pure ▶
               → parse(docstring:str) → DocstringInfo    CC=2    pure
@@ -50,6 +43,13 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str CC=4    mutation
               → _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str] CC=11   pure ■
               PURITY: 3/4 pure  BOTTLENECK: _build_context(CC=12)
+
+  Code2docs [Analysis]: str → DependencyInfo
+              → scan(project_path:str) → ProjectDependencies CC=8    pure ▶
+              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
+              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
+              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
+              PURITY: 2/4 pure  BOTTLENECK: scan(CC=8)
 
   Code2docs [IO]: ? → Optional[FunctionInfo]
               → generate_all() → Dict[str, str]         CC=1    pure ▶
@@ -96,9 +96,9 @@ TRANSFORMS (fan-out ≥10):
   _render_module_detail(mod_name:str, mod_info:ModuleInfo) → str fan=16   PIPELINE:ModuleDocsGenerator.entry
   generate() → str                                        fan=16   PIPELINE:ArchitectureGenerator.entry
   _run_generate(project_path:str, config:Code2DocsConfig, readme_only:bool, dry_run:bool) fan=16   fan=16
+  scan(project_path:str) → ProjectDependencies            fan=15   PIPELINE:DependencyScanner.entry
+  _parse_go_mod(path:Path) → ProjectDependencies          fan=14   PIPELINE:DependencyScanner.entry
   custom_watcher_with_hooks(project_path:str) → None      fan=13   fan=13
-  _get_repo_url(project_path:Path) → str                  fan=13   PIPELINE:OrgReadmeGenerator.entry
-  markdown_formatting_examples() → None                   fan=12   fan=12
 
 CONTRACTS:
   Pipeline: Code2docs
@@ -187,25 +187,6 @@ CONTRACTS:
       OUT: Optional[ClassInfo]
 
   Pipeline: Code2docs
-    scan(project_path:str) → ProjectDependencies
-      IN:  project_path:str
-      OUT: ProjectDependencies
-
-    _parse_pyproject(path:Path) → ProjectDependencies
-      IN:  path:Path
-      OUT: ProjectDependencies
-      SIDE-EFFECT: IO(open, load)
-
-    _parse_pyproject_regex(path:Path) → ProjectDependencies
-      IN:  path:Path
-      OUT: ProjectDependencies
-      SIDE-EFFECT: IO(read_text)
-
-    _parse_dep_string(dep_str:str) → DependencyInfo
-      IN:  dep_str:str
-      OUT: DependencyInfo
-
-  Pipeline: Code2docs
     extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
       IN:  result:AnalysisResult
       OUT: Dict[str, DocstringInfo]
@@ -240,6 +221,25 @@ CONTRACTS:
     _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str]
       IN:  badge_type:str, project_name:str, stats:Dict, deps
       OUT: Optional[str]
+
+  Pipeline: Code2docs
+    scan(project_path:str) → ProjectDependencies
+      IN:  project_path:str
+      OUT: ProjectDependencies
+
+    _parse_pyproject(path:Path) → ProjectDependencies
+      IN:  path:Path
+      OUT: ProjectDependencies
+      SIDE-EFFECT: IO(open, load)
+
+    _parse_pyproject_regex(path:Path) → ProjectDependencies
+      IN:  path:Path
+      OUT: ProjectDependencies
+      SIDE-EFFECT: IO(read_text)
+
+    _parse_dep_string(dep_str:str) → DependencyInfo
+      IN:  dep_str:str
+      OUT: DependencyInfo
 
   Pipeline: Code2docs
     generate_all() → Dict[str, str]
@@ -321,25 +321,25 @@ CONTRACTS:
       SIDE-EFFECT: global(_litellm)
 
 
-DATA_TYPES (by cross-function usage) [287 annotated, 0 inferred / 292 functions]:
+DATA_TYPES (by cross-function usage) [290 annotated, 0 inferred / 295 functions]:
   str                  consumed:144 produced:120  !! HUB-TYPE → split interface
   Code2DocsConfig      consumed:31  produced:5    !! HUB-TYPE → split interface
   AnalysisResult       consumed:24  produced:2    !! HUB-TYPE → split interface
   bool                 consumed:6   produced:19 
   Dict                 consumed:17  produced:7    !! HUB-TYPE → split interface
-  Path                 consumed:18  produced:1    !! HUB-TYPE → split interface
+  Path                 consumed:21  produced:1    !! HUB-TYPE → split interface
   GenerateContext      consumed:17  produced:0    !! HUB-TYPE → split interface
   int                  consumed:10  produced:1    !! HUB-TYPE → split interface
   str, str             consumed:4   produced:6  
   FunctionInfo         consumed:4   produced:5  
   MarkdownFormatter    consumed:0   produced:8    output-heavy
-  ClassInfo            consumed:3   produced:3  
+  ProjectDependencies  consumed:0   produced:8    output-heavy
   DocstringInfo        consumed:5   produced:1    input-heavy (read-only flow)
-  str, bool            consumed:4   produced:1  
+  ClassInfo            consumed:3   produced:3  
   str, List[str]       consumed:1   produced:4  
-  ProjectDependencies  consumed:0   produced:5    output-heavy
-  ApiChange            consumed:3   produced:1    narrow scope
+  str, bool            consumed:4   produced:1  
   str, int             consumed:3   produced:1    narrow scope
+  ApiChange            consumed:3   produced:1    narrow scope
   dict                 consumed:0   produced:3    narrow scope
   ModuleInfo           consumed:3   produced:0    narrow scope
 
@@ -354,7 +354,7 @@ DATA_TYPES (by cross-function usage) [287 annotated, 0 inferred / 292 functions]
       - FlowResult (call_graph, cfg, dfg)
     Dict → 17 consumers → split into:
       - (analyze consumers to suggest sub-interfaces)
-    Path → 18 consumers → split into:
+    Path → 21 consumers → split into:
       - (analyze consumers to suggest sub-interfaces)
     GenerateContext → 17 consumers → split into:
       - (analyze consumers to suggest sub-interfaces)
@@ -371,9 +371,9 @@ SIDE_EFFECTS:
     Code2docs       █░░░ 25% pure
     Code2docs       █░░░ 25% pure
     Code2docs       ██░░ 50% pure
+    Code2docs       ███░ 75% pure
+    Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
-    Code2docs       ███░ 75% pure
-    Code2docs       ███░ 75% pure
     Code2docs       ██░░ 50% pure
     Code2docs       █░░░ 33% pure
     Code2docs       █░░░ 33% pure
