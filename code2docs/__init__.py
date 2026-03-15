@@ -5,7 +5,7 @@ Uses code2llm's AnalysisResult to produce human-readable documentation:
 README.md, API references, module docs, examples, and architecture diagrams.
 """
 
-__version__ = "3.0.21"
+__version__ = "3.0.22"
 __author__ = "Tom Sapletta"
 
 from .config import Code2DocsConfig

@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.22] - 2026-03-15
+
+### Docs
+- Update project/context.md
+
+### Other
+- Update project/analysis.json
+- Update project/analysis.toon
+- Update project/analysis.yaml
+- Update project/calls.mmd
+- Update project/dashboard.html
+- Update project/flow.mmd
+- Update project/flow.toon
+- Update project/map.toon
+- Update project/project.toon
+- Update project/project.yaml
+
 ## [3.0.21] - 2026-03-15
 
 ### Docs
