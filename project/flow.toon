@@ -23,13 +23,6 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _slugify(text:str) → str                CC=1    pure ■
               PURITY: 1/4 pure  BOTTLENECK: extract_headings(CC=6)
 
-  Code2docs [IO]: ? → Optional[str]
-              → generate() → str                        CC=3    pure ▶
-              → _build_context(project_name:str) → Dict CC=12   pure
-              → generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str CC=4    mutation
-              → _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str] CC=11   pure ■
-              PURITY: 3/4 pure  BOTTLENECK: _build_context(CC=12)
-
   Code2docs [Unknown]: ? → Optional[ClassInfo]
               → generate_all() → Dict[str, str]         CC=1    pure ▶
               → _generate_advanced() → str              CC=22   mutation  !!
@@ -37,19 +30,26 @@ PIPELINES[12] (Analysis:2, Core:4, Export:2, IO:3, Unknown:1):
               → _find_class_by_name(name:str) → Optional[ClassInfo] CC=3    pure ■
               PURITY: 2/4 pure  BOTTLENECK: _generate_advanced(CC=22)
 
-  Code2docs [Analysis]: str → DependencyInfo
-              → scan(project_path:str) → ProjectDependencies CC=8    pure ▶
-              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
-              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
-              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
-              PURITY: 2/4 pure  BOTTLENECK: scan(CC=8)
-
   Code2docs [Analysis]: AnalysisResult → Optional[str]
               → extract_all(result:AnalysisResult) → Dict[str, DocstringInfo] CC=5    pure ▶
               → parse(docstring:str) → DocstringInfo    CC=2    pure
               → _parse_sections(lines:List[str], info:DocstringInfo) → None CC=8    mutation
               → _classify_section(line:str) → Optional[str] CC=5    pure ■
               PURITY: 3/4 pure  BOTTLENECK: _parse_sections(CC=8)
+
+  Code2docs [IO]: ? → Optional[str]
+              → generate() → str                        CC=3    pure ▶
+              → _build_context(project_name:str) → Dict CC=12   pure
+              → generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str CC=4    mutation
+              → _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str] CC=11   pure ■
+              PURITY: 3/4 pure  BOTTLENECK: _build_context(CC=12)
+
+  Code2docs [Analysis]: str → DependencyInfo
+              → scan(project_path:str) → ProjectDependencies CC=8    pure ▶
+              → _parse_pyproject(path:Path) → ProjectDependencies CC=8    IO
+              → _parse_pyproject_regex(path:Path) → ProjectDependencies CC=4    IO
+              → _parse_dep_string(dep_str:str) → DependencyInfo CC=2    pure ■
+              PURITY: 2/4 pure  BOTTLENECK: scan(CC=8)
 
   Code2docs [IO]: ? → Optional[FunctionInfo]
               → generate_all() → Dict[str, str]         CC=1    pure ▶
@@ -94,8 +94,8 @@ TRANSFORMS (fan-out ≥10):
   _build_context(project_name:str) → Dict                 fan=17   PIPELINE:ReadmeGenerator.entry
   apply(project_path:str, changes:List[ChangeInfo]) → None fan=16   PIPELINE:Updater.entry
   _render_module_detail(mod_name:str, mod_info:ModuleInfo) → str fan=16   PIPELINE:ModuleDocsGenerator.entry
-  _run_generate(project_path:str, config:Code2DocsConfig, readme_only:bool, dry_run:bool) fan=16   fan=16
   generate() → str                                        fan=16   PIPELINE:ArchitectureGenerator.entry
+  _run_generate(project_path:str, config:Code2DocsConfig, readme_only:bool, dry_run:bool) fan=16   fan=16
   scan(project_path:str) → ProjectDependencies            fan=15   PIPELINE:DependencyScanner.entry
   _parse_go_mod(path:Path) → ProjectDependencies          fan=14   PIPELINE:DependencyScanner.entry
   custom_watcher_with_hooks(project_path:str) → None      fan=13   fan=13
@@ -167,24 +167,6 @@ CONTRACTS:
       OUT: str
 
   Pipeline: Code2docs
-    generate() → str
-      IN:  ()
-      OUT: str
-
-    _build_context(project_name:str) → Dict
-      IN:  project_name:str
-      OUT: Dict
-
-    generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str
-      IN:  project_name:str, badge_types:List[str], stats:Dict, deps
-      OUT: str
-      SIDE-EFFECT: pure
-
-    _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str]
-      IN:  badge_type:str, project_name:str, stats:Dict, deps
-      OUT: Optional[str]
-
-  Pipeline: Code2docs
     generate_all() → Dict[str, str]
       IN:  ()
       OUT: Dict[str, str]
@@ -205,6 +187,42 @@ CONTRACTS:
       OUT: Optional[ClassInfo]
 
   Pipeline: Code2docs
+    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
+      IN:  result:AnalysisResult
+      OUT: Dict[str, DocstringInfo]
+
+    parse(docstring:str) → DocstringInfo
+      IN:  docstring:str
+      OUT: DocstringInfo
+
+    _parse_sections(lines:List[str], info:DocstringInfo) → None
+      IN:  lines:List[str], info:DocstringInfo
+      OUT: None
+      SIDE-EFFECT: pure
+
+    _classify_section(line:str) → Optional[str]
+      IN:  line:str
+      OUT: Optional[str]
+
+  Pipeline: Code2docs
+    generate() → str
+      IN:  ()
+      OUT: str
+
+    _build_context(project_name:str) → Dict
+      IN:  project_name:str
+      OUT: Dict
+
+    generate_badges(project_name:str, badge_types:List[str], stats:Dict, deps) → str
+      IN:  project_name:str, badge_types:List[str], stats:Dict, deps
+      OUT: str
+      SIDE-EFFECT: pure
+
+    _make_badge(badge_type:str, project_name:str, stats:Dict, deps) → Optional[str]
+      IN:  badge_type:str, project_name:str, stats:Dict, deps
+      OUT: Optional[str]
+
+  Pipeline: Code2docs
     scan(project_path:str) → ProjectDependencies
       IN:  project_path:str
       OUT: ProjectDependencies
@@ -222,24 +240,6 @@ CONTRACTS:
     _parse_dep_string(dep_str:str) → DependencyInfo
       IN:  dep_str:str
       OUT: DependencyInfo
-
-  Pipeline: Code2docs
-    extract_all(result:AnalysisResult) → Dict[str, DocstringInfo]
-      IN:  result:AnalysisResult
-      OUT: Dict[str, DocstringInfo]
-
-    parse(docstring:str) → DocstringInfo
-      IN:  docstring:str
-      OUT: DocstringInfo
-
-    _parse_sections(lines:List[str], info:DocstringInfo) → None
-      IN:  lines:List[str], info:DocstringInfo
-      OUT: None
-      SIDE-EFFECT: pure
-
-    _classify_section(line:str) → Optional[str]
-      IN:  line:str
-      OUT: Optional[str]
 
   Pipeline: Code2docs
     generate_all() → Dict[str, str]
@@ -332,16 +332,16 @@ DATA_TYPES (by cross-function usage) [293 annotated, 0 inferred / 298 functions]
   int                  consumed:10  produced:1    !! HUB-TYPE → split interface
   str, str             consumed:4   produced:6  
   FunctionInfo         consumed:4   produced:5  
-  ProjectDependencies  consumed:0   produced:8    output-heavy
   MarkdownFormatter    consumed:0   produced:8    output-heavy
-  DocstringInfo        consumed:5   produced:1    input-heavy (read-only flow)
+  ProjectDependencies  consumed:0   produced:8    output-heavy
   ClassInfo            consumed:3   produced:3  
+  DocstringInfo        consumed:5   produced:1    input-heavy (read-only flow)
   str, List[str]       consumed:1   produced:4  
   str, bool            consumed:4   produced:1  
   str, int             consumed:3   produced:1    narrow scope
   ApiChange            consumed:3   produced:1    narrow scope
+  Endpoint             consumed:0   produced:3    narrow scope
   ModuleInfo           consumed:3   produced:0    narrow scope
-  ChangeInfo           consumed:1   produced:2    narrow scope
 
   HUB TYPES (consumed ≥10):
     str → 144 consumers → split into:
@@ -370,10 +370,10 @@ SIDE_EFFECTS:
     Code2docs       █░░░ 40% pure
     Code2docs       █░░░ 25% pure
     Code2docs       █░░░ 25% pure
-    Code2docs       ███░ 75% pure
-    Code2docs       ██░░ 50% pure
     Code2docs       ██░░ 50% pure
     Code2docs       ███░ 75% pure
+    Code2docs       ███░ 75% pure
+    Code2docs       ██░░ 50% pure
     Code2docs       ██░░ 50% pure
     Code2docs       █░░░ 33% pure
     Code2docs       █░░░ 33% pure

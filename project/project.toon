@@ -1,55 +1,344 @@
-# code2docs | 258 func | 34f | 7585L | python | 2026-03-15
-
-HEALTH:
-  CC̄=4.4  critical=28 (limit:10)  dup=0  cycles=1
-
-ALERTS[20]:
-  !!! cc_exceeded      ReadmeGenerator._extract_project_metadata = 29 (limit:15)
-  !!! cc_exceeded      ModuleDocsGenerator._render_module_detail = 25 (limit:15)
-  !!! cc_exceeded      ApiReferenceGenerator._render_module_section = 25 (limit:15)
-  !!! high_fan_out     _run_check = 24 (limit:10)
-  !!! high_fan_out     ReadmeGenerator._extract_project_metadata = 23 (limit:10)
-  !!! high_fan_out     start_watcher = 22 (limit:10)
-  !!! high_fan_out     ApiReferenceGenerator._render_module_section = 21 (limit:10)
-  !!! high_fan_out     OrgReadmeGenerator._extract_description = 20 (limit:10)
-  !!  cc_exceeded      ExamplesGenerator._generate_advanced = 22 (limit:15)
-  !!  high_fan_out     ModuleDocsGenerator.generate = 19 (limit:10)
-
-MODULES[39] (top by size):
-  M[code2docs/generators/readme_gen.py] 477L C:1 F:18 CC↑29 D:1 (python)
-  M[code2docs/generators/examples_gen.py] 443L C:1 F:15 CC↑22 D:0 (python)
-  M[code2docs/generators/_registry_adapters.py] 441L C:15 F:31 CC↑15 D:0 (python)
-  M[code2docs/analyzers/dependency_scanner.py] 325L C:3 F:10 CC↑9 D:0 (python)
-  M[code2docs/cli.py] 319L C:1 F:14 CC↑10 D:0 (python)
-  M[code2docs/config.py] 297L C:7 F:5 CC↑10 D:0 (python)
-  M[code2docs/generators/architecture_gen.py] 294L C:1 F:10 CC↑13 D:0 (python)
-  M[code2docs/generators/contributing_gen.py] 231L C:1 F:8 CC↑16 D:0 (python)
-  M[code2docs/generators/org_readme_gen.py] 227L C:1 F:10 CC↑17 D:0 (python)
-  M[code2docs/generators/code2llm_gen.py] 206L C:1 F:6 CC↑17 D:0 (python)
-  M[code2docs/generators/module_docs_gen.py] 198L C:1 F:9 CC↑25 D:0 (python)
-  M[code2docs/generators/getting_started_gen.py] 196L C:1 F:8 CC↑16 D:0 (python)
-  M[code2docs/generators/api_changelog_gen.py] 196L C:2 F:9 CC↑14 D:0 (python)
-  M[code2docs/generators/api_reference_gen.py] 163L C:1 F:7 CC↑25 D:0 (python)
-  M[code2docs/llm_helper.py] 161L C:1 F:7 CC↑7 D:0 (python)
-  LANGS: python:38/shell:1
-
-HOTSPOTS[10]:
-  ★ _run_check fan=24  // Run documentation health check.
-  ★ ReadmeGenerator._extract_project_metadata fan=23  // Extract project metadata (author, license, version) from pyproject.toml or git.
-  ★ start_watcher fan=22  // Start watching project for file changes and auto-resync docs.
-
-Requires watchdog
-  ★ ApiReferenceGenerator._render_module_section fan=21  // Render a module as a subsection within the consolidated doc.
-  ★ OrgReadmeGenerator._extract_description fan=20  // Extract short description from project (max 5 lines).
-
-REFACTOR[15]:
-  [1] H/L Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10)
-  [2] H/L Split ModuleDocsGenerator._render_module_detail (CC=25 → target CC<10)
-  [3] H/L Split ApiReferenceGenerator._render_module_section (CC=25 → target CC<10)
-  [4] M/L Split GettingStartedGenerator._render_first_usage (CC=15 → target CC<10)
-  [5] M/L Split GettingStartedGenerator._generate_intro (CC=16 → target CC<10)
-
-EVOLUTION:
-  2026-03-08 CC̄=4.2 crit=25 7148L // Automated analysis
-  2026-03-09 CC̄=4.4 crit=27 7432L // Automated analysis
-  2026-03-15 CC̄=4.4 crit=28 7585L // Automated analysis
+# code2docs | 64f 9429L | python:64
+# Keys: M=modules, D=details, i=imports, c=classes, f=functions, m=methods
+M[64]:
+  code2docs/__init__.py,26
+  code2docs/__main__.py,4
+  code2docs/analyzers/__init__.py,11
+  code2docs/analyzers/dependency_scanner.py,242
+  code2docs/analyzers/docstring_extractor.py,114
+  code2docs/analyzers/endpoint_detector.py,91
+  code2docs/analyzers/project_scanner.py,30
+  code2docs/base.py,33
+  code2docs/cli.py,242
+  code2docs/config.py,252
+  code2docs/examples/advanced_usage.py,52
+  code2docs/examples/quickstart.py,25
+  code2docs/formatters/__init__.py,5
+  code2docs/formatters/badges.py,38
+  code2docs/formatters/markdown.py,57
+  code2docs/formatters/toc.py,47
+  code2docs/generators/__init__.py,48
+  code2docs/generators/_registry_adapters.py,360
+  code2docs/generators/_source_links.py,60
+  code2docs/generators/api_changelog_gen.py,165
+  code2docs/generators/api_reference_gen.py,136
+  code2docs/generators/architecture_gen.py,243
+  code2docs/generators/changelog_gen.py,98
+  code2docs/generators/code2llm_gen.py,148
+  code2docs/generators/config_docs_gen.py,109
+  code2docs/generators/contributing_gen.py,211
+  code2docs/generators/coverage_gen.py,91
+  code2docs/generators/depgraph_gen.py,121
+  code2docs/generators/examples_gen.py,374
+  code2docs/generators/getting_started_gen.py,171
+  code2docs/generators/mkdocs_gen.py,75
+  code2docs/generators/module_docs_gen.py,171
+  code2docs/generators/org_readme_gen.py,171
+  code2docs/generators/readme_gen.py,395
+  code2docs/llm_helper.py,138
+  code2docs/registry.py,29
+  code2docs/sync/__init__.py,4
+  code2docs/sync/differ.py,99
+  code2docs/sync/updater.py,32
+  code2docs/sync/watcher.py,58
+  docs/examples/advanced_usage.py,52
+  docs/examples/quickstart.py,25
+  examples/01_cli_usage.py,23
+  examples/02_configuration.py,106
+  examples/03_programmatic_api.py,88
+  examples/04_sync_and_watch.py,133
+  examples/05_custom_generators.py,145
+  examples/06_formatters.py,136
+  examples/07_web_frameworks.py,127
+  examples/advanced_usage.py,52
+  examples/basic_usage.py,18
+  examples/class_examples.py,22
+  examples/entry_points.py,11
+  examples/quickstart.py,25
+  tests/__init__.py,0
+  tests/test_analyzers.py,119
+  tests/test_cli.py,231
+  tests/test_code2docs.py,7
+  tests/test_config.py,39
+  tests/test_formatters.py,72
+  tests/test_generators.py,520
+  tests/test_llm_helper.py,214
+  tests/test_registry.py,172
+  tests/test_sync.py,58
+D:
+  code2docs/__init__.py:
+    i: config.Code2DocsConfig
+    __getattr__(name)
+  code2docs/analyzers/dependency_scanner.py:
+    i: re,tomllib,dataclasses.{dataclass,field},pathlib.Path,typing.{Dict,List,Optional}
+    e: DependencyInfo,ProjectDependencies,DependencyScanner
+    DependencyInfo:   # Information about a project dependency.
+    ProjectDependencies:   # All detected project dependencies.
+    DependencyScanner: scan(1),_parse_pyproject(1),_parse_pyproject_regex(1),_parse_setup_py(1),_parse_requirements_txt(1)  # Scan and parse project dependency files.
+  code2docs/analyzers/docstring_extractor.py:
+    i: ast,code2llm.api.{AnalysisResult,FunctionInfo},dataclasses.{dataclass,field},pathlib.Path,typing.{Dict,List,Optional,Tuple}
+    e: DocstringInfo,DocstringExtractor
+    DocstringInfo:   # Parsed docstring with sections.
+    DocstringExtractor: extract_all(1),parse(1),_extract_summary(1),_classify_section(1),_parse_sections(2)  # Extract and parse docstrings from Ana...
+  code2docs/analyzers/endpoint_detector.py:
+    i: ast,re,code2llm.api.{AnalysisResult,FunctionInfo},dataclasses.{dataclass,field},pathlib.Path,typing.{Dict,List,Optional}
+    e: Endpoint,EndpointDetector
+    Endpoint:   # Represents a detected web endpoint.
+    EndpointDetector: detect(2),_parse_decorator(2),_scan_django_urls(1)  # Detects web endpoints from decorator...
+  code2docs/analyzers/project_scanner.py:
+    i: code2llm.api.{AnalysisResult,Config,FAST_CONFIG,analyze},config.Code2DocsConfig,pathlib.Path,typing.Optional
+    e: ProjectScanner,analyze_and_document
+    ProjectScanner: __init__(1),_build_llm_config(0),analyze(1)  # Wraps code2llm's ProjectAnalyzer with...
+    analyze_and_document(project_path:str;config:Optional[Code2DocsConfig]=None)->AnalysisResult
+  code2docs/base.py:
+    i: abc.{ABC,abstractmethod},code2llm.api.AnalysisResult,config.Code2DocsConfig,dataclasses.dataclass,pathlib.Path,typing.Optional
+    e: GenerateContext,BaseGenerator
+    GenerateContext:   # Shared context passed to all generato...
+    BaseGenerator: __init__(2),should_run(0),run(1)  # Abstract base for all documentation g...
+  code2docs/cli.py:
+    i: sys,click,config.Code2DocsConfig,pathlib.Path,rich.console.Console,rich.panel.Panel,rich.table.Table,typing.Optional
+    e: DefaultGroup,main,generate,sync,watch,init,check,diff
+    DefaultGroup: parse_args(2)  # Click Group that routes unknown subco...
+    main()
+    generate(project_path;config_path;readme_only;sections;output;verbose;...+1)
+    sync(project_path;config_path;verbose;dry_run)
+    watch(project_path;config_path;verbose)
+    init(project_path;output)
+    check(project_path;config_path;target)
+    diff(project_path;config_path)
+    _load_config(project_path:str;config_path:Optional[str]=None)->Code2DocsConfig
+  code2docs/config.py:
+    i: os,subprocess,yaml,dataclasses.{dataclass,field},dotenv.load_dotenv,pathlib.Path,typing.{Dict,List,Optional}
+    e: ReadmeConfig,DocsConfig,ExamplesConfig,SyncConfig,Code2LlmConfig,LLMConfig,Code2DocsConfig
+    ReadmeConfig:   # Configuration for README generation.
+    DocsConfig:   # Configuration for docs/ generation.
+    ExamplesConfig:   # Configuration for examples/ generation.
+    SyncConfig:   # Configuration for synchronization.
+    Code2LlmConfig:   # Configuration for code2llm analysis g...
+  code2docs/formatters/badges.py:
+    i: typing.{Dict,List,Optional},urllib.parse.quote
+    e: generate_badges
+    generate_badges(project_name:str;badge_types:List[str];stats:Dict=None;deps=None)->str
+    _make_badge(badge_type:str;project_name:str;stats:Dict;deps)->Optional[str]
+  code2docs/formatters/markdown.py:
+    i: typing.{Dict,List,Optional}
+    e: MarkdownFormatter
+    MarkdownFormatter: __init__(0),heading(2),paragraph(1),blockquote(1),code_block(2)  # Helper for constructing Markdown docu...
+  code2docs/formatters/toc.py:
+    i: re,typing.{List,Tuple}
+    e: generate_toc,extract_headings
+    generate_toc(markdown_content:str;max_depth:int=3)->str
+    extract_headings(content:str;max_depth:int=3)->List[Tuple[int, str, str]]
+    _slugify(text:str)->str
+  code2docs/generators/__init__.py:
+    i: api_changelog_gen.ApiChangelogGenerator,api_reference_gen.ApiReferenceGenerator,architecture_gen.ArchitectureGenerator,changelog_gen.ChangelogGenerator,coverage_gen.CoverageGenerator,depgraph_gen.DepGraphGenerator,examples_gen.ExamplesGenerator,mkdocs_gen.MkDocsGenerator,module_docs_gen.ModuleDocsGenerator,readme_gen.ReadmeGenerator
+    e: generate_docs
+    generate_docs(project_path:str;config=None)
+  code2docs/generators/_registry_adapters.py:
+    i: click,base.{BaseGenerator,GenerateContext},code2llm.api.AnalysisResult,config.Code2DocsConfig,pathlib.Path,typing.Optional
+    e: ReadmeGeneratorAdapter,ApiReferenceAdapter,ModuleDocsAdapter,ArchitectureAdapter,DepGraphAdapter,CoverageAdapter,ApiChangelogAdapter,ExamplesAdapter
+    ReadmeGeneratorAdapter: should_run(0),run(1)
+    ApiReferenceAdapter: should_run(0),run(1)
+    ModuleDocsAdapter: should_run(0),run(1)
+    ArchitectureAdapter: should_run(0),run(1)
+    DepGraphAdapter: should_run(0),run(1)
+  code2docs/generators/_source_links.py:
+    i: code2llm.api.AnalysisResult,config.Code2DocsConfig,pathlib.Path,typing.Optional
+    e: SourceLinker
+    SourceLinker: __init__(2),source_link(2),file_link(1),_relative_path(1),_find_git_root(1)  # Build source-code links (relative pat...
+  code2docs/generators/api_changelog_gen.py:
+    i: json,code2llm.api.AnalysisResult,config.Code2DocsConfig,dataclasses.{dataclass,field},pathlib.Path,typing.{Dict,List,Optional,Tuple}
+    e: SNAPSHOT_FILE,ApiChange,ApiChangelogGenerator
+    ApiChange: emoji(0)  # A single API change between two analy...
+    ApiChangelogGenerator: __init__(2),generate(1),save_snapshot(1),_build_snapshot(0),_load_snapshot(1)  # Generate API changelog by diffing cur...
+  code2docs/generators/api_reference_gen.py:
+    i: code2llm.api.{AnalysisResult,ClassInfo,FunctionInfo,ModuleInfo},collections.defaultdict,config.Code2DocsConfig,pathlib.Path,typing.{Dict,List,Optional}
+    e: ApiReferenceGenerator
+    ApiReferenceGenerator: __init__(2),generate(0),_group_modules(0),_has_content(1),_render_module_section(2)  # Generate docs/api.md — consolidated A...
+  code2docs/generators/architecture_gen.py:
+    i: code2llm.api.{AnalysisResult,ModuleInfo},config.Code2DocsConfig,llm_helper.LLMHelper,pathlib.Path,typing.{Dict,List,Set}
+    e: ArchitectureGenerator
+    ArchitectureGenerator: __init__(2),generate(0),_generate_pipeline_overview(1),_generate_layer_diagram(1),_get_public_entry_points(0)  # Generate docs/architecture.md — archi...
+  code2docs/generators/changelog_gen.py:
+    i: subprocess,code2llm.api.AnalysisResult,config.Code2DocsConfig,dataclasses.{dataclass,field},pathlib.Path,typing.{Dict,List,Optional}
+    e: ChangelogEntry,ChangelogGenerator
+    ChangelogEntry:   # A single changelog entry.
+    ChangelogGenerator: __init__(2),generate(2),_get_git_log(2),_classify_message(1),_group_by_type(1)  # Generate CHANGELOG.md from git log an...
+  code2docs/generators/code2llm_gen.py:
+    i: subprocess,code2llm.api.AnalysisResult,config.Code2DocsConfig,pathlib.Path,typing.{Dict,List,Optional,Set}
+    e: parse_gitignore,Code2LlmGenerator,generate_code2llm_analysis
+    Code2LlmGenerator: __init__(2),generate_all(0),_run_code2llm(2),get_analysis_summary(0)  # Generate code2llm analysis files in p...
+    parse_gitignore(project_path:Path)->List[str]
+    generate_code2llm_analysis(project_path:str;config:Optional[Code2DocsConfig]=None)->Dict[str, str]
+  code2docs/generators/config_docs_gen.py:
+    i: code2llm.api.AnalysisResult,config.Code2DocsConfig,dataclasses.{MISSING,fields},typing.Any
+    e: ConfigDocsGenerator
+    ConfigDocsGenerator: __init__(2),generate(0),_render_section(2),_render_example(0)  # Generate docs/configuration.md from C...
+  code2docs/generators/contributing_gen.py:
+    i: analyzers.dependency_scanner.DependencyScanner,code2llm.api.AnalysisResult,config.Code2DocsConfig,typing.{Dict,List}
+    e: ContributingGenerator
+    ContributingGenerator: __init__(2),generate(0),_detect_dev_tools(0),_render_setup(1),_render_development(1)  # Generate CONTRIBUTING.md by detecting...
+  code2docs/generators/coverage_gen.py:
+    i: analyzers.docstring_extractor.DocstringExtractor,code2llm.api.AnalysisResult,config.Code2DocsConfig,typing.{Dict,List}
+    e: CoverageGenerator
+    CoverageGenerator: __init__(2),generate(0),_render_summary(1),_render_per_module(0),_collect_module_stats(0)  # Generate docs/coverage.md — docstring...
+  code2docs/generators/depgraph_gen.py:
+    i: ast,code2llm.api.{AnalysisResult,ModuleInfo},config.Code2DocsConfig,pathlib.Path,typing.{Dict,List,Set,Tuple}
+    e: DepGraphGenerator
+    DepGraphGenerator: __init__(2),generate(0),_collect_edges(0),_extract_imports_from_file(1),_import_matches(2)  # Generate docs/dependency-graph.md wit...
+  code2docs/generators/examples_gen.py:
+    i: code2llm.api.{AnalysisResult,ClassInfo,FunctionInfo},config.Code2DocsConfig,pathlib.Path,typing.{Dict,List,Optional,Set}
+    e: _TYPE_EXAMPLES,_ARG_EXAMPLES,ExamplesGenerator
+    ExamplesGenerator: __init__(2),_get_example_value(1),generate_all(0),_generate_quickstart(0),_generate_advanced(0)  # Generate examples/ — usage examples f...
+  code2docs/generators/getting_started_gen.py:
+    i: analyzers.dependency_scanner.DependencyScanner,code2llm.api.AnalysisResult,config.Code2DocsConfig,llm_helper.LLMHelper,typing.{List,Optional}
+    e: GettingStartedGenerator
+    GettingStartedGenerator: __init__(2),generate(0),_render_prerequisites(0),_render_installation(0),_render_first_usage(0)  # Generate docs/getting-started.md from...
+  code2docs/generators/mkdocs_gen.py:
+    i: yaml,code2llm.api.AnalysisResult,config.Code2DocsConfig,pathlib.Path,typing.{Any,Dict,List,Optional}
+    e: MkDocsGenerator
+    MkDocsGenerator: __init__(2),generate(1),_read_pyproject_mkdocs(0),_build_nav(1),write(2)  # Generate mkdocs.yml from the docs/ di...
+  code2docs/generators/module_docs_gen.py:
+    i: ast,code2llm.api.{AnalysisResult,ClassInfo,FunctionInfo,ModuleInfo},collections.defaultdict,config.Code2DocsConfig,pathlib.Path,typing.{Dict,List}
+    e: ModuleDocsGenerator
+    ModuleDocsGenerator: __init__(2),generate(0),_group_modules(0),_has_content(1),_render_module_detail(2)  # Generate docs/modules.md — consolidat...
+  code2docs/generators/org_readme_gen.py:
+    i: analyzers.project_scanner.ProjectScanner,code2llm.api.AnalysisResult,config.Code2DocsConfig,pathlib.Path,typing.{Dict,List,Optional}
+    e: OrgReadmeGenerator
+    OrgReadmeGenerator: __init__(3),generate(0),_discover_projects(0),_analyze_project(1),_extract_description(2)  # Generate organization README with lis...
+  code2docs/generators/readme_gen.py:
+    i: re,code2llm.api.{AnalysisResult,FunctionInfo},jinja2.{Environment,PackageLoader,select_autoescape},pathlib.Path,typing.{Dict,List,Optional}
+    e: MARKER_START,MARKER_END,ReadmeGenerator,generate_readme
+    ReadmeGenerator: __init__(2),generate(0),_build_context(1),_calc_avg_complexity(0),_build_module_tree(0)  # Generate README.md from AnalysisResult.
+    generate_readme(project_path:str='./';output:str='README.md';sections:Optional[List[str]]=None;sync_markers:bool=True;config:Optional[Code2DocsConfig]=None)->str
+  code2docs/llm_helper.py:
+    i: logging,config.LLMConfig,typing.Optional
+    e: LLMHelper
+    LLMHelper: __init__(1),available(0),complete(2),generate_project_description(3),generate_architecture_summary(4)  # Thin wrapper around litellm for docum...
+    _get_litellm()
+  code2docs/registry.py:
+    i: click,base.{BaseGenerator,GenerateContext},typing.{Dict,List,Optional,Type}
+    e: GeneratorRegistry
+    GeneratorRegistry: __init__(0),add(1),run_all(1),run_only(2)  # Registry of documentation generators.
+  code2docs/sync/differ.py:
+    i: hashlib,json,config.Code2DocsConfig,dataclasses.{dataclass,field},pathlib.Path,typing.{Dict,List,Optional}
+    e: STATE_FILE,ChangeInfo,Differ
+    ChangeInfo: __str__(0)  # Describes a detected change.
+    Differ: __init__(1),detect_changes(1),save_state(1),_load_state(1),_compute_state(1)  # Detect changes between current source...
+  code2docs/sync/updater.py:
+    i: config.Code2DocsConfig,differ.{ChangeInfo,Differ},pathlib.Path,typing.{List,Optional}
+    e: Updater
+    Updater: __init__(1),apply(2)  # Apply selective documentation updates...
+  code2docs/sync/watcher.py:
+    i: time,config.Code2DocsConfig,pathlib.Path,typing.Optional
+    e: start_watcher
+    start_watcher(project_path:str;config:Optional[Code2DocsConfig]=None)->None
+  examples/01_cli_usage.py:
+    i: subprocess
+    e: run_cli_basic,run_cli_with_config
+    run_cli_basic(project_path:str)->None
+    run_cli_with_config(project_path:str;config_path:str)->None
+  examples/02_configuration.py:
+    i: code2docs.config.Code2DocsConfig,pathlib.Path
+    e: create_basic_config,create_advanced_config,EXAMPLE_YAML_CONFIG,save_yaml_config_example,load_config_from_yaml
+    create_basic_config()->Code2DocsConfig
+    create_advanced_config()->Code2DocsConfig
+    save_yaml_config_example(path:str='code2docs.yaml')->None
+    load_config_from_yaml(path:str)->Code2DocsConfig
+  examples/03_programmatic_api.py:
+    i: code2docs.{Code2DocsConfig,generate_readme},code2docs.generators.api_reference_gen.ApiReferenceGenerator,code2docs.generators.module_docs_gen.ModuleDocsGenerator,code2docs.generators.readme_gen.ReadmeGenerator,code2llm.api.analyze,pathlib.Path
+    e: generate_readme_simple,generate_full_documentation,custom_documentation_pipeline,inspect_project_structure,generate_docs_if_needed
+    generate_readme_simple(project_path:str)->str
+    generate_full_documentation(project_path:str)->None
+    custom_documentation_pipeline(project_path:str)->dict
+    inspect_project_structure(project_path:str)->None
+    generate_docs_if_needed(project_path:str;force:bool=False)->bool
+  examples/04_sync_and_watch.py:
+    i: time,code2docs.config.Code2DocsConfig,code2docs.sync.differ.{ChangeInfo,Differ},code2docs.sync.updater.Updater,code2docs.sync.watcher.start_watcher
+    e: detect_changes_example,update_docs_incrementally,force_full_regeneration,watch_and_auto_regenerate,custom_watcher_with_hooks,sync_with_git_changes
+    detect_changes_example(project_path:str)->ChangeInfo
+    update_docs_incrementally(project_path:str)->None
+    force_full_regeneration(project_path:str)->None
+    watch_and_auto_regenerate(project_path:str;interval:int=5)->None
+    custom_watcher_with_hooks(project_path:str)->None
+    sync_with_git_changes(project_path:str)->None
+  examples/05_custom_generators.py:
+    i: code2docs.config.Code2DocsConfig,code2docs.formatters.markdown.MarkdownFormatter,code2docs.generators.base.BaseGenerator,code2llm.api.AnalysisResult,dataclasses.dataclass,typing.{Dict,List}
+    e: MetricsReportGenerator,APIChangelogGenerator,generate_custom_report,CustomGenerator
+    MetricsReportGenerator: __init__(2),generate(0),_calculate_stats(0),_format_stats_table(1),_list_largest_files(0)  # Generate a metrics report from code a...
+    APIChangelogGenerator: __init__(2),generate(1),_list_new_apis(0),_compare_apis(1)  # Generate changelog based on API changes.
+    CustomGenerator: generate(0),write(2)  # Example of extending the base generat...
+    generate_custom_report(project_path:str)->None
+  examples/06_formatters.py:
+    i: code2docs.formatters.badges.generate_badges,code2docs.formatters.markdown.MarkdownFormatter,code2docs.formatters.toc.{extract_headings,generate_toc}
+    e: markdown_formatting_examples,generate_complex_document,badge_examples,toc_examples,build_custom_readme
+    markdown_formatting_examples()->None
+    generate_complex_document()->str
+    badge_examples()->None
+    toc_examples()->None
+    build_custom_readme()->str
+  examples/07_web_frameworks.py:
+    i: code2docs.analyzers.endpoint_detector.{Endpoint,EndpointDetector},code2llm.api.analyze
+    e: detect_flask_endpoints,detect_fastapi_endpoints,generate_api_docs_from_endpoints,EXAMPLE_FLASK_APP,EXAMPLE_FASTAPI_APP,create_example_web_apps,document_web_project
+    detect_flask_endpoints(project_path:str)->list[Endpoint]
+    detect_fastapi_endpoints(project_path:str)->list[Endpoint]
+    generate_api_docs_from_endpoints(project_path:str;output_dir:str='docs/api')->str
+    create_example_web_apps(target_dir:str='./example_web_apps')->None
+    document_web_project(project_path:str)->dict
+  tests/test_analyzers.py:
+    i: tempfile,pytest,code2docs.analyzers.dependency_scanner.DependencyScanner,code2docs.analyzers.docstring_extractor.{DocstringExtractor,DocstringInfo},code2docs.analyzers.endpoint_detector.{Endpoint,EndpointDetector},pathlib.Path
+    e: TestDocstringExtractor,TestDependencyScanner,TestEndpointDetector
+    TestDocstringExtractor: test_parse_simple(0),test_parse_with_params(0),test_parse_empty(0),test_coverage_report(0)
+    TestDependencyScanner: test_parse_requirements_txt(0),test_parse_pyproject_toml(0),test_empty_project(0)
+    TestEndpointDetector: test_parse_flask_decorator(0),test_parse_fastapi_decorator(0),test_no_match(0)
+  tests/test_cli.py:
+    i: subprocess,sys,tempfile,pytest,click.testing.CliRunner,code2docs.cli.main,pathlib.Path
+    e: TestCLI,TestCLIShellE2E,TestCLINewFeaturesE2E
+    TestCLI: setup_method(0),test_help(0),test_generate_help(0),test_sync_help(0),test_init_creates_config(0)  # Unit tests using Click's CliRunner.
+    TestCLIShellE2E: temp_project(0),_run_shell(2),test_shell_generate(1),test_shell_generate_creates_files(1),test_shell_init(1)  # E2E tests using actual shell subproce...
+    TestCLINewFeaturesE2E: temp_org(0),_run_shell(2),test_shell_org_mode(1),test_shell_org_mode_dry_run(1)  # E2E tests for new CLI features (--org...
+  tests/test_code2docs.py:
+    e: test_placeholder,test_import
+    test_placeholder()
+    test_import()
+  tests/test_config.py:
+    i: tempfile,pytest,code2docs.config.{Code2DocsConfig,DocsConfig,ReadmeConfig,SyncConfig},pathlib.Path
+    e: TestCode2DocsConfig
+    TestCode2DocsConfig: test_defaults(0),test_readme_defaults(0),test_yaml_roundtrip(0),test_from_yaml_missing_file(0),test_sync_config_defaults(0)
+  tests/test_formatters.py:
+    i: pytest,code2docs.formatters.badges.generate_badges,code2docs.formatters.markdown.MarkdownFormatter,code2docs.formatters.toc.{extract_headings,generate_toc}
+    e: TestMarkdownFormatter,TestBadges,TestToc
+    TestMarkdownFormatter: test_heading(0),test_heading_level2(0),test_code_block(0),test_table(0),test_list_item(0)
+    TestBadges: test_generate_badges_version(0),test_generate_badges_python(0),test_generate_badges_complexity(0),test_generate_badges_empty(0)
+    TestToc: test_extract_headings(0),test_extract_headings_skips_code_blocks(0),test_generate_toc(0),test_generate_toc_empty(0)
+  tests/test_generators.py:
+    i: tempfile,pytest,code2docs.config.Code2DocsConfig,code2llm.core.models.{AnalysisResult,ClassInfo,FunctionInfo,ModuleInfo},pathlib.Path
+    e: TestReadmeGenerator,TestApiReferenceGenerator,TestModuleDocsGenerator,TestExamplesGenerator,TestArchitectureGenerator,TestChangelogGenerator,TestDepGraphGenerator,TestCoverageGenerator
+    TestReadmeGenerator: test_manual_fallback_contains_sections(0),test_manual_fallback_sync_markers(0),test_generate_produces_output(0),test_build_api_section_lists_classes(0),test_build_endpoints_section_empty(0)
+    TestApiReferenceGenerator: test_generate_produces_single_file(0),test_contains_modules(0),test_contains_classes(0),test_contains_functions(0),test_skips_trivial_modules(0)
+    TestModuleDocsGenerator: test_generate_produces_single_file(0),test_contains_modules(0),test_contains_classes(0),test_contains_functions(0),test_skips_trivial_modules(0)
+    TestExamplesGenerator: test_generate_all_produces_quickstart(0),test_quickstart_contains_imports(0),test_quickstart_has_docstring(0),test_advanced_contains_imports(0),test_detect_package_name(0)
+    TestArchitectureGenerator: test_generate_produces_output(0),test_contains_mermaid(0),test_contains_metrics(0)
+    _make_result()->AnalysisResult
+    _make_config()->Code2DocsConfig
+  tests/test_llm_helper.py:
+    i: pytest,code2docs.config.{Code2DocsConfig,LLMConfig},code2docs.llm_helper.{LLMHelper,_get_litellm},unittest.mock.{MagicMock,patch}
+    e: TestLLMConfig,TestLLMHelperDisabled,TestLLMHelperEnabled,TestGeneratorFallback
+    TestLLMConfig: test_defaults(0),test_from_env_no_vars(0),test_from_env_with_model(0),test_from_env_with_api_base(0)
+    TestLLMHelperDisabled: test_not_available_when_disabled(0),test_not_available_when_no_model(0),test_complete_returns_none_when_disabled(0),test_generate_project_description_returns_none(0),test_generate_architecture_summary_returns_none(0)  # Test that LLMHelper returns None for...
+    TestLLMHelperEnabled: _make_helper(0),_mock_response(1),test_complete_calls_litellm(0),test_complete_returns_none_on_exception(0),test_generate_project_description_with_llm(0)  # Test LLMHelper with mocked litellm.
+    TestGeneratorFallback: test_readme_without_llm(0),test_architecture_without_llm(0),test_getting_started_without_llm(0)  # Verify generators work correctly with...
+  tests/test_registry.py:
+    i: tempfile,pytest,code2docs.base.BaseGenerator,code2docs.config.Code2DocsConfig,code2llm.core.models.{AnalysisResult,ClassInfo,FunctionInfo,ModuleInfo},pathlib.Path,typing.Optional
+    e: TestBaseGenerator,TestGenerateContext,TestGeneratorRegistry,TestAdapters
+    _DummyGenerator: __init__(2),should_run(0),run(1)  # Concrete test generator.
+    _AlwaysGenerator: should_run(0),run(1)
+    TestBaseGenerator: test_subclass_instantiation(0),test_should_run_respects_flag(0),test_should_run_readme_only(0)
+    TestGenerateContext: test_defaults(0),test_custom(0)
+    TestGeneratorRegistry: test_add_and_run_all(0),test_skips_disabled_generator(0),test_readme_only_filters(0),test_run_only(0),test_run_preserves_order(0)
+    _make_config()->Code2DocsConfig
+    _make_result()->AnalysisResult
+  tests/test_sync.py:
+    i: tempfile,pytest,code2docs.sync.differ.{ChangeInfo,Differ},pathlib.Path
+    e: TestDiffer
+    TestDiffer: test_detect_new_files(0),test_detect_no_changes_after_save(0),test_detect_modified(0),test_detect_deleted(0),test_ignore_patterns(0)
