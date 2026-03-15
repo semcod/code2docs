@@ -2,7 +2,6 @@
 # CC̄=4.4 | critical:27/295 | dups:0 | cycles:1
 
 HEALTH[11]:
-  🟡 CC    _extract_project_metadata CC=29 (limit:15)
   🟡 CC    _render_first_usage CC=15 (limit:15)
   🟡 CC    _generate_intro CC=16 (limit:15)
   🟡 CC    parse_gitignore CC=15 (limit:15)
@@ -13,6 +12,7 @@ HEALTH[11]:
   🟡 CC    _render_module_section CC=25 (limit:15)
   🟡 CC    _generate_advanced CC=22 (limit:15)
   🟡 CC    _render_code_style CC=16 (limit:15)
+  🟡 CC    _extract_project_metadata CC=29 (limit:15)
 
 REFACTOR[2]:
   1. split 11 high-CC methods  (CC>15)
@@ -94,13 +94,13 @@ FUNCTIONS (CC≥10, 27 of 255):
    11.0  ApiReferenceGenerator.generate             10n   2exit  loops+cond+ret
    11.0  ExamplesGenerator._example_from_type       18n   7exit  cond+ret
    11.0  ArchitectureGenerator._generate_class_diagram   12n   2exit  loops+cond+ret
-   10.0  ConfigDocsGenerator._render_section        14n   2exit  loops+cond+ret
    10.0  GettingStartedGenerator._render_prerequisites   15n   2exit  cond+ret
+   10.0  ConfigDocsGenerator._render_section        14n   2exit  loops+cond+ret
    10.0  ApiReferenceGenerator._has_content          6n   3exit  cond+ret
-   10.0  _run_check                                 11n   1exit  loops+cond
+   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
    10.0  ApiChangelogGenerator._diff_functions       9n   1exit  loops+cond
    10.0  ApiChangelogGenerator._diff_classes        15n   1exit  loops+cond
-   10.0  Code2DocsConfig.from_yaml                  20n   3exit  cond+ret
+   10.0  _run_check                                 11n   1exit  loops+cond
 
   summary:
     critical(≥10): 27 | high(5-10): 58 | medium(2-5): 100 | low(<2): 70
@@ -143,8 +143,8 @@ CLASSES:
   Code2LlmGenerator              █████                      4m  CC̄=6.2   max=17    !!
   Code2DocsConfig                █████                      4m  CC̄=4.0   max=10  
   BaseGenerator                  ████                       3m  CC̄=1.0   max=1   
-  ProjectScanner                 ████                       3m  CC̄=1.3   max=2   
   EndpointDetector               ████                       3m  CC̄=4.0   max=5   
+  ProjectScanner                 ████                       3m  CC̄=1.3   max=2   
   Updater                        ██                         2m  CC̄=3.0   max=4   
   ReadmeGeneratorAdapter         ██                         2m  CC̄=2.5   max=4   
   ApiReferenceAdapter            ██                         2m  CC̄=2.0   max=2   
@@ -161,16 +161,16 @@ CLASSES:
   Code2LlmAdapter                ██                         2m  CC̄=4.0   max=7   
   OrgReadmeAdapter               ██                         2m  CC̄=3.0   max=4   
   ChangeInfo                     █                          1m  CC̄=1.0   max=1   
-  DefaultGroup                   █                          1m  CC̄=4.0   max=4   
   LLMConfig                      █                          1m  CC̄=1.0   max=1   
+  DefaultGroup                   █                          1m  CC̄=4.0   max=4   
   GenerateContext                                           0m  CC̄=0.0   max=0.0 
   ChangelogEntry                                            0m  CC̄=0.0   max=0.0 
-  ApiChange                                                 0m  CC̄=0.0   max=0.0 
   ReadmeConfig                                              0m  CC̄=0.0   max=0.0 
   DocsConfig                                                0m  CC̄=0.0   max=0.0 
   ExamplesConfig                                            0m  CC̄=0.0   max=0.0 
   SyncConfig                                                0m  CC̄=0.0   max=0.0 
   Code2LlmConfig                                            0m  CC̄=0.0   max=0.0 
+  ApiChange                                                 0m  CC̄=0.0   max=0.0 
   DependencyInfo                                            0m  CC̄=0.0   max=0.0 
   ProjectDependencies                                       0m  CC̄=0.0   max=0.0 
   Endpoint                                                  0m  CC̄=0.0   max=0.0 
@@ -236,6 +236,18 @@ Thi...
     e: ConfigDocsGenerator
     ConfigDocsGenerator  # Generate docs/configuration.md from Code2DocsConfig dataclas...
       __init__(2)  CC=1.0
+  code2docs/config.py:
+    e: ReadmeConfig,DocsConfig,ExamplesConfig,SyncConfig,Code2LlmConfig,LLMConfig,Code2DocsConfig
+    ReadmeConfig  # Configuration for README generation....
+    DocsConfig  # Configuration for docs/ generation....
+    ExamplesConfig  # Configuration for examples/ generation....
+    SyncConfig  # Configuration for synchronization....
+    Code2LlmConfig  # Configuration for code2llm analysis generation....
+    LLMConfig  # Configuration for optional LLM-assisted documentation genera...
+      from_env(0)  CC=1.0
+    Code2DocsConfig  # Main configuration for code2docs....
+      __post_init__(0)  CC=2.0
+        → _detect_repo_url(-1)  CC=3.0
   code2docs/cli.py:
     e: DefaultGroup,main,generate,sync,watch,init,check,diff,_load_config,_run_generate,_run_sync,_run_watch,_run_check,_run_diff
     DefaultGroup  # Click Group that routes unknown subcommands to 'generate'....
@@ -254,18 +266,6 @@ Thi...
     _run_watch(project_path,config)
     _run_check(project_path,config,target)
     _run_diff(project_path,config)
-  code2docs/config.py:
-    e: ReadmeConfig,DocsConfig,ExamplesConfig,SyncConfig,Code2LlmConfig,LLMConfig,Code2DocsConfig
-    ReadmeConfig  # Configuration for README generation....
-    DocsConfig  # Configuration for docs/ generation....
-    ExamplesConfig  # Configuration for examples/ generation....
-    SyncConfig  # Configuration for synchronization....
-    Code2LlmConfig  # Configuration for code2llm analysis generation....
-    LLMConfig  # Configuration for optional LLM-assisted documentation genera...
-      from_env(0)  CC=1.0
-    Code2DocsConfig  # Main configuration for code2docs....
-      __post_init__(0)  CC=2.0
-        → _detect_repo_url(-1)  CC=3.0
   examples/07_web_frameworks.py:
     e: detect_flask_endpoints,detect_fastapi_endpoints,generate_api_docs_from_endpoints,create_example_web_apps,document_web_project
     detect_flask_endpoints(project_path)

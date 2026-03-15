@@ -3,7 +3,7 @@ project:
   name: code2docs
   repo: /home/tom/github/wronai/code2docs
   language: python
-  analyzed_at: '2026-03-09T21:24:09Z'
+  analyzed_at: '2026-03-09T21:34:36Z'
   tool: code2llm
   stats:
     files: 34
@@ -88,12 +88,12 @@ health:
     limit: 10
     severity: error
   - type: high_fan_out
-    target: _run_generate
+    target: ArchitectureGenerator.generate
     value: 16
     limit: 10
     severity: error
   - type: high_fan_out
-    target: ArchitectureGenerator.generate
+    target: _run_generate
     value: 16
     limit: 10
     severity: error
@@ -758,10 +758,6 @@ hotspots:
   note: Render a single module's detail section.
 refactoring:
   priorities:
-  - action: Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10)
-    impact: high
-    effort: low
-    module: readme_gen.py
   - action: Split ModuleDocsGenerator._render_module_detail (CC=25 → target CC<10)
     impact: high
     effort: low
@@ -770,6 +766,10 @@ refactoring:
     impact: high
     effort: low
     module: api_reference_gen.py
+  - action: Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10)
+    impact: high
+    effort: low
+    module: readme_gen.py
   - action: Split GettingStartedGenerator._render_first_usage (CC=15 → target CC<10)
     impact: medium
     effort: low

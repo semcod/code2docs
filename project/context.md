@@ -98,9 +98,9 @@ Requires watchdog
 
 | # | Action | Impact | Effort |
 |---|--------|--------|--------|
-| 1 | Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10) | high | low |
-| 2 | Split ModuleDocsGenerator._render_module_detail (CC=25 → target CC<10) | high | low |
-| 3 | Split ApiReferenceGenerator._render_module_section (CC=25 → target CC<10) | high | low |
+| 1 | Split ModuleDocsGenerator._render_module_detail (CC=25 → target CC<10) | high | low |
+| 2 | Split ApiReferenceGenerator._render_module_section (CC=25 → target CC<10) | high | low |
+| 3 | Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10) | high | low |
 | 4 | Split GettingStartedGenerator._render_first_usage (CC=15 → target CC<10) | medium | low |
 | 5 | Split GettingStartedGenerator._generate_intro (CC=16 → target CC<10) | medium | low |
 | 6 | Split parse_gitignore (CC=15 → target CC<10) | medium | low |
