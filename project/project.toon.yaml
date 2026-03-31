@@ -1,4 +1,4 @@
-# code2docs | 258 func | 34f | 7585L | python | 2026-03-31
+# code2docs | 258 func | 34f | 7586L | python | 2026-03-31
 
 HEALTH:
   CC̄=4.4  critical=28 (limit:10)  dup=0  cycles=1
@@ -13,11 +13,11 @@ ALERTS[20]:
   !!! high_fan_out     ApiReferenceGenerator._render_module_section = 21 (limit:10)
   !!! high_fan_out     OrgReadmeGenerator._extract_description = 20 (limit:10)
   !!  cc_exceeded      ExamplesGenerator._generate_advanced = 22 (limit:15)
-  !!  high_fan_out     ModuleDocsGenerator.generate = 19 (limit:10)
+  !!  high_fan_out     Code2DocsConfig.from_yaml = 19 (limit:10)
 
 MODULES[39] (top by size):
   M[code2docs/generators/readme_gen.py] 477L C:1 F:18 CC↑29 D:1 (python)
-  M[code2docs/generators/examples_gen.py] 443L C:1 F:15 CC↑22 D:0 (python)
+  M[code2docs/generators/examples_gen.py] 444L C:1 F:15 CC↑22 D:0 (python)
   M[code2docs/generators/_registry_adapters.py] 441L C:15 F:31 CC↑15 D:0 (python)
   M[code2docs/analyzers/dependency_scanner.py] 325L C:3 F:10 CC↑9 D:0 (python)
   M[code2docs/cli.py] 319L C:1 F:14 CC↑10 D:0 (python)
@@ -52,4 +52,4 @@ REFACTOR[15]:
 EVOLUTION:
   2026-03-09 CC̄=4.4 crit=27 7432L // Automated analysis
   2026-03-15 CC̄=4.4 crit=28 7585L // Automated analysis
-  2026-03-31 CC̄=4.4 crit=28 7585L // Automated analysis
+  2026-03-31 CC̄=4.4 crit=28 7586L // Automated analysis
