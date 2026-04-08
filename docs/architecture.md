@@ -301,6 +301,8 @@ classDiagram
 
 ## Public Entry Points
 
+- `code2docs.generators.generate_docs` — High-level function to generate all documentation.
+- `code2docs.generators.code2llm_gen.generate_code2llm_analysis` — Convenience function to generate code2llm analysis.
 - `code2docs.cli.main` — code2docs — Auto-generate project documentation from source code.
 - `code2docs.cli.generate` — Generate documentation (default command).
 - `code2docs.cli.sync` — Synchronize documentation with source code changes.
@@ -308,9 +310,6 @@ classDiagram
 - `code2docs.cli.init` — Initialize code2docs.yaml configuration file.
 - `code2docs.cli.check` — Health check — verify documentation completeness.
 - `code2docs.cli.diff` — Preview what would change without writing anything.
-- `code2docs.generators.generate_docs` — High-level function to generate all documentation.
-- `code2docs.generators.code2llm_gen.generate_code2llm_analysis` — Convenience function to generate code2llm analysis.
-- `code2docs.analyzers.project_scanner.analyze_and_document` — Convenience function: analyze a project in one call.
 - `examples.04_sync_and_watch.detect_changes_example` — Detect what files have changed since last documentation generation.
 - `examples.04_sync_and_watch.update_docs_incrementally` — Update only the parts of docs that need changing.
 - `examples.04_sync_and_watch.force_full_regeneration` — Force full regeneration of all documentation.
@@ -338,6 +337,7 @@ classDiagram
 - `examples.02_configuration.create_advanced_config` — Create advanced configuration with all options.
 - `examples.02_configuration.save_yaml_config_example` — Save example YAML config to file.
 - `examples.02_configuration.load_config_from_yaml` — Load configuration from YAML file.
+- `code2docs.analyzers.project_scanner.analyze_and_document` — Convenience function: analyze a project in one call.
 
 ## Metrics Summary
 
@@ -349,4 +349,4 @@ classDiagram
 | CFG Nodes | 1792 |
 | Patterns | 2 |
 | Avg Complexity | 4.1 |
-| Analysis Time | 4.3s |
+| Analysis Time | 4.31s |
