@@ -32,7 +32,7 @@ def main() -> None:
 @click.option('--output', '-o', default=None, help='Output directory for docs')
 @click.option('--verbose', '-v', is_flag=True, help='Verbose output')
 @click.option('--dry-run', is_flag=True, help='Show what would be generated without writing')
-@click.option('--llm', 'llm_model', default=None, help='Enable LLM-assisted generation (e.g. openai/gpt-4o-mini, ollama/llama3)')
+@click.option('--llm', 'llm_model', default=None, help='Enable LLM-assisted generation (e.g. openai/gpt-5.4-mini, ollama/llama3)')
 @click.option('--org-name', default=None, help='Organization name for org-mode README generation')
 def generate(project_path, config_path, readme_only, sections, output, verbose, dry_run, llm_model, org_name) -> None:
     """Generate documentation (default command)."""

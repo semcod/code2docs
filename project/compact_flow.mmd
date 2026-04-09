@@ -1,9 +1,11 @@
 flowchart TD
-    code2docs__analyzers["code2docs.analyzers<br/>17 funcs"]
+    code2docs__analyzers["code2docs.analyzers<br/>27 funcs"]
     code2docs__cli["code2docs.cli<br/>14 funcs"]
+    code2docs__config["code2docs.config<br/>5 funcs"]
     code2docs__formatters["code2docs.formatters<br/>18 funcs"]
-    code2docs__generators["code2docs.generators<br/>138 funcs"]
+    code2docs__generators["code2docs.generators<br/>169 funcs"]
     code2docs__sync["code2docs.sync<br/>10 funcs"]
+    examples__02_configuration["examples.02_configuration<br/>4 funcs"]
     examples__03_programmatic_api["examples.03_programmatic_api<br/>5 funcs"]
     examples__04_sync_and_watch["examples.04_sync_and_watch<br/>6 funcs"]
     examples__05_custom_generators["examples.05_custom_generators<br/>13 funcs"]
@@ -12,8 +14,10 @@ flowchart TD
     examples__06_formatters ==>|5| code2docs__formatters
     examples__03_programmatic_api ==>|5| code2docs__analyzers
     examples__07_web_frameworks ==>|4| code2docs__analyzers
+    code2docs__cli -->|2| code2docs__config
     code2docs__generators -->|1| code2docs__formatters
-    code2docs__cli -->|1| code2docs__sync
     examples__04_sync_and_watch -->|1| code2docs__sync
+    code2docs__cli -->|1| code2docs__sync
     examples__05_custom_generators -->|1| code2docs__analyzers
     examples__03_programmatic_api -->|1| code2docs__generators
+    examples__02_configuration -->|1| code2docs__config

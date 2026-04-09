@@ -4,14 +4,19 @@
 
 - **Project**: /home/tom/github/semcod/code2docs
 - **Primary Language**: python
-- **Languages**: python: 49, shell: 1
+- **Languages**: python: 54, shell: 1
 - **Analysis Mode**: static
-- **Total Functions**: 252
-- **Total Classes**: 35
-- **Modules**: 50
-- **Entry Points**: 235
+- **Total Functions**: 298
+- **Total Classes**: 60
+- **Modules**: 55
+- **Entry Points**: 281
 
 ## Architecture by Module
+
+### code2docs.generators._registry_adapters
+- **Functions**: 31
+- **Classes**: 15
+- **File**: `_registry_adapters.py`
 
 ### code2docs.generators.readme_gen
 - **Functions**: 18
@@ -52,6 +57,11 @@
 - **Functions**: 10
 - **Classes**: 2
 - **File**: `docstring_extractor.py`
+
+### code2docs.analyzers.dependency_scanner
+- **Functions**: 10
+- **Classes**: 3
+- **File**: `dependency_scanner.py`
 
 ### code2docs.generators.depgraph_gen
 - **Functions**: 9
@@ -103,16 +113,6 @@
 - **Classes**: 1
 - **File**: `_source_links.py`
 
-### code2docs.generators.changelog_gen
-- **Functions**: 6
-- **Classes**: 2
-- **File**: `changelog_gen.py`
-
-### code2docs.generators.code2llm_gen
-- **Functions**: 6
-- **Classes**: 1
-- **File**: `code2llm_gen.py`
-
 ## Key Entry Points
 
 Main execution flows into the system:
@@ -120,6 +120,10 @@ Main execution flows into the system:
 ### code2docs.generators.examples_gen.ExamplesGenerator._generate_advanced
 > Generate advanced_usage.py — individual generator usage, sync, etc.
 - **Calls**: self._find_generator_classes, self._find_class_by_name, lines.append, None.join, lines.append, lines.append, lines.append, lines.append
+
+### code2docs.config.Code2DocsConfig.from_yaml
+> Load configuration from code2docs.yaml.
+- **Calls**: Path, cls, data.get, project.get, project.get, project.get, project.get, project.get
 
 ### code2docs.generators.examples_gen.ExamplesGenerator._generate_quickstart
 > Generate quickstart.py — minimal working example.
@@ -173,6 +177,9 @@ Main execution flows into the system:
 > Extract short description from project (max 5 lines).
 - **Calls**: result.modules.values, readme.exists, pyproject.exists, hasattr, self._truncate_description, readme.read_text, content.split, enumerate
 
+### code2docs.generators._registry_adapters.IndexHtmlAdapter._generate_html
+- **Calls**: None.exists, None.exists, None.exists, None.exists, None.exists, None.exists, None.exists, None.exists
+
 ### code2docs.generators.readme_gen.ReadmeGenerator._build_context
 > Build template context from analysis result.
 - **Calls**: DependencyScanner, dep_scanner.scan, EndpointDetector, endpoint_detector.detect, self._calc_avg_complexity, self._build_module_tree, self._generate_description, self._extract_project_metadata
@@ -197,6 +204,18 @@ Main execution flows into the system:
 > Execute code2llm CLI with appropriate options.
 - **Calls**: code2docs.generators.code2llm_gen.parse_gitignore, subprocess.run, str, None.join, str, str, cmd.append, cmd.append
 
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
+> Parse pyproject.toml for dependencies.
+- **Calls**: ProjectDependencies, data.get, project.get, project.get, project.get, project.get, project.get, project.get
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_package_json
+> Parse package.json for dependencies.
+- **Calls**: ProjectDependencies, data.get, data.get, data.get, engines.get, None.items, None.items, lock_pnpm.exists
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_go_mod
+> Parse go.mod for Go dependencies.
+- **Calls**: ProjectDependencies, path.read_text, re.search, re.search, re.finditer, go_ver.group, None.splitlines, deps.dependencies.append
+
 ### code2docs.sync.differ.Differ.detect_changes
 > Compare current file hashes with saved state. Return list of changes.
 - **Calls**: None.resolve, self._load_state, self._compute_state, new_state.items, old_state.items, old_state.get, Path, changes.append
@@ -217,26 +236,6 @@ Main execution flows into the system:
 > Render first usage example — CLI + Python API.
 - **Calls**: public_funcs.sort, lines.append, None.join, None.join, lines.append, lines.append, lines.append, lines.append
 
-### code2docs.generators.generate_docs
-> High-level function to generate all documentation.
-- **Calls**: ProjectScanner, scanner.analyze, None.generate, None.generate, None.generate, Code2DocsConfig, None.generate, None.generate
-
-### code2docs.cli.generate
-> Generate documentation (default command).
-- **Calls**: main.command, click.argument, click.option, click.option, click.option, click.option, click.option, click.option
-
-### code2docs.generators.getting_started_gen.GettingStartedGenerator._render_prerequisites
-> Render prerequisites section.
-- **Calls**: DependencyScanner, dep_scanner.scan, None.join, lines.append, lines.append, lines.append, lines.append, lines.append
-
-### code2docs.generators.org_readme_gen.OrgReadmeGenerator._get_repo_url
-> Get repository URL from git or pyproject.toml.
-- **Calls**: pyproject.exists, subprocess.run, result.stdout.strip, url.startswith, url.removesuffix, open, tomllib.load, None.get
-
-### examples.05_custom_generators.APIChangelogGenerator.generate
-> Generate changelog comparing to previous analysis.
-- **Calls**: lines.append, None.join, lines.append, lines.append, self._compare_apis, self._list_new_apis, lines.append, lines.append
-
 ## Process Flows
 
 Key execution flows identified:
@@ -246,49 +245,49 @@ Key execution flows identified:
 _generate_advanced [code2docs.generators.examples_gen.ExamplesGenerator]
 ```
 
-### Flow 2: _generate_quickstart
+### Flow 2: from_yaml
+```
+from_yaml [code2docs.config.Code2DocsConfig]
+```
+
+### Flow 3: _generate_quickstart
 ```
 _generate_quickstart [code2docs.generators.examples_gen.ExamplesGenerator]
 ```
 
-### Flow 3: generate
+### Flow 4: generate
 ```
 generate [code2docs.generators.architecture_gen.ArchitectureGenerator]
 ```
 
-### Flow 4: _render_module_section
+### Flow 5: _render_module_section
 ```
 _render_module_section [code2docs.generators.api_reference_gen.ApiReferenceGenerator]
 ```
 
-### Flow 5: _extract_project_metadata
+### Flow 6: _extract_project_metadata
 ```
 _extract_project_metadata [code2docs.generators.readme_gen.ReadmeGenerator]
 ```
 
-### Flow 6: _render_module_detail
+### Flow 7: _render_module_detail
 ```
 _render_module_detail [code2docs.generators.module_docs_gen.ModuleDocsGenerator]
 ```
 
-### Flow 7: generate_complex_document
+### Flow 8: generate_complex_document
 ```
 generate_complex_document [examples.06_formatters]
 ```
 
-### Flow 8: markdown_formatting_examples
+### Flow 9: markdown_formatting_examples
 ```
 markdown_formatting_examples [examples.06_formatters]
 ```
 
-### Flow 9: _diff_classes
+### Flow 10: _diff_classes
 ```
 _diff_classes [code2docs.generators.api_changelog_gen.ApiChangelogGenerator]
-```
-
-### Flow 10: _render_code_style
-```
-_render_code_style [code2docs.generators.contributing_gen.ContributingGenerator]
 ```
 
 ## Key Classes
@@ -322,6 +321,11 @@ _render_code_style [code2docs.generators.contributing_gen.ContributingGenerator]
 > Extract and parse docstrings from AnalysisResult.
 - **Methods**: 10
 - **Key Methods**: code2docs.analyzers.docstring_extractor.DocstringExtractor.extract_all, code2docs.analyzers.docstring_extractor.DocstringExtractor.parse, code2docs.analyzers.docstring_extractor.DocstringExtractor._extract_summary, code2docs.analyzers.docstring_extractor.DocstringExtractor._classify_section, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line, code2docs.analyzers.docstring_extractor.DocstringExtractor.coverage_report
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner
+> Scan and parse project dependency files.
+- **Methods**: 10
+- **Key Methods**: code2docs.analyzers.dependency_scanner.DependencyScanner.scan, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject_regex, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_setup_py, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_requirements_txt, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_package_json, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_cargo_toml, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_go_mod, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_dep_string, code2docs.analyzers.dependency_scanner.DependencyScanner._detect_version
 
 ### code2docs.generators.depgraph_gen.DepGraphGenerator
 > Generate docs/dependency-graph.md with Mermaid diagrams.
@@ -390,13 +394,6 @@ If LLM is unavailable or disabled, every
 - **Methods**: 5
 - **Key Methods**: code2docs.generators.mkdocs_gen.MkDocsGenerator.__init__, code2docs.generators.mkdocs_gen.MkDocsGenerator.generate, code2docs.generators.mkdocs_gen.MkDocsGenerator._read_pyproject_mkdocs, code2docs.generators.mkdocs_gen.MkDocsGenerator._build_nav, code2docs.generators.mkdocs_gen.MkDocsGenerator.write
 
-### code2docs.registry.GeneratorRegistry
-> Registry of documentation generators.
-
-Generators register themselves via :meth:`register`. The CLI 
-- **Methods**: 4
-- **Key Methods**: code2docs.registry.GeneratorRegistry.__init__, code2docs.registry.GeneratorRegistry.add, code2docs.registry.GeneratorRegistry.run_all, code2docs.registry.GeneratorRegistry.run_only
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
@@ -416,9 +413,6 @@ Filters out:
 ### code2docs.generators.api_reference_gen.ApiReferenceGenerator._format_signature
 > Format a function signature string.
 - **Output to**: None.join, len
-
-### code2docs.cli.DefaultGroup.parse_args
-- **Output to**: None.parse_args, super
 
 ### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
 > Parse a docstring into structured sections (orchestrator).
@@ -443,6 +437,45 @@ Filters out:
 > Parse an examples line.
 - **Output to**: info.examples.append
 
+### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
+> Try to parse a route decorator string.
+- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
+> Parse pyproject.toml for dependencies.
+- **Output to**: ProjectDependencies, data.get, project.get, project.get, project.get
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject_regex
+> Fallback regex-based pyproject.toml parser.
+- **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.findall
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_setup_py
+> Parse setup.py for dependencies (regex-based, no exec).
+- **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.findall
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_requirements_txt
+> Parse requirements.txt.
+- **Output to**: ProjectDependencies, None.splitlines, line.strip, deps.dependencies.append, path.read_text
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_package_json
+> Parse package.json for dependencies.
+- **Output to**: ProjectDependencies, data.get, data.get, data.get, engines.get
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_cargo_toml
+> Parse Cargo.toml for Rust dependencies.
+- **Output to**: ProjectDependencies, path.read_text, re.search, content.splitlines, ver_match.group
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_go_mod
+> Parse go.mod for Go dependencies.
+- **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.finditer
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_dep_string
+> Parse a dependency string like 'package>=1.0'.
+- **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
+
+### code2docs.cli.DefaultGroup.parse_args
+- **Output to**: None.parse_args, super
+
 ### examples.05_custom_generators.MetricsReportGenerator._format_stats_table
 > Format statistics as markdown table.
 - **Output to**: stats.items, None.join, lines.append
@@ -450,10 +483,6 @@ Filters out:
 ### examples.06_formatters.markdown_formatting_examples
 > Demonstrate markdown formatting utilities.
 - **Output to**: MarkdownFormatter, print, print, print, print
-
-### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
-> Try to parse a route decorator string.
-- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
 
 ## Behavioral Patterns
 
@@ -471,6 +500,7 @@ Filters out:
 
 Functions exposed as public API (no underscore prefix):
 
+- `code2docs.config.Code2DocsConfig.from_yaml` - 53 calls
 - `code2docs.generators.architecture_gen.ArchitectureGenerator.generate` - 42 calls
 - `examples.06_formatters.generate_complex_document` - 32 calls
 - `code2docs.sync.watcher.start_watcher` - 29 calls
@@ -485,15 +515,19 @@ Functions exposed as public API (no underscore prefix):
 - `code2docs.sync.differ.Differ.detect_changes` - 16 calls
 - `examples.03_programmatic_api.inspect_project_structure` - 16 calls
 - `code2docs.generators.generate_docs` - 15 calls
+- `code2docs.analyzers.dependency_scanner.DependencyScanner.scan` - 15 calls
 - `code2docs.cli.generate` - 15 calls
 - `examples.05_custom_generators.APIChangelogGenerator.generate` - 14 calls
 - `code2docs.generators.config_docs_gen.ConfigDocsGenerator.generate` - 12 calls
 - `examples.03_programmatic_api.generate_full_documentation` - 12 calls
 - `code2docs.generators.code2llm_gen.parse_gitignore` - 11 calls
+- `code2docs.generators._registry_adapters.ReadmeGeneratorAdapter.run` - 11 calls
+- `code2docs.generators._registry_adapters.OrgReadmeAdapter.run` - 11 calls
 - `examples.04_sync_and_watch.sync_with_git_changes` - 11 calls
 - `code2docs.formatters.toc.extract_headings` - 10 calls
 - `code2docs.cli.init` - 10 calls
 - `examples.03_programmatic_api.generate_docs_if_needed` - 10 calls
+- `code2docs.config.LLMConfig.from_env` - 9 calls
 - `code2docs.generators.readme_gen.ReadmeGenerator.write` - 9 calls
 - `examples.05_custom_generators.generate_custom_report` - 9 calls
 - `examples.07_web_frameworks.document_web_project` - 9 calls
@@ -505,12 +539,7 @@ Functions exposed as public API (no underscore prefix):
 - `code2docs.cli.sync` - 8 calls
 - `examples.03_programmatic_api.custom_documentation_pipeline` - 8 calls
 - `code2docs.generators.contributing_gen.ContributingGenerator.generate` - 7 calls
-- `code2docs.cli.watch` - 7 calls
-- `code2docs.cli.check` - 7 calls
-- `examples.04_sync_and_watch.update_docs_incrementally` - 7 calls
-- `examples.07_web_frameworks.create_example_web_apps` - 7 calls
-- `code2docs.generators.readme_gen.generate_readme` - 6 calls
-- `code2docs.generators.api_changelog_gen.ApiChangelogGenerator.generate` - 6 calls
+- `code2docs.generators._registry_adapters.Code2LlmAdapter.run` - 7 calls
 
 ## System Interactions
 
@@ -522,6 +551,9 @@ graph TD
     _generate_advanced --> _find_class_by_name
     _generate_advanced --> append
     _generate_advanced --> join
+    from_yaml --> Path
+    from_yaml --> cls
+    from_yaml --> get
     _generate_quickstart --> _find_convenience_fu
     _generate_quickstart --> _find_api_classes
     _generate_quickstart --> set
@@ -545,9 +577,6 @@ graph TD
     generate_complex_doc --> MarkdownFormatter
     generate_complex_doc --> append
     generate --> sorted
-    markdown_formatting_ --> MarkdownFormatter
-    markdown_formatting_ --> print
-    _diff_classes --> set
 ```
 
 ## Reverse Engineering Guidelines

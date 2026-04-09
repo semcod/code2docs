@@ -55,7 +55,7 @@ class ConfigDocsGenerator:
         "watch": "Enable file watcher for auto-resync",
         "ignore": "Glob patterns to ignore during sync",
         "enabled": "Enable LLM-assisted documentation generation",
-        "model": "LLM model identifier (litellm format, e.g. `openai/gpt-4o-mini`, `ollama/llama3`)",
+        "model": "LLM model identifier (litellm format, e.g. `openai/gpt-5.4-mini`, `ollama/llama3`)",
         "api_key": "API key for the LLM provider (use `.env` or env var `CODE2DOCS_LLM_API_KEY`)",
         "api_base": "Custom API base URL (for self-hosted or proxy endpoints)",
         "max_tokens": "Maximum tokens per LLM call",

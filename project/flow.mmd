@@ -24,6 +24,8 @@ flowchart TD
         code2docs__registry__GeneratorRegistry__add["add"]
         code2docs__registry__GeneratorRegistry__run_all["run_all"]
         code2docs__registry__GeneratorRegistry__run_only["run_only"]
+        code2docs__base__BaseGenerator__should_run["should_run"]
+        code2docs__base__BaseGenerator__run["run"]
         code2docs__sync__updater__Updater__apply["apply"]
         code2docs__sync__differ__ChangeInfo____str__["__str__"]
         code2docs__sync__differ__Differ__detect_changes["detect_changes"]
@@ -34,9 +36,7 @@ flowchart TD
         code2docs__formatters__markdown__MarkdownFormatter__heading["heading"]
         code2docs__formatters__markdown__MarkdownFormatter__paragraph["paragraph"]
         code2docs__formatters__markdown__MarkdownFormatter__blockquote["blockquote"]
-        code2docs__formatters__markdown__MarkdownFormatter__code_block["code_block"]
-        code2docs__formatters__markdown__MarkdownFormatter__inline_code["inline_code"]
-        ...["+152 more"]
+        ...["+198 more"]
     end
 
-    class code2docs__registry__GeneratorRegistry__add,code2docs__registry__GeneratorRegistry__run_all,code2docs__registry__GeneratorRegistry__run_only,code2docs__sync__updater__Updater__apply,code2docs__sync__differ__ChangeInfo____str__,code2docs__sync__differ__Differ__detect_changes,code2docs__sync__differ__Differ__save_state,code2docs__sync__differ__Differ___load_state,code2docs__sync__differ__Differ___compute_state,code2docs__sync__differ__Differ___file_to_module entry
+    class code2docs__registry__GeneratorRegistry__add,code2docs__registry__GeneratorRegistry__run_all,code2docs__registry__GeneratorRegistry__run_only,code2docs__base__BaseGenerator__should_run,code2docs__base__BaseGenerator__run,code2docs__sync__updater__Updater__apply,code2docs__sync__differ__ChangeInfo____str__,code2docs__sync__differ__Differ__detect_changes,code2docs__sync__differ__Differ__save_state,code2docs__sync__differ__Differ___load_state entry

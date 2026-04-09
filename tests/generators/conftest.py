@@ -1,0 +1,14 @@
+from code2llm.core.models import AnalysisResult, FunctionInfo, ClassInfo, ModuleInfo
+from code2docs.config import Code2DocsConfig
+
+def _make_result() -> AnalysisResult:
+    result = AnalysisResult(project_path='/tmp/mockproject')
+    result.modules = {'mylib.core': ModuleInfo(name='mylib.core', file='/tmp/mockproject/mylib/core.py', imports=['os', 'json', 'mylib.utils'], functions=['process', 'validate'], classes=['Engine']), 'mylib.utils': ModuleInfo(name='mylib.utils', file='/tmp/mockproject/mylib/utils.py', imports=['re'], functions=['slugify', 'sanitize'], classes=[])}
+    result.classes = {'mylib.core.Engine': ClassInfo(name='Engine', qualified_name='mylib.core.Engine', file='/tmp/mockproject/mylib/core.py', line=10, module='mylib.core', bases=['BaseEngine'], methods=['run', 'stop'], docstring='Main processing engine.')}
+    result.functions = {'mylib.core.process': FunctionInfo(name='process', qualified_name='mylib.core.process', file='/tmp/mockproject/mylib/core.py', line=50, module='mylib.core', args=['data', 'config'], returns='Result', docstring='Process input data.', complexity={'cyclomatic': 5}), 'mylib.core.validate': FunctionInfo(name='validate', qualified_name='mylib.core.validate', file='/tmp/mockproject/mylib/core.py', line=80, module='mylib.core', args=['schema', 'payload'], returns='bool', docstring='Validate payload against schema.', complexity={'cyclomatic': 8}), 'mylib.core.Engine.run': FunctionInfo(name='run', qualified_name='mylib.core.Engine.run', file='/tmp/mockproject/mylib/core.py', line=15, module='mylib.core', is_method=True, args=['self', 'input'], returns='Output', docstring='Run the engine.', complexity={'cyclomatic': 3}), 'mylib.core.Engine.stop': FunctionInfo(name='stop', qualified_name='mylib.core.Engine.stop', file='/tmp/mockproject/mylib/core.py', line=30, module='mylib.core', is_method=True, args=['self'], returns=None, docstring='Stop the engine.', complexity={'cyclomatic': 1}), 'mylib.utils.slugify': FunctionInfo(name='slugify', qualified_name='mylib.utils.slugify', file='/tmp/mockproject/mylib/utils.py', line=5, module='mylib.utils', args=['text'], returns='str', docstring='Convert text to slug.', complexity={'cyclomatic': 2}), 'mylib.utils.sanitize': FunctionInfo(name='sanitize', qualified_name='mylib.utils.sanitize', file='/tmp/mockproject/mylib/utils.py', line=20, module='mylib.utils', args=['html'], returns='str', docstring=None, complexity={'cyclomatic': 4})}
+    result.stats = {'files_processed': 2, 'functions_found': 6, 'classes_found': 1}
+    result.entry_points = ['mylib.core.process']
+    return result
+
+def _make_config(**kwargs) -> Code2DocsConfig:
+    return Code2DocsConfig(project_name='mockproject', **kwargs)

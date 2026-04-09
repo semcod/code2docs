@@ -2,14 +2,6 @@ import re
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from code2llm import AnalysisResult
-from code2docs.config import Code2DocsConfig
-from code2docs.llm_helper import LLMHelper
-from jinja2 import Environment, PackageLoader, select_autoescape
-
-MARKER_START = "<!-- code2docs:start -->"
-MARKER_END = "<!-- code2docs:end -->"
-
 class ReadmeGenerator:
     """Generate README.md from AnalysisResult...."""
 

@@ -28,7 +28,7 @@ class TestLLMConfig:
 
     def test_from_env_with_model(self):
         env = {
-            "CODE2DOCS_LLM_MODEL": "openai/gpt-4o-mini",
+            "CODE2DOCS_LLM_MODEL": "openai/gpt-5.4-mini",
             "CODE2DOCS_LLM_API_KEY": "sk-test123",
             "CODE2DOCS_LLM_MAX_TOKENS": "2048",
             "CODE2DOCS_LLM_TEMPERATURE": "0.5",
@@ -36,7 +36,7 @@ class TestLLMConfig:
         with patch.dict("os.environ", env, clear=True):
             cfg = LLMConfig.from_env()
         assert cfg.enabled is True
-        assert cfg.model == "openai/gpt-4o-mini"
+        assert cfg.model == "openai/gpt-5.4-mini"
         assert cfg.api_key == "sk-test123"
         assert cfg.max_tokens == 2048
         assert cfg.temperature == 0.5
@@ -59,7 +59,7 @@ class TestLLMHelperDisabled:
     """Test that LLMHelper returns None for everything when disabled."""
 
     def test_not_available_when_disabled(self):
-        cfg = LLMConfig(enabled=False, model="openai/gpt-4o-mini")
+        cfg = LLMConfig(enabled=False, model="openai/gpt-5.4-mini")
         helper = LLMHelper(cfg)
         assert helper.available is False
 
@@ -103,7 +103,7 @@ class TestLLMHelperEnabled:
     @staticmethod
     def _make_helper():
         cfg = LLMConfig(
-            enabled=True, model="openai/gpt-4o-mini",
+            enabled=True, model="openai/gpt-5.4-mini",
             api_key="sk-test", max_tokens=512, temperature=0.2,
         )
         return LLMHelper(cfg)
@@ -128,7 +128,7 @@ class TestLLMHelperEnabled:
         assert result == "Hello world"
         mock_litellm.completion.assert_called_once()
         call_kwargs = mock_litellm.completion.call_args[1]
-        assert call_kwargs["model"] == "openai/gpt-4o-mini"
+        assert call_kwargs["model"] == "openai/gpt-5.4-mini"
         assert call_kwargs["max_tokens"] == 512
         assert call_kwargs["temperature"] == 0.2
         assert len(call_kwargs["messages"]) == 2
@@ -162,7 +162,7 @@ class TestLLMHelperEnabled:
 
     def test_api_key_passed_when_set(self):
         cfg = LLMConfig(
-            enabled=True, model="openai/gpt-4o-mini",
+            enabled=True, model="openai/gpt-5.4-mini",
             api_key="sk-secret", max_tokens=1024, temperature=0.3,
         )
         helper = LLMHelper(cfg)
