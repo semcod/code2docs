@@ -1,9 +1,8 @@
 """Wrapper around code2llm's ProjectAnalyzer for documentation purposes."""
 
-from pathlib import Path
 from typing import Optional
 
-from code2llm.api import Config, FAST_CONFIG, AnalysisResult, analyze
+from code2llm.api import Config, AnalysisResult, analyze
 
 from ..config import Code2DocsConfig
 

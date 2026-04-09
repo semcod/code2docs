@@ -1,17 +1,46 @@
+
+PORT_4 = 4
+CONSTANT_5 = 5
+CONSTANT_50 = 50
+
+
+PORT_4 = PORT_4
+CONSTANT_5 = CONSTANT_5
+CONSTANT_50 = CONSTANT_50
+
+
+PORT_4 = PORT_4
+CONSTANT_5 = CONSTANT_5
+CONSTANT_50 = CONSTANT_50
+
+
+PORT_4 = PORT_4
+CONSTANT_5 = CONSTANT_5
+CONSTANT_50 = CONSTANT_50
+
+
+
+PORT_4 = PORT_4
+CONSTANT_5 = CONSTANT_5
+CONSTANT_50 = CONSTANT_50
+
+PORT_4 = PORT_4
+CONSTANT_5 = CONSTANT_5
+CONSTANT_50 = CONSTANT_50
+
 """Auto-generate usage examples from public signatures and entry points."""
 
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Type
+from typing import Dict, List, Optional, Set
 
 from code2llm.api import AnalysisResult, FunctionInfo, ClassInfo
 
 from ..config import Code2DocsConfig
 
-# Constants
-CONSTANT_50 = 50
-
 # Default type hints → example values
-_TYPE_EXAMPLES = {
+
+if __name__ == "__main__":
+    _TYPE_EXAMPLES = {
     "str": '"./my-project"',
     "Path": 'Path("./my-project")',
     "int": "10",
@@ -26,7 +55,7 @@ _TYPE_EXAMPLES = {
 }
 
 # Arg name → realistic example value
-_ARG_EXAMPLES = {
+    _ARG_EXAMPLES = {
     "project_path": '"./my-project"',
     "path": '"./my-project"',
     "source": '"./src"',
@@ -145,7 +174,7 @@ class ExamplesGenerator:
         source = self.config.source or "./"
         output = self.config.output or "./docs"
         if config_cls:
-            lines.append('# ' + '=' * 50)
+            lines.append('# ' + '=' * CONSTANT_50)
             lines.append("# Example 1: Configuration")
             lines.append('# ' + '=' * CONSTANT_50)
             lines.append("")
@@ -159,7 +188,7 @@ class ExamplesGenerator:
 
         # --- Example 2: Quick generate ---
         lines.append("")
-        lines.append('# ' + '=' * 50)
+        lines.append('# ' + '=' * CONSTANT_50)
         lines.append("# Example 2: Generate documentation")
         lines.append('# ' + '=' * CONSTANT_50)
         lines.append("")
@@ -186,7 +215,7 @@ class ExamplesGenerator:
         scanner_cls = self._find_class_by_name("ProjectScanner")
         if scanner_cls:
             lines.append("")
-            lines.append('# ' + '=' * 50)
+            lines.append('# ' + '=' * CONSTANT_50)
             lines.append("# Example 3: Analyze a project programmatically")
             lines.append('# ' + '=' * CONSTANT_50)
             lines.append("")
@@ -222,13 +251,13 @@ class ExamplesGenerator:
         # --- Individual generators ---
         gen_classes = self._find_generator_classes()
         if gen_classes:
-            lines.append('# ' + '=' * 50)
+            lines.append('# ' + '=' * CONSTANT_50)
             lines.append("# Using individual generators")
             lines.append('# ' + '=' * CONSTANT_50)
             lines.append("")
             lines.append(f"from {pkg} import Code2DocsConfig")
             lines.append(f"from {pkg}.analyzers.project_scanner import ProjectScanner")
-            for cls in gen_classes[:4]:
+            for cls in gen_classes[:PORT_4]:
                 mod = cls.module or pkg
                 if not mod.startswith(pkg):
                     mod = f"{pkg}.{mod}"
@@ -241,7 +270,7 @@ class ExamplesGenerator:
             lines.append('result = scanner.analyze(f"./{project_name_adv}") if project_name_adv != "." else scanner.analyze("./")')
             lines.append("")
 
-            for i, cls in enumerate(gen_classes[:4], start=2):
+            for i, cls in enumerate(gen_classes[:PORT_4], start=2):
                 gen_name = cls.name[0].lower() + cls.name[1:]
                 gen_name = gen_name.replace("Generator", "_gen")
                 lines.append(f"# Step {i}: Generate with {cls.name}")
@@ -271,7 +300,7 @@ class ExamplesGenerator:
         fmt_funcs = [f for f in fmt_funcs if f]
         if fmt_funcs:
             lines.append("")
-            lines.append('# ' + '=' * 50)
+            lines.append('# ' + '=' * CONSTANT_50)
             lines.append("# Formatters")
             lines.append('# ' + '=' * CONSTANT_50)
             lines.append("")
@@ -306,7 +335,7 @@ class ExamplesGenerator:
         differ_cls = self._find_class_by_name("Differ")
         if differ_cls:
             lines.append("")
-            lines.append('# ' + '=' * 50)
+            lines.append('# ' + '=' * CONSTANT_50)
             lines.append("# Sync — detect and apply changes")
             lines.append('# ' + '=' * CONSTANT_50)
             lines.append("")
@@ -397,7 +426,7 @@ class ExamplesGenerator:
         """Build a realistic argument string for a function call."""
         args = [a for a in func.args if a not in ("self", "cls")]
         parts = []
-        for arg in args[:5]:
+        for arg in args[:CONSTANT_5]:
             val = self._get_example_value(arg)
             if not val or val == '"..."':
                 # Try type hint

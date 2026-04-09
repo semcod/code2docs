@@ -1,4 +1,4 @@
-# code2docs | 39f 5219L | shell:1,python:38 | 2026-04-08
+# code2docs | 39f 5272L | shell:1,python:38 | 2026-04-09
 # stats: 258 func | 0 cls | 39 mod | CC̄=4.4 | critical:12 | cycles:0
 # alerts[5]: CC ReadmeGenerator._extract_project_metadata=29; CC ApiReferenceGenerator._render_module_section=25; CC ModuleDocsGenerator._render_module_detail=25; fan-out _run_check=24; fan-out ReadmeGenerator._extract_project_metadata=23
 # hotspots[5]: _run_check fan=24; ReadmeGenerator._extract_project_metadata fan=23; start_watcher fan=22; ApiReferenceGenerator._render_module_section fan=21; OrgReadmeGenerator._extract_description fan=20
@@ -9,9 +9,9 @@ M[39]:
   code2docs/__main__.py,6
   code2docs/analyzers/__init__.py,13
   code2docs/analyzers/dependency_scanner.py,248
-  code2docs/analyzers/docstring_extractor.py,140
-  code2docs/analyzers/endpoint_detector.py,113
-  code2docs/analyzers/project_scanner.py,42
+  code2docs/analyzers/docstring_extractor.py,138
+  code2docs/analyzers/endpoint_detector.py,112
+  code2docs/analyzers/project_scanner.py,41
   code2docs/base.py,46
   code2docs/cli.py,245
   code2docs/config.py,155
@@ -27,23 +27,23 @@ M[39]:
   code2docs/generators/architecture_gen.py,294
   code2docs/generators/changelog_gen.py,121
   code2docs/generators/code2llm_gen.py,206
-  code2docs/generators/config_docs_gen.py,125
+  code2docs/generators/config_docs_gen.py,124
   code2docs/generators/contributing_gen.py,231
   code2docs/generators/coverage_gen.py,104
   code2docs/generators/depgraph_gen.py,140
-  code2docs/generators/examples_gen.py,456
+  code2docs/generators/examples_gen.py,476
   code2docs/generators/getting_started_gen.py,196
   code2docs/generators/mkdocs_gen.py,110
   code2docs/generators/module_docs_gen.py,198
   code2docs/generators/org_readme_gen.py,227
-  code2docs/generators/readme_gen.py,322
+  code2docs/generators/readme_gen.py,350
   code2docs/llm_helper.py,161
   code2docs/registry.py,35
   code2docs/sync/__init__.py,6
   code2docs/sync/differ.py,125
   code2docs/sync/updater.py,51
   code2docs/sync/watcher.py,75
-  project.sh,25
+  project.sh,35
 D:
   code2docs/generators/readme_gen.py:
     e: ReadmeGenerator,generate_readme
@@ -105,15 +105,6 @@ Thi...
     e: generate_badges,_make_badge
     generate_badges(project_name;badge_types;stats;deps)
     _make_badge(badge_type;project_name;stats;deps)
-  code2docs/config.py:
-    e: ReadmeConfig,DocsConfig,ExamplesConfig,SyncConfig,Code2LlmConfig,LLMConfig,Code2DocsConfig
-    ReadmeConfig:  # Configuration for README generation...
-    DocsConfig:  # Configuration for docs/ generation...
-    ExamplesConfig:  # Configuration for examples/ generation...
-    SyncConfig:  # Configuration for synchronization...
-    Code2LlmConfig:  # Configuration for code2llm analysis generation...
-    LLMConfig: from_env(0)  # Configuration for optional LLM-assisted documentation genera...
-    Code2DocsConfig: __post_init__(0),_detect_repo_url(-1),from_yaml(1),to_yaml(1)  # Main configuration for code2docs...
   code2docs/generators/config_docs_gen.py:
     e: ConfigDocsGenerator
     ConfigDocsGenerator: __init__(2),generate(0),_render_section(2),_render_example(0)  # Generate docs/configuration.md from Code2DocsConfig dataclas...
@@ -133,6 +124,15 @@ Thi...
     _run_watch(project_path;config)
     _run_check(project_path;config;target)
     _run_diff(project_path;config)
+  code2docs/config.py:
+    e: ReadmeConfig,DocsConfig,ExamplesConfig,SyncConfig,Code2LlmConfig,LLMConfig,Code2DocsConfig
+    ReadmeConfig:  # Configuration for README generation...
+    DocsConfig:  # Configuration for docs/ generation...
+    ExamplesConfig:  # Configuration for examples/ generation...
+    SyncConfig:  # Configuration for synchronization...
+    Code2LlmConfig:  # Configuration for code2llm analysis generation...
+    LLMConfig: from_env(0)  # Configuration for optional LLM-assisted documentation genera...
+    Code2DocsConfig: __post_init__(0),_detect_repo_url(-1),from_yaml(1),to_yaml(1)  # Main configuration for code2docs...
   code2docs/generators/depgraph_gen.py:
     e: DepGraphGenerator
     DepGraphGenerator: __init__(2),generate(0),_collect_edges(0),_extract_imports_from_file(0),_import_matches(1),_render_mermaid(1),_render_matrix(1),_calc_degrees(0),_render_degree_table(2)  # Generate docs/dependency-graph.md with Mermaid diagrams...

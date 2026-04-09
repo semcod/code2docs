@@ -5,10 +5,8 @@ Minimal working examples for the most common use cases.
 Run: python examples/quickstart.py
 """
 
-from pathlib import Path
 
 from code2docs import Code2DocsConfig
-from code2docs import analyze_and_document
 from code2docs import generate_docs
 from code2docs import generate_readme
 

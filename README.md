@@ -3,7 +3,7 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.31-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-3.0.27-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![AI Cost](https://img.shields.io/badge/AI%20Cost-$7.50-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-18.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
 - 🤖 **LLM usage:** $7.5000 (59 commits)
@@ -13,7 +13,7 @@ Generated on 2026-04-09 using [openrouter/qwen/qwen3-coder-next](https://openrou
 
 ---
 
-![version](https://img.shields.io/badge/version-3.0.26-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)
+![version](https://img.shields.io/badge/version-3.0.27-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)
 
 > Auto-generate and sync project documentation from source code analysis.
 
@@ -153,7 +153,7 @@ code2docs can update only specific sections of an existing README using markers:
 ```markdown
 <!-- code2docs:start --># code2docs
 
-![version](https://img.shields.io/badge/version-3.0.26-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-276-green)
+![version](https://img.shields.io/badge/version-3.0.27-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.9-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-276-green)
 > **276** functions | **57** classes | **51** files | CC̄ = 3.8
 
 > Auto-generated project documentation from source code analysis.

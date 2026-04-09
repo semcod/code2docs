@@ -1,4 +1,4 @@
-# code2docs | 258 func | 34f | 6901L | python | 2026-04-08
+# code2docs | 258 func | 34f | 7093L | python | 2026-04-09
 
 HEALTH:
   CC̄=4.4  critical=28 (limit:10)  dup=0  cycles=1
@@ -13,11 +13,11 @@ ALERTS[20]:
   !!! high_fan_out     ApiReferenceGenerator._render_module_section = 21 (limit:10)
   !!! high_fan_out     OrgReadmeGenerator._extract_description = 20 (limit:10)
   !!  cc_exceeded      ExamplesGenerator._generate_advanced = 22 (limit:15)
-  !!  high_fan_out     Code2DocsConfig.from_yaml = 19 (limit:10)
+  !!  high_fan_out     ModuleDocsGenerator.generate = 19 (limit:10)
 
 MODULES[39] (top by size):
-  M[code2docs/generators/examples_gen.py] 456L C:1 F:15 CC↑22 D:0 (python)
-  M[code2docs/generators/readme_gen.py] 322L C:1 F:18 CC↑29 D:1 (python)
+  M[code2docs/generators/examples_gen.py] 476L C:1 F:15 CC↑22 D:0 (python)
+  M[code2docs/generators/readme_gen.py] 350L C:1 F:18 CC↑29 D:1 (python)
   M[code2docs/generators/architecture_gen.py] 294L C:1 F:10 CC↑13 D:0 (python)
   M[code2docs/generators/_registry_adapters.py] 290L C:15 F:31 CC↑15 D:0 (python)
   M[code2docs/analyzers/dependency_scanner.py] 248L C:3 F:10 CC↑9 D:0 (python)
@@ -43,8 +43,8 @@ Requires watchdog
   ★ OrgReadmeGenerator._extract_description fan=20  // Extract short description from project (max 5 lines).
 
 REFACTOR[15]:
-  [1] H/L Split ModuleDocsGenerator._render_module_detail (CC=25 → target CC<10)
-  [2] H/L Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10)
+  [1] H/L Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10)
+  [2] H/L Split ModuleDocsGenerator._render_module_detail (CC=25 → target CC<10)
   [3] H/L Split ApiReferenceGenerator._render_module_section (CC=25 → target CC<10)
   [4] M/L Split GettingStartedGenerator._render_first_usage (CC=15 → target CC<10)
   [5] M/L Split GettingStartedGenerator._generate_intro (CC=16 → target CC<10)
@@ -52,4 +52,4 @@ REFACTOR[15]:
 EVOLUTION:
   2026-03-09 CC̄=4.4 crit=27 7432L // Automated analysis
   2026-03-15 CC̄=4.4 crit=28 7585L // Automated analysis
-  2026-04-08 CC̄=4.4 crit=28 6901L // Automated analysis
+  2026-04-09 CC̄=4.4 crit=28 7093L // Automated analysis

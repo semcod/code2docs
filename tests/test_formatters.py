@@ -1,6 +1,5 @@
 """Tests for formatters (markdown, badges, toc)."""
 
-import pytest
 
 from code2docs.formatters.markdown import MarkdownFormatter
 from code2docs.formatters.badges import generate_badges

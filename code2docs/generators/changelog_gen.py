@@ -1,7 +1,7 @@
 """Changelog generator from git log and API diff."""
 
 import subprocess
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
 

@@ -1,66 +1,60 @@
-# redup/duplication | 7 groups | 38f 5365L | 2026-04-08
+# redup/duplication | 6 groups | 54f 6535L | 2026-04-09
 
 SUMMARY:
-  files_scanned: 38
-  total_lines:   5365
-  dup_groups:    7
-  dup_fragments: 21
-  saved_lines:   88
-  scan_ms:       8492
+  files_scanned: 54
+  total_lines:   6535
+  dup_groups:    6
+  dup_fragments: 19
+  saved_lines:   69
+  scan_ms:       4649
 
-DUPLICATES[7] (ranked by impact):
-  [88c0cfa6561a3637] ! EXAC  __init__  L=5 N=9 saved=40 sim=1.00
-      code2docs/generators/config_docs_gen.py:0-4  (__init__)
-      code2docs/generators/depgraph_gen.py:0-4  (__init__)
-      code2docs/generators/changelog_gen.py:0-4  (__init__)
-      code2docs/generators/code2llm_gen.py:0-4  (__init__)
-      code2docs/generators/mkdocs_gen.py:0-4  (__init__)
-      code2docs/generators/contributing_gen.py:0-4  (__init__)
-      code2docs/generators/api_changelog_gen.py:0-4  (__init__)
-      code2docs/base.py:0-4  (__init__)
-      examples/05_custom_generators.py:0-4  (__init__)
-  [95ed8c6095a87c3f]   EXAC  _get_public_methods  L=14 N=2 saved=14 sim=1.00
-      code2docs/generators/module_docs_gen.py:0-13  (_get_public_methods)
-      code2docs/generators/api_reference_gen.py:0-13  (_get_public_methods)
-  [2de350a70c24cad1]   EXAC  _group_modules  L=12 N=2 saved=12 sim=1.00
-      code2docs/generators/module_docs_gen.py:0-11  (_group_modules)
-      code2docs/generators/api_reference_gen.py:0-11  (_group_modules)
-  [8a2144faf5860455]   EXAC  __init__  L=6 N=2 saved=6 sim=1.00
-      code2docs/generators/getting_started_gen.py:0-5  (__init__)
-      code2docs/generators/architecture_gen.py:0-5  (__init__)
-  [92e552f65b8cca0f]   EXAC  __init__  L=6 N=2 saved=6 sim=1.00
-      code2docs/generators/module_docs_gen.py:0-5  (__init__)
-      code2docs/generators/api_reference_gen.py:0-5  (__init__)
-  [1ab2551cb5a5679f]   STRU  __init__  L=6 N=2 saved=6 sim=1.00
-      code2docs/generators/coverage_gen.py:0-5  (__init__)
-      examples/05_custom_generators.py:0-5  (__init__)
-  [a8f23cb0ba88c52c]   EXAC  __init__  L=4 N=2 saved=4 sim=1.00
-      code2docs/sync/updater.py:0-3  (__init__)
-      code2docs/sync/differ.py:0-3  (__init__)
+DUPLICATES[6] (ranked by impact):
+  [88c0cfa6561a3637]   EXAC  __init__  L=3 N=9 saved=24 sim=1.00
+      code2docs/base.py:32-34  (__init__)
+      code2docs/generators/api_changelog_gen.py:33-35  (__init__)
+      code2docs/generators/changelog_gen.py:39-41  (__init__)
+      code2docs/generators/code2llm_gen.py:75-77  (__init__)
+      code2docs/generators/config_docs_gen.py:14-16  (__init__)
+      code2docs/generators/contributing_gen.py:14-16  (__init__)
+      code2docs/generators/depgraph_gen.py:15-17  (__init__)
+      code2docs/generators/mkdocs_gen.py:16-18  (__init__)
+      examples/05_custom_generators.py:72-74  (__init__)
+  [0adfa1b309f0ccd0]   STRU  detect_flask_endpoints  L=15 N=2 saved=15 sim=1.00
+      examples/07_web_frameworks.py:16-30  (detect_flask_endpoints)
+      examples/07_web_frameworks.py:33-47  (detect_fastapi_endpoints)
+  [95ed8c6095a87c3f]   EXAC  _get_public_methods  L=12 N=2 saved=12 sim=1.00
+      code2docs/generators/api_reference_gen.py:142-153  (_get_public_methods)
+      code2docs/generators/module_docs_gen.py:154-165  (_get_public_methods)
+  [2de350a70c24cad1]   EXAC  _group_modules  L=10 N=2 saved=10 sim=1.00
+      code2docs/generators/api_reference_gen.py:57-66  (_group_modules)
+      code2docs/generators/module_docs_gen.py:77-86  (_group_modules)
+  [92e552f65b8cca0f]   EXAC  __init__  L=4 N=2 saved=4 sim=1.00
+      code2docs/generators/api_reference_gen.py:16-19  (__init__)
+      code2docs/generators/module_docs_gen.py:17-20  (__init__)
+  [8a2144faf5860455]   EXAC  __init__  L=4 N=2 saved=4 sim=1.00
+      code2docs/generators/architecture_gen.py:15-18  (__init__)
+      code2docs/generators/getting_started_gen.py:15-18  (__init__)
 
-REFACTOR[7] (ranked by priority):
+REFACTOR[6] (ranked by priority):
   [1] ○ extract_function   → utils/__init__.py
-      WHY: 9 occurrences of 5-line block across 9 files — saves 40 lines
+      WHY: 9 occurrences of 3-line block across 9 files — saves 24 lines
       FILES: code2docs/base.py, code2docs/generators/api_changelog_gen.py, code2docs/generators/changelog_gen.py, code2docs/generators/code2llm_gen.py, code2docs/generators/config_docs_gen.py +4 more
-  [2] ○ extract_function   → code2docs/generators/utils/_get_public_methods.py
-      WHY: 2 occurrences of 14-line block across 2 files — saves 14 lines
-      FILES: code2docs/generators/api_reference_gen.py, code2docs/generators/module_docs_gen.py
-  [3] ○ extract_function   → code2docs/generators/utils/_group_modules.py
+  [2] ○ extract_function   → examples/utils/detect_flask_endpoints.py
+      WHY: 2 occurrences of 15-line block across 1 files — saves 15 lines
+      FILES: examples/07_web_frameworks.py
+  [3] ○ extract_function   → code2docs/generators/utils/_get_public_methods.py
       WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
       FILES: code2docs/generators/api_reference_gen.py, code2docs/generators/module_docs_gen.py
-  [4] ○ extract_function   → code2docs/generators/utils/__init__.py
-      WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
-      FILES: code2docs/generators/architecture_gen.py, code2docs/generators/getting_started_gen.py
-  [5] ○ extract_function   → code2docs/generators/utils/__init__.py
-      WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
+  [4] ○ extract_function   → code2docs/generators/utils/_group_modules.py
+      WHY: 2 occurrences of 10-line block across 2 files — saves 10 lines
       FILES: code2docs/generators/api_reference_gen.py, code2docs/generators/module_docs_gen.py
-  [6] ○ extract_function   → utils/__init__.py
-      WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
-      FILES: code2docs/generators/coverage_gen.py, examples/05_custom_generators.py
-  [7] ○ extract_function   → code2docs/sync/utils/__init__.py
+  [5] ○ extract_function   → code2docs/generators/utils/__init__.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
-      FILES: code2docs/sync/differ.py, code2docs/sync/updater.py
+      FILES: code2docs/generators/api_reference_gen.py, code2docs/generators/module_docs_gen.py
+  [6] ○ extract_function   → code2docs/generators/utils/__init__.py
+      WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
+      FILES: code2docs/generators/architecture_gen.py, code2docs/generators/getting_started_gen.py
 
 METRICS-TARGET:
-  dup_groups:  7 → 0
-  saved_lines: 88 lines recoverable
+  dup_groups:  6 → 0
+  saved_lines: 69 lines recoverable

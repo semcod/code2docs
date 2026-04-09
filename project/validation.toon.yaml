@@ -1,9 +1,9 @@
-# vallm batch | 135f | 65✓ 9⚠ 13✗ | 2026-04-08
+# vallm batch | 140f | 80✓ 10⚠ 1✗ | 2026-04-09
 
 SUMMARY:
-  scanned: 135  passed: 65 (48.1%)  warnings: 9  errors: 13  unsupported: 57
+  scanned: 140  passed: 80 (57.1%)  warnings: 10  errors: 1  unsupported: 59
 
-WARNINGS[9]{path,score}:
+WARNINGS[10]{path,score}:
   code2docs/generators/examples_gen.py,0.93
     issues[3]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_generate_advanced has cyclomatic complexity 22 (max: 15),216
@@ -18,7 +18,7 @@ WARNINGS[9]{path,score}:
   code2docs/generators/readme_gen.py,0.96
     issues[3]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_extract_project_metadata has cyclomatic complexity 29 (max: 15),113
-      complexity.maintainability,warning,Low maintainability index: 10.4 (threshold: 20),
+      complexity.maintainability,warning,Low maintainability index: 10.7 (threshold: 20),
       complexity.lizard_cc,warning,_extract_project_metadata: CC=29 exceeds limit 15,113
   code2docs/generators/api_reference_gen.py,0.97
     issues[2]{rule,severity,message,line}:
@@ -40,53 +40,19 @@ WARNINGS[9]{path,score}:
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_extract_description has cyclomatic complexity 17 (max: 15),88
       complexity.lizard_cc,warning,_extract_description: CC=17 exceeds limit 15,88
+  code2docs/generators/_registry_adapters.py,0.98
+    issues[1]{rule,severity,message,line}:
+      complexity.maintainability,warning,Low maintainability index: 17.1 (threshold: 20),
   tests/test_generators.py,0.98
     issues[1]{rule,severity,message,line}:
       complexity.maintainability,warning,Low maintainability index: 1.1 (threshold: 20),
 
-ERRORS[13]{path,score}:
-  code2docs/analyzers/dependency_scanner.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: expected an indented block after 'except' statement on line 11,13
-  code2docs/config.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: expected 'except' or 'finally' block,11
-  code2docs/generators/_registry_adapters.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: expected an indented block after class definition on line 11,13
+ERRORS[1]{path,score}:
   code2docs/project/analysis.yaml,0.00
     issues[1]{rule,severity,message,line}:
       syntax.tree_sitter,error,tree-sitter found 1 parse error(s) in yaml,
-  examples/advanced_usage.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: unexpected indent,32
-  examples/quickstart.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: unexpected indent,17
-  tests/test_config.py,0.89
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'pytest' not found,6
-  tests/test_formatters.py,0.89
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'pytest' not found,3
-  tests/test_sync.py,0.91
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'pytest' not found,6
-  tests/test_cli.py,0.94
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'pytest' not found,8
-  tests/test_analyzers.py,0.96
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'pytest' not found,6
-  tests/test_llm_helper.py,0.96
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'pytest' not found,5
-  tests/test_registry.py,0.96
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'pytest' not found,7
 
-UNSUPPORTED[4]{bucket,count}:
+UNSUPPORTED[3]{bucket,count}:
   *.md,31
   *.txt,3
-  *.example,1
-  other,22
+  other,25

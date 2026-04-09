@@ -2,7 +2,7 @@
 
 import subprocess
 from pathlib import Path
-from typing import List, Optional, Dict, Set
+from typing import List, Optional, Dict
 
 from code2llm.api import AnalysisResult
 

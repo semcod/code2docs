@@ -5,9 +5,9 @@ from pathlib import Path
 
 import pytest
 
-from code2docs.analyzers.docstring_extractor import DocstringExtractor, DocstringInfo
+from code2docs.analyzers.docstring_extractor import DocstringExtractor
 from code2docs.analyzers.dependency_scanner import DependencyScanner
-from code2docs.analyzers.endpoint_detector import EndpointDetector, Endpoint
+from code2docs.analyzers.endpoint_detector import EndpointDetector
 
 
 class TestDocstringExtractor:

@@ -1,6 +1,6 @@
 """Markdown formatting utilities."""
 
-from typing import Dict, List, Optional
+from typing import List
 
 
 class MarkdownFormatter:

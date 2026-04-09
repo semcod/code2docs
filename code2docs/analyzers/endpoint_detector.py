@@ -1,10 +1,9 @@
 """Detect web framework endpoints (Flask, FastAPI, Django) from AST analysis."""
 
-import ast
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from code2llm.api import AnalysisResult, FunctionInfo
 

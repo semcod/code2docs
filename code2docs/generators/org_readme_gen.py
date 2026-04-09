@@ -1,7 +1,7 @@
 """Organization README generator - generates overview of multiple projects."""
 
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 
 from code2llm.api import AnalysisResult
 

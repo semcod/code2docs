@@ -1,9 +1,9 @@
 """API changelog generator — diff function/class signatures between versions."""
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 from code2llm.api import AnalysisResult
 

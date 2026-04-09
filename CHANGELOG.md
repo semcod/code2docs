@@ -137,6 +137,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.27] - 2026-04-09
+
+### Docs
+- Update docs/README.md
+- Update docs/examples/advanced_usage.py
+- Update docs/examples/quickstart.py
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_analyzers.py
+- Update tests/test_config.py
+- Update tests/test_formatters.py
+- Update tests/test_generators.py
+- Update tests/test_llm_helper.py
+- Update tests/test_registry.py
+- Update tests/test_sync.py
+
+### Other
+- Update code2docs/analyzers/docstring_extractor.py
+- Update code2docs/analyzers/endpoint_detector.py
+- Update code2docs/analyzers/project_scanner.py
+- Update code2docs/examples/advanced_usage.py
+- Update code2docs/examples/quickstart.py
+- Update code2docs/formatters/markdown.py
+- Update code2docs/generators/api_changelog_gen.py
+- Update code2docs/generators/architecture_gen.py
+- Update code2docs/generators/changelog_gen.py
+- Update code2docs/generators/code2llm_gen.py
+- ... and 23 more files
+
 ## [3.0.26] - 2026-04-08
 
 ### Docs

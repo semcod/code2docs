@@ -1,4 +1,4 @@
-# code2llm/evolution | 258 func | 34f | 2026-04-08
+# code2llm/evolution | 258 func | 34f | 2026-04-09
 
 NEXT[9] (ranked by impact):
   [1] !! SPLIT-FUNC      ReadmeGenerator._extract_project_metadata  CC=29  fan=23

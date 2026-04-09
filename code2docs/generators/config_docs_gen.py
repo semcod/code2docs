@@ -1,7 +1,6 @@
 """Configuration documentation generator."""
 
 from dataclasses import fields, MISSING
-from typing import Any
 
 from code2llm.api import AnalysisResult
 

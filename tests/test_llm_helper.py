@@ -2,10 +2,9 @@
 
 from unittest.mock import patch, MagicMock
 
-import pytest
 
 from code2docs.config import LLMConfig, Code2DocsConfig
-from code2docs.llm_helper import LLMHelper, _get_litellm
+from code2docs.llm_helper import LLMHelper
 
 
 # ── LLMConfig tests ──────────────────────────────────────────────────────

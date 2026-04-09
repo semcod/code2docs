@@ -3,9 +3,8 @@
 import tempfile
 from pathlib import Path
 
-import pytest
 
-from code2docs.config import Code2DocsConfig, ReadmeConfig, DocsConfig, SyncConfig
+from code2docs.config import Code2DocsConfig
 
 
 class TestCode2DocsConfig:

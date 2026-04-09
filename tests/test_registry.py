@@ -1,10 +1,7 @@
 """Tests for BaseGenerator, GeneratorRegistry, and adapter integration."""
 
-import tempfile
 from pathlib import Path
-from typing import Optional
 
-import pytest
 
 from code2llm.core.models import (
     AnalysisResult, FunctionInfo, ClassInfo, ModuleInfo,

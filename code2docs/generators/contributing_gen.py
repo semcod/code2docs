@@ -1,6 +1,6 @@
 """CONTRIBUTING.md generator from project tooling detection."""
 
-from typing import Dict, List
+from typing import Dict
 
 from code2llm.api import AnalysisResult
 

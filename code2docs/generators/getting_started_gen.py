@@ -1,6 +1,6 @@
 """Getting Started guide generator."""
 
-from typing import List, Optional
+from typing import List
 
 from code2llm.api import AnalysisResult
 

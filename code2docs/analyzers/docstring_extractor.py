@@ -1,11 +1,9 @@
 """Extract and analyze docstrings from source code."""
 
-import ast
 from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
-from code2llm.api import AnalysisResult, FunctionInfo, ClassInfo
+from code2llm.api import AnalysisResult
 
 
 @dataclass

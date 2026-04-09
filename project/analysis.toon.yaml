@@ -1,7 +1,8 @@
-# code2llm | 39f 5219L | python:38,shell:1 | 2026-04-08
+# code2llm | 39f 5272L | python:38,shell:1 | 2026-04-09
 # CC̄=4.4 | critical:12/298 | dups:0 | cycles:1
 
 HEALTH[12]:
+  🟡 CC    _extract_project_metadata CC=29 (limit:15)
   🟡 CC    _render_first_usage CC=15 (limit:15)
   🟡 CC    _generate_intro CC=16 (limit:15)
   🟡 CC    parse_gitignore CC=15 (limit:15)
@@ -9,11 +10,10 @@ HEALTH[12]:
   🟡 CC    generate CC=18 (limit:15)
   🟡 CC    _render_module_detail CC=25 (limit:15)
   🟡 CC    _extract_description CC=17 (limit:15)
-  🟡 CC    _extract_project_metadata CC=29 (limit:15)
   🟡 CC    _render_module_section CC=25 (limit:15)
+  🟡 CC    _generate_html CC=15 (limit:15)
   🟡 CC    _generate_advanced CC=22 (limit:15)
   🟡 CC    _render_code_style CC=16 (limit:15)
-  🟡 CC    _generate_html CC=15 (limit:15)
 
 REFACTOR[2]:
   1. split 12 high-CC methods  (CC>15)
@@ -33,8 +33,8 @@ PIPELINES[246]:
 
 LAYERS:
   code2docs/                      CC̄=4.4    ←in:0  →out:1
-  │ !! examples_gen               456L  1C   15m  CC=22     ←0
-  │ !! readme_gen                 322L  1C   18m  CC=29     ←1
+  │ !! examples_gen               476L  1C   15m  CC=22     ←0
+  │ !! readme_gen                 350L  1C   18m  CC=29     ←1
   │ architecture_gen           294L  1C   10m  CC=13     ←0
   │ !! _registry_adapters         290L  15C   31m  CC=15     ←0
   │ dependency_scanner         248L  3C   10m  CC=9      ←0
@@ -49,11 +49,11 @@ LAYERS:
   │ llm_helper                 161L  1C    7m  CC=7      ←0
   │ config                     155L  7C    5m  CC=10     ←2
   │ depgraph_gen               140L  1C    9m  CC=9      ←0
-  │ docstring_extractor        140L  2C   10m  CC=8      ←0
+  │ docstring_extractor        138L  2C   10m  CC=8      ←0
   │ differ                     125L  2C    7m  CC=6      ←0
-  │ config_docs_gen            125L  1C    4m  CC=10     ←0
+  │ config_docs_gen            124L  1C    4m  CC=10     ←0
   │ changelog_gen              121L  2C    6m  CC=6      ←0
-  │ endpoint_detector          113L  2C    3m  CC=5      ←0
+  │ endpoint_detector          112L  2C    3m  CC=5      ←0
   │ mkdocs_gen                 110L  1C    5m  CC=5      ←0
   │ coverage_gen               104L  1C    7m  CC=12     ←0
   │ _source_links               76L  1C    6m  CC=5      ←0
@@ -64,7 +64,7 @@ LAYERS:
   │ badges                      52L  0C    2m  CC=11     ←2
   │ updater                     51L  1C    2m  CC=4      ←0
   │ base                        46L  2C    3m  CC=1      ←0
-  │ project_scanner             42L  1C    4m  CC=2      ←3
+  │ project_scanner             41L  1C    4m  CC=2      ←3
   │ registry                    35L  1C    4m  CC=4      ←0
   │ __init__                    24L  0C    1m  CC=4      ←0
   │ __init__                    13L  0C    0m  CC=0.0    ←0
@@ -73,7 +73,7 @@ LAYERS:
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ project.sh                  25L  0C    0m  CC=0.0    ←0
+  │ project.sh                  35L  0C    0m  CC=0.0    ←0
   │
 
 COUPLING:

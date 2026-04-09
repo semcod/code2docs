@@ -4,7 +4,7 @@ import ast
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
-from code2llm.api import AnalysisResult, ModuleInfo
+from code2llm.api import AnalysisResult
 
 from ..config import Code2DocsConfig
 
