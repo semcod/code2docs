@@ -6,7 +6,7 @@ SUMMARY:
   dup_groups:    6
   dup_fragments: 19
   saved_lines:   69
-  scan_ms:       4006
+  scan_ms:       3774
 
 DUPLICATES[6] (ranked by impact):
   [88c0cfa6561a3637]   EXAC  __init__  L=3 N=9 saved=24 sim=1.00

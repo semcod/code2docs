@@ -3,44 +3,44 @@ flowchart LR
         code2docs__analyzers__project_scanner__ProjectScanner__analyze["analyze"]
     end
     subgraph code2docs__cli
-        code2docs__cli___run_diff["_run_diff"]
-        code2docs__cli___run_sync["_run_sync"]
-        code2docs__cli__diff["diff"]
-        code2docs__cli___load_config["_load_config"]
-        code2docs__cli___run_check["_run_check"]
         code2docs__cli___run_watch["_run_watch"]
+        code2docs__cli__watch["watch"]
         code2docs__cli__sync["sync"]
         code2docs__cli__check["check"]
-        code2docs__cli__watch["watch"]
+        code2docs__cli___run_sync["_run_sync"]
+        code2docs__cli___load_config["_load_config"]
+        code2docs__cli__diff["diff"]
+        code2docs__cli___run_diff["_run_diff"]
+        code2docs__cli___run_check["_run_check"]
     end
     subgraph code2docs__config
         code2docs__config__Code2DocsConfig__from_yaml["from_yaml"]
     end
     subgraph code2docs__formatters
-        code2docs__formatters__badges__generate_badges["generate_badges"]
         code2docs__formatters__badges___make_badge["_make_badge"]
         code2docs__formatters__toc__generate_toc["generate_toc"]
         code2docs__formatters__toc__extract_headings["extract_headings"]
+        code2docs__formatters__badges__generate_badges["generate_badges"]
         code2docs__formatters__toc___slugify["_slugify"]
     end
     subgraph code2docs__generators
-        code2docs__generators__code2llm_gen___is_valid_pattern["_is_valid_pattern"]
-        code2docs__generators__code2llm_gen__Code2LlmGenerator___add_exclude_patterns["_add_exclude_patterns"]
-        code2docs__generators__contributing_gen__ContributingGenerator___get_python_style_lines["_get_python_style_lines"]
-        code2docs__generators__code2llm_gen___clean_pattern["_clean_pattern"]
         code2docs__generators__readme_gen__generate_readme["generate_readme"]
         code2docs__generators__contributing_gen__ContributingGenerator___get_style_lines["_get_style_lines"]
-        code2docs__generators__contributing_gen__ContributingGenerator___render_code_style["_render_code_style"]
         code2docs__generators__code2llm_gen__parse_gitignore["parse_gitignore"]
-        code2docs__generators__code2llm_gen___should_skip_line["_should_skip_line"]
-        code2docs__generators__code2llm_gen___extract_patterns["_extract_patterns"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___add_exclude_patterns["_add_exclude_patterns"]
         code2docs__generators__code2llm_gen___process_line["_process_line"]
-        code2docs__generators__readme_gen__ReadmeGenerator___build_context["_build_context"]
+        code2docs__generators__contributing_gen__ContributingGenerator___render_code_style["_render_code_style"]
+        code2docs__generators__contributing_gen__ContributingGenerator___get_python_style_lines["_get_python_style_lines"]
+        code2docs__generators__code2llm_gen___is_valid_pattern["_is_valid_pattern"]
+        code2docs__generators__code2llm_gen___clean_pattern["_clean_pattern"]
+        code2docs__generators__code2llm_gen___extract_patterns["_extract_patterns"]
         code2docs__generators__contributing_gen__ContributingGenerator___get_jsts_style_lines["_get_jsts_style_lines"]
+        code2docs__generators__code2llm_gen___should_skip_line["_should_skip_line"]
+        code2docs__generators__readme_gen__ReadmeGenerator___build_context["_build_context"]
     end
     subgraph code2docs__llm_helper
-        code2docs__llm_helper__LLMHelper__complete["complete"]
         code2docs__llm_helper___get_litellm["_get_litellm"]
+        code2docs__llm_helper__LLMHelper__complete["complete"]
     end
     subgraph code2docs__sync
         code2docs__sync__watcher__start_watcher["start_watcher"]
@@ -49,10 +49,10 @@ flowchart LR
         examples__02_configuration__load_config_from_yaml["load_config_from_yaml"]
     end
     subgraph examples__03_programmatic_api
-        examples__03_programmatic_api__inspect_project_structure["inspect_project_structure"]
         examples__03_programmatic_api__custom_documentation_pipeline["custom_documentation_pipeline"]
-        examples__03_programmatic_api__generate_docs_if_needed["generate_docs_if_needed"]
+        examples__03_programmatic_api__inspect_project_structure["inspect_project_structure"]
         examples__03_programmatic_api__generate_readme_simple["generate_readme_simple"]
+        examples__03_programmatic_api__generate_docs_if_needed["generate_docs_if_needed"]
         examples__03_programmatic_api__generate_full_documentation["generate_full_documentation"]
     end
     subgraph examples__04_sync_and_watch
@@ -62,15 +62,15 @@ flowchart LR
         examples__05_custom_generators__generate_custom_report["generate_custom_report"]
     end
     subgraph examples__06_formatters
+        examples__06_formatters__badge_examples["badge_examples"]
         examples__06_formatters__build_custom_readme["build_custom_readme"]
         examples__06_formatters__toc_examples["toc_examples"]
-        examples__06_formatters__badge_examples["badge_examples"]
     end
     subgraph examples__07_web_frameworks
-        examples__07_web_frameworks__detect_flask_endpoints["detect_flask_endpoints"]
         examples__07_web_frameworks__detect_fastapi_endpoints["detect_fastapi_endpoints"]
         examples__07_web_frameworks__document_web_project["document_web_project"]
         examples__07_web_frameworks__generate_api_docs_from_endpoints["generate_api_docs_from_endpoin"]
+        examples__07_web_frameworks__detect_flask_endpoints["detect_flask_endpoints"]
     end
     code2docs__formatters__badges__generate_badges --> code2docs__formatters__badges___make_badge
     code2docs__formatters__toc__generate_toc --> code2docs__formatters__toc__extract_headings
