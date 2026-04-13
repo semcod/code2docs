@@ -1,55 +1,54 @@
-# code2docs | 258 func | 34f | 7093L | python | 2026-04-09
+# code2docs | 311 func | 34f | 7280L | python | 2026-04-13
 
 HEALTH:
-  CC̄=4.4  critical=28 (limit:10)  dup=0  cycles=1
+  CC̄=3.8  critical=19 (limit:10)  dup=0  cycles=1
 
 ALERTS[20]:
-  !!! cc_exceeded      ReadmeGenerator._extract_project_metadata = 29 (limit:15)
-  !!! cc_exceeded      ModuleDocsGenerator._render_module_detail = 25 (limit:15)
-  !!! cc_exceeded      ApiReferenceGenerator._render_module_section = 25 (limit:15)
   !!! high_fan_out     _run_check = 24 (limit:10)
-  !!! high_fan_out     ReadmeGenerator._extract_project_metadata = 23 (limit:10)
   !!! high_fan_out     start_watcher = 22 (limit:10)
-  !!! high_fan_out     ApiReferenceGenerator._render_module_section = 21 (limit:10)
-  !!! high_fan_out     OrgReadmeGenerator._extract_description = 20 (limit:10)
-  !!  cc_exceeded      ExamplesGenerator._generate_advanced = 22 (limit:15)
-  !!  high_fan_out     ModuleDocsGenerator.generate = 19 (limit:10)
+  !!  high_fan_out     Code2DocsConfig.from_yaml = 19 (limit:10)
+  !!  high_fan_out     ReadmeGenerator._build_context = 17 (limit:10)
+  !!  high_fan_out     Updater.apply = 16 (limit:10)
+  !!  high_fan_out     _run_generate = 16 (limit:10)
+  !!  high_fan_out     ArchitectureGenerator.generate = 16 (limit:10)
+  !!  high_fan_out     DependencyScanner.scan = 15 (limit:10)
+  !   high_fan_out     DependencyScanner._parse_go_mod = 14 (limit:10)
+  !   high_fan_out     OrgReadmeGenerator._get_repo_url = 13 (limit:10)
 
 MODULES[39] (top by size):
-  M[code2docs/generators/examples_gen.py] 476L C:1 F:15 CC↑22 D:0 (python)
-  M[code2docs/generators/readme_gen.py] 350L C:1 F:18 CC↑29 D:1 (python)
+  M[code2docs/generators/examples_gen.py] 492L C:1 F:19 CC↑13 D:0 (python)
+  M[code2docs/generators/readme_gen.py] 339L C:1 F:22 CC↑12 D:1 (python)
+  M[code2docs/generators/_registry_adapters.py] 302L C:15 F:35 CC↑7 D:0 (python)
   M[code2docs/generators/architecture_gen.py] 294L C:1 F:10 CC↑13 D:0 (python)
-  M[code2docs/generators/_registry_adapters.py] 290L C:15 F:31 CC↑15 D:0 (python)
+  M[code2docs/generators/org_readme_gen.py] 252L C:1 F:15 CC↑8 D:0 (python)
   M[code2docs/analyzers/dependency_scanner.py] 248L C:3 F:10 CC↑9 D:0 (python)
+  M[code2docs/generators/code2llm_gen.py] 248L C:1 F:17 CC↑7 D:0 (python)
+  M[code2docs/generators/module_docs_gen.py] 246L C:1 F:20 CC↑9 D:0 (python)
+  M[code2docs/generators/contributing_gen.py] 246L C:1 F:11 CC↑7 D:0 (python)
   M[code2docs/cli.py] 245L C:1 F:14 CC↑10 D:0 (python)
-  M[code2docs/generators/contributing_gen.py] 231L C:1 F:8 CC↑16 D:0 (python)
-  M[code2docs/generators/org_readme_gen.py] 227L C:1 F:10 CC↑17 D:0 (python)
-  M[code2docs/generators/code2llm_gen.py] 206L C:1 F:6 CC↑17 D:0 (python)
-  M[code2docs/generators/module_docs_gen.py] 198L C:1 F:9 CC↑25 D:0 (python)
-  M[code2docs/generators/getting_started_gen.py] 196L C:1 F:8 CC↑16 D:0 (python)
+  M[code2docs/generators/getting_started_gen.py] 218L C:1 F:14 CC↑11 D:0 (python)
   M[code2docs/generators/api_changelog_gen.py] 196L C:2 F:9 CC↑14 D:0 (python)
-  M[code2docs/generators/api_reference_gen.py] 163L C:1 F:7 CC↑25 D:0 (python)
+  M[code2docs/generators/api_reference_gen.py] 181L C:1 F:12 CC↑11 D:0 (python)
   M[code2docs/llm_helper.py] 161L C:1 F:7 CC↑7 D:0 (python)
   M[code2docs/config.py] 155L C:7 F:5 CC↑10 D:0 (python)
   LANGS: python:38/shell:1
 
 HOTSPOTS[10]:
   ★ _run_check fan=24  // Run documentation health check.
-  ★ ReadmeGenerator._extract_project_metadata fan=23  // Extract project metadata (author, license, version) from pyproject.toml or git.
   ★ start_watcher fan=22  // Start watching project for file changes and auto-resync docs.
 
 Requires watchdog
-  ★ ApiReferenceGenerator._render_module_section fan=21  // Render a module as a subsection within the consolidated doc.
-  ★ OrgReadmeGenerator._extract_description fan=20  // Extract short description from project (max 5 lines).
+  ★ Code2DocsConfig.from_yaml fan=19  // Load configuration from code2docs.yaml.
+  ★ ReadmeGenerator._build_context fan=17  // Build template context from analysis result.
+  ★ Updater.apply fan=16  // Regenerate documentation for changed modules.
 
-REFACTOR[15]:
-  [1] H/L Split ReadmeGenerator._extract_project_metadata (CC=29 → target CC<10)
-  [2] H/L Split ModuleDocsGenerator._render_module_detail (CC=25 → target CC<10)
-  [3] H/L Split ApiReferenceGenerator._render_module_section (CC=25 → target CC<10)
-  [4] M/L Split GettingStartedGenerator._render_first_usage (CC=15 → target CC<10)
-  [5] M/L Split GettingStartedGenerator._generate_intro (CC=16 → target CC<10)
+REFACTOR[4]:
+  [1] M/L Break circular dependency: code2docs.analyzers.project_scanner.ProjectScanner.analyze
+  [2] M/M Reduce _run_check fan-out (currently 24)
+  [3] M/M Reduce start_watcher fan-out (currently 22)
+  [4] M/M Reduce Code2DocsConfig.from_yaml fan-out (currently 19)
 
 EVOLUTION:
   2026-03-09 CC̄=4.4 crit=27 7432L // Automated analysis
   2026-03-15 CC̄=4.4 crit=28 7585L // Automated analysis
-  2026-04-09 CC̄=4.4 crit=28 7093L // Automated analysis
+  2026-04-13 CC̄=3.8 crit=19 7280L // Automated analysis

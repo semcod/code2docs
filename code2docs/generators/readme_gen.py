@@ -6,33 +6,6 @@ CONSTANT_20 = 20
 CONSTANT_30 = 30
 
 
-CONSTANT_3 = CONSTANT_3
-CONSTANT_5 = CONSTANT_5
-CONSTANT_15 = CONSTANT_15
-CONSTANT_20 = CONSTANT_20
-CONSTANT_30 = CONSTANT_30
-
-
-CONSTANT_3 = CONSTANT_3
-CONSTANT_5 = CONSTANT_5
-CONSTANT_15 = CONSTANT_15
-CONSTANT_20 = CONSTANT_20
-CONSTANT_30 = CONSTANT_30
-
-
-CONSTANT_3 = CONSTANT_3
-CONSTANT_5 = CONSTANT_5
-CONSTANT_15 = CONSTANT_15
-CONSTANT_20 = CONSTANT_20
-CONSTANT_30 = CONSTANT_30
-
-
-CONSTANT_3 = CONSTANT_3
-CONSTANT_5 = CONSTANT_5
-CONSTANT_15 = CONSTANT_15
-CONSTANT_20 = CONSTANT_20
-CONSTANT_30 = CONSTANT_30
-
 """README.md generator from AnalysisResult."""
 import re
 from pathlib import Path
@@ -141,6 +114,16 @@ class ReadmeGenerator:
     def _extract_project_metadata(self) -> Dict:
         """Extract project metadata (author, license, version) from pyproject.toml or git."""
         metadata = {'author': '', 'license': '', 'license_file': '', 'contributors': [], 'version': '0.1.0'}
+        self._extract_from_pyproject(metadata)
+        if not metadata['contributors']:
+            self._extract_contributors_from_git(metadata)
+        if not metadata['author']:
+            self._extract_author_from_git(metadata)
+        self._detect_license(metadata)
+        return metadata
+
+    def _extract_from_pyproject(self, metadata: Dict) -> None:
+        """Extract metadata from pyproject.toml files."""
         try:
             import tomllib
             pyproject_paths = [Path(self.result.project_path) / 'pyproject.toml', Path(self.result.project_path).parent / 'pyproject.toml']
@@ -165,31 +148,38 @@ class ReadmeGenerator:
                     break
         except Exception:
             pass
-        if not metadata['contributors']:
-            try:
-                import subprocess
-                result = subprocess.run(['git', 'shortlog', '-sne', 'HEAD'], capture_output=True, text=True, cwd=self.result.project_path)
-                if result.returncode == 0:
-                    contributors = []
-                    for line in result.stdout.strip().split('\n')[:CONSTANT_5]:
-                        parts = line.split('\t')
-                        if len(parts) >= 2:
-                            contributors.append(parts[1])
-                    metadata['contributors'] = contributors
-            except Exception:
-                pass
-        if not metadata['author']:
-            try:
-                import subprocess
-                name = subprocess.run(['git', 'config', 'user.name'], capture_output=True, text=True, cwd=self.result.project_path)
-                email = subprocess.run(['git', 'config', 'user.email'], capture_output=True, text=True, cwd=self.result.project_path)
-                if name.returncode == 0 and name.stdout.strip():
-                    author = name.stdout.strip()
-                    if email.returncode == 0 and email.stdout.strip():
-                        author += f' <{email.stdout.strip()}>'
-                    metadata['author'] = author
-            except Exception:
-                pass
+
+    def _extract_contributors_from_git(self, metadata: Dict) -> None:
+        """Extract contributors from git shortlog."""
+        try:
+            import subprocess
+            result = subprocess.run(['git', 'shortlog', '-sne', 'HEAD'], capture_output=True, text=True, cwd=self.result.project_path)
+            if result.returncode == 0:
+                contributors = []
+                for line in result.stdout.strip().split('\n')[:CONSTANT_5]:
+                    parts = line.split('\t')
+                    if len(parts) >= 2:
+                        contributors.append(parts[1])
+                metadata['contributors'] = contributors
+        except Exception:
+            pass
+
+    def _extract_author_from_git(self, metadata: Dict) -> None:
+        """Extract author from git config."""
+        try:
+            import subprocess
+            name = subprocess.run(['git', 'config', 'user.name'], capture_output=True, text=True, cwd=self.result.project_path)
+            email = subprocess.run(['git', 'config', 'user.email'], capture_output=True, text=True, cwd=self.result.project_path)
+            if name.returncode == 0 and name.stdout.strip():
+                author = name.stdout.strip()
+                if email.returncode == 0 and email.stdout.strip():
+                    author += f' <{email.stdout.strip()}>'
+                metadata['author'] = author
+        except Exception:
+            pass
+
+    def _detect_license(self, metadata: Dict) -> None:
+        """Detect license type from LICENSE files."""
         license_paths = [Path(self.result.project_path) / lf for lf in ['LICENSE', 'LICENSE.txt', 'LICENSE.md', 'COPYING']]
         parent_path = Path(self.result.project_path).parent
         if parent_path != Path(self.result.project_path):
@@ -207,7 +197,6 @@ class ReadmeGenerator:
                     except Exception:
                         pass
                 break
-        return metadata
 
     def _extract_extras(self) -> List[Dict]:
         """Extract optional dependencies (extras) from pyproject.toml."""

@@ -1,25 +1,12 @@
-# code2llm | 39f 5272L | python:38,shell:1 | 2026-04-09
-# CC̄=4.4 | critical:12/298 | dups:0 | cycles:1
+# code2llm | 39f 5459L | python:38,shell:1 | 2026-04-13
+# CC̄=3.8 | critical:0/351 | dups:0 | cycles:1
 
-HEALTH[12]:
-  🟡 CC    _extract_project_metadata CC=29 (limit:15)
-  🟡 CC    _render_first_usage CC=15 (limit:15)
-  🟡 CC    _generate_intro CC=16 (limit:15)
-  🟡 CC    parse_gitignore CC=15 (limit:15)
-  🟡 CC    _run_code2llm CC=17 (limit:15)
-  🟡 CC    generate CC=18 (limit:15)
-  🟡 CC    _render_module_detail CC=25 (limit:15)
-  🟡 CC    _extract_description CC=17 (limit:15)
-  🟡 CC    _render_module_section CC=25 (limit:15)
-  🟡 CC    _generate_html CC=15 (limit:15)
-  🟡 CC    _generate_advanced CC=22 (limit:15)
-  🟡 CC    _render_code_style CC=16 (limit:15)
+HEALTH[0]: ok
 
-REFACTOR[2]:
-  1. split 12 high-CC methods  (CC>15)
-  2. break 1 circular dependencies
+REFACTOR[1]:
+  1. break 1 circular dependencies
 
-PIPELINES[246]:
+PIPELINES[291]:
   [1] Src [add]: add
       PURITY: 100% pure
   [2] Src [run_all]: run_all
@@ -32,20 +19,20 @@ PIPELINES[246]:
       PURITY: 100% pure
 
 LAYERS:
-  code2docs/                      CC̄=4.4    ←in:0  →out:1
-  │ !! examples_gen               476L  1C   15m  CC=22     ←0
-  │ !! readme_gen                 350L  1C   18m  CC=29     ←1
+  code2docs/                      CC̄=3.8    ←in:0  →out:1
+  │ examples_gen               492L  1C   19m  CC=13     ←0
+  │ readme_gen                 339L  1C   22m  CC=12     ←1
+  │ _registry_adapters         302L  15C   35m  CC=7      ←0
   │ architecture_gen           294L  1C   10m  CC=13     ←0
-  │ !! _registry_adapters         290L  15C   31m  CC=15     ←0
+  │ org_readme_gen             252L  1C   15m  CC=8      ←0
+  │ code2llm_gen               248L  1C   17m  CC=7      ←0
   │ dependency_scanner         248L  3C   10m  CC=9      ←0
+  │ module_docs_gen            246L  1C   20m  CC=9      ←0
+  │ contributing_gen           246L  1C   11m  CC=7      ←0
   │ cli                        245L  1C   14m  CC=10     ←0
-  │ !! contributing_gen           231L  1C    8m  CC=16     ←0
-  │ !! org_readme_gen             227L  1C   10m  CC=17     ←0
-  │ !! code2llm_gen               206L  1C    6m  CC=17     ←0
-  │ !! module_docs_gen            198L  1C    9m  CC=25     ←0
-  │ !! getting_started_gen        196L  1C    8m  CC=16     ←0
+  │ getting_started_gen        218L  1C   14m  CC=11     ←0
   │ api_changelog_gen          196L  2C    9m  CC=14     ←0
-  │ !! api_reference_gen          163L  1C    7m  CC=25     ←0
+  │ api_reference_gen          181L  1C   12m  CC=11     ←0
   │ llm_helper                 161L  1C    7m  CC=7      ←0
   │ config                     155L  7C    5m  CC=10     ←2
   │ depgraph_gen               140L  1C    9m  CC=9      ←0

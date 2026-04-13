@@ -6,32 +6,52 @@
 - **Primary Language**: python
 - **Languages**: python: 53, shell: 1
 - **Analysis Mode**: static
-- **Total Functions**: 298
+- **Total Functions**: 351
 - **Total Classes**: 60
 - **Modules**: 54
-- **Entry Points**: 281
+- **Entry Points**: 329
 
 ## Architecture by Module
 
 ### code2docs.generators._registry_adapters
-- **Functions**: 31
+- **Functions**: 35
 - **Classes**: 15
 - **File**: `_registry_adapters.py`
 
 ### code2docs.generators.readme_gen
-- **Functions**: 18
+- **Functions**: 22
 - **Classes**: 1
 - **File**: `readme_gen.py`
 
+### code2docs.generators.module_docs_gen
+- **Functions**: 20
+- **Classes**: 1
+- **File**: `module_docs_gen.py`
+
 ### code2docs.generators.examples_gen
-- **Functions**: 15
+- **Functions**: 19
 - **Classes**: 1
 - **File**: `examples_gen.py`
+
+### code2docs.generators.code2llm_gen
+- **Functions**: 17
+- **Classes**: 1
+- **File**: `code2llm_gen.py`
+
+### code2docs.generators.org_readme_gen
+- **Functions**: 15
+- **Classes**: 1
+- **File**: `org_readme_gen.py`
 
 ### code2docs.cli
 - **Functions**: 14
 - **Classes**: 1
 - **File**: `cli.py`
+
+### code2docs.generators.getting_started_gen
+- **Functions**: 14
+- **Classes**: 1
+- **File**: `getting_started_gen.py`
 
 ### code2docs.formatters.markdown
 - **Functions**: 13
@@ -43,10 +63,15 @@
 - **Classes**: 3
 - **File**: `05_custom_generators.py`
 
-### code2docs.generators.org_readme_gen
-- **Functions**: 10
+### code2docs.generators.api_reference_gen
+- **Functions**: 12
 - **Classes**: 1
-- **File**: `org_readme_gen.py`
+- **File**: `api_reference_gen.py`
+
+### code2docs.generators.contributing_gen
+- **Functions**: 11
+- **Classes**: 1
+- **File**: `contributing_gen.py`
 
 ### code2docs.generators.architecture_gen
 - **Functions**: 10
@@ -68,25 +93,10 @@
 - **Classes**: 1
 - **File**: `depgraph_gen.py`
 
-### code2docs.generators.module_docs_gen
-- **Functions**: 9
-- **Classes**: 1
-- **File**: `module_docs_gen.py`
-
 ### code2docs.generators.api_changelog_gen
 - **Functions**: 9
 - **Classes**: 2
 - **File**: `api_changelog_gen.py`
-
-### code2docs.generators.getting_started_gen
-- **Functions**: 8
-- **Classes**: 1
-- **File**: `getting_started_gen.py`
-
-### code2docs.generators.contributing_gen
-- **Functions**: 8
-- **Classes**: 1
-- **File**: `contributing_gen.py`
 
 ### code2docs.sync.differ
 - **Functions**: 7
@@ -98,60 +108,30 @@
 - **Classes**: 1
 - **File**: `coverage_gen.py`
 
-### code2docs.generators.api_reference_gen
-- **Functions**: 7
-- **Classes**: 1
-- **File**: `api_reference_gen.py`
-
 ### code2docs.llm_helper
 - **Functions**: 7
 - **Classes**: 1
 - **File**: `llm_helper.py`
 
-### code2docs.generators._source_links
-- **Functions**: 6
-- **Classes**: 1
-- **File**: `_source_links.py`
-
 ## Key Entry Points
 
 Main execution flows into the system:
-
-### code2docs.generators.examples_gen.ExamplesGenerator._generate_advanced
-> Generate advanced_usage.py — individual generator usage, sync, etc.
-- **Calls**: self._find_generator_classes, self._find_class_by_name, lines.append, None.join, lines.append, lines.append, lines.append, lines.append
-
-### code2docs.config.Code2DocsConfig.from_yaml
-> Load configuration from code2docs.yaml.
-- **Calls**: Path, cls, data.get, project.get, project.get, project.get, project.get, project.get
 
 ### code2docs.generators.examples_gen.ExamplesGenerator._generate_quickstart
 > Generate quickstart.py — minimal working example.
 - **Calls**: self._find_convenience_functions, self._find_api_classes, set, lines.extend, lines.append, self._find_class_by_name, lines.append, lines.append
 
+### code2docs.config.Code2DocsConfig.from_yaml
+> Load configuration from code2docs.yaml.
+- **Calls**: Path, cls, data.get, project.get, project.get, project.get, project.get, project.get
+
 ### code2docs.generators.architecture_gen.ArchitectureGenerator.generate
 > Generate architecture documentation.
 - **Calls**: lines.append, self._generate_llm_summary, lines.append, self._detect_layers, lines.append, lines.append, lines.append, lines.append
 
-### code2docs.generators.api_reference_gen.ApiReferenceGenerator._render_module_section
-> Render a module as a subsection within the consolidated doc.
-- **Calls**: self._linker.file_link, None.join, lines.append, lines.append, sorted, lines.append, sorted, lines.append
-
-### code2docs.generators.readme_gen.ReadmeGenerator._extract_project_metadata
-> Extract project metadata (author, license, version) from pyproject.toml or git.
-- **Calls**: Path, Path, license_path.exists, pyproject_path.exists, subprocess.run, subprocess.run, subprocess.run, Path
-
-### code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail
-> Render a single module's detail section.
-- **Calls**: self._linker.file_link, self._get_module_docstring, None.join, lines.append, sorted, sorted, lines.append, self.result.classes.items
-
 ### examples.06_formatters.generate_complex_document
 > Generate a complex markdown document using the formatter.
 - **Calls**: MarkdownFormatter, sections.append, sections.append, sections.append, sections.append, sections.append, sections.append, sections.append
-
-### code2docs.generators.module_docs_gen.ModuleDocsGenerator.generate
-> Generate a single modules.md with all modules grouped by package.
-- **Calls**: lines.append, lines.append, lines.append, sorted, lines.append, self._group_modules, groups.items, None.join
 
 ### examples.06_formatters.markdown_formatting_examples
 > Demonstrate markdown formatting utilities.
@@ -161,9 +141,9 @@ Main execution flows into the system:
 > Diff class definitions.
 - **Calls**: set, set, old.get, new.get, old.keys, new.keys, changes.append, ApiChange
 
-### code2docs.generators.contributing_gen.ContributingGenerator._render_code_style
-> Render code style guidelines.
-- **Calls**: tools.get, None.join, tools.get, tools.get, tools.get, lines.append, lines.append, lines.append
+### code2docs.generators.examples_gen.ExamplesGenerator._render_generator_examples
+> Render individual generator usage examples.
+- **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append
 
 ### examples.06_formatters.build_custom_readme
 > Build a custom README using formatters.
@@ -173,12 +153,13 @@ Main execution flows into the system:
 > Generate the metrics report.
 - **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, self._calculate_stats, lines.append, lines.append
 
-### code2docs.generators.org_readme_gen.OrgReadmeGenerator._extract_description
-> Extract short description from project (max 5 lines).
-- **Calls**: result.modules.values, readme.exists, pyproject.exists, hasattr, self._truncate_description, readme.read_text, content.split, enumerate
+### code2docs.generators.examples_gen.ExamplesGenerator._render_formatter_examples
+> Render formatter usage examples.
+- **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, self._find_function_by_name, self._find_function_by_name, lines.append
 
-### code2docs.generators._registry_adapters.IndexHtmlAdapter._generate_html
-- **Calls**: None.exists, None.exists, None.exists, None.exists, None.exists, None.exists, None.exists, None.exists
+### code2docs.generators.examples_gen.ExamplesGenerator._render_sync_examples
+> Render sync/diff usage examples.
+- **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append
 
 ### code2docs.generators.readme_gen.ReadmeGenerator._build_context
 > Build template context from analysis result.
@@ -200,10 +181,6 @@ Main execution flows into the system:
 > Generate metrics summary table.
 - **Calls**: stats.get, lines.append, None.join, f.complexity.get, round, lines.append, lines.append, f.complexity.get
 
-### code2docs.generators.code2llm_gen.Code2LlmGenerator._run_code2llm
-> Execute code2llm CLI with appropriate options.
-- **Calls**: code2docs.generators.code2llm_gen.parse_gitignore, subprocess.run, str, None.join, str, str, cmd.append, cmd.append
-
 ### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
 > Parse pyproject.toml for dependencies.
 - **Calls**: ProjectDependencies, data.get, project.get, project.get, project.get, project.get, project.get, project.get
@@ -220,9 +197,17 @@ Main execution flows into the system:
 > Compare current file hashes with saved state. Return list of changes.
 - **Calls**: None.resolve, self._load_state, self._compute_state, new_state.items, old_state.items, old_state.get, Path, changes.append
 
+### code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject
+> Extract metadata from pyproject.toml files.
+- **Calls**: pyproject_path.exists, Path, data.get, project.get, project.get, project.get, isinstance, Path
+
 ### code2docs.generators.config_docs_gen.ConfigDocsGenerator._render_section
 > Render a dataclass as a Markdown table.
 - **Calls**: fields, None.join, getattr, type_str.replace, isinstance, self._FIELD_DOCS.get, lines.append, str
+
+### code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_classes_detail
+> Render classes with their method summaries.
+- **Calls**: sorted, module_classes.items, self._linker.source_link, lines.append, lines.append, self._get_public_methods, lines.append, lines.append
 
 ### code2docs.generators.architecture_gen.ArchitectureGenerator._generate_class_diagram
 > Generate Mermaid class diagram for key classes.
@@ -232,17 +217,33 @@ Main execution flows into the system:
 > Inspect project structure from analysis.
 - **Calls**: code2docs.analyzers.project_scanner.ProjectScanner.analyze, print, print, print, print, print, print, result.functions.items
 
-### code2docs.generators.getting_started_gen.GettingStartedGenerator._render_first_usage
-> Render first usage example — CLI + Python API.
-- **Calls**: public_funcs.sort, lines.append, None.join, None.join, lines.append, lines.append, lines.append, lines.append
+### code2docs.cli.generate
+> Generate documentation (default command).
+- **Calls**: main.command, click.argument, click.option, click.option, click.option, click.option, click.option, click.option
+
+### code2docs.generators.generate_docs
+> High-level function to generate all documentation.
+- **Calls**: ProjectScanner, scanner.analyze, None.generate, None.generate, None.generate, Code2DocsConfig, None.generate, None.generate
+
+### code2docs.analyzers.dependency_scanner.DependencyScanner.scan
+> Scan project for dependency information.
+- **Calls**: Path, ProjectDependencies, package_json.exists, cargo_toml.exists, go_mod.exists, pyproject.exists, setup_py.exists, req_txt.exists
+
+### code2docs.generators.getting_started_gen.GettingStartedGenerator._render_prerequisites
+> Render prerequisites section.
+- **Calls**: DependencyScanner, dep_scanner.scan, None.join, lines.append, lines.append, lines.append, lines.append, lines.append
+
+### code2docs.generators.org_readme_gen.OrgReadmeGenerator._get_repo_url
+> Get repository URL from git or pyproject.toml.
+- **Calls**: pyproject.exists, subprocess.run, result.stdout.strip, url.startswith, url.removesuffix, open, tomllib.load, None.get
 
 ## Process Flows
 
 Key execution flows identified:
 
-### Flow 1: _generate_advanced
+### Flow 1: _generate_quickstart
 ```
-_generate_advanced [code2docs.generators.examples_gen.ExamplesGenerator]
+_generate_quickstart [code2docs.generators.examples_gen.ExamplesGenerator]
 ```
 
 ### Flow 2: from_yaml
@@ -250,67 +251,94 @@ _generate_advanced [code2docs.generators.examples_gen.ExamplesGenerator]
 from_yaml [code2docs.config.Code2DocsConfig]
 ```
 
-### Flow 3: _generate_quickstart
-```
-_generate_quickstart [code2docs.generators.examples_gen.ExamplesGenerator]
-```
-
-### Flow 4: generate
+### Flow 3: generate
 ```
 generate [code2docs.generators.architecture_gen.ArchitectureGenerator]
 ```
 
-### Flow 5: _render_module_section
-```
-_render_module_section [code2docs.generators.api_reference_gen.ApiReferenceGenerator]
-```
-
-### Flow 6: _extract_project_metadata
-```
-_extract_project_metadata [code2docs.generators.readme_gen.ReadmeGenerator]
-```
-
-### Flow 7: _render_module_detail
-```
-_render_module_detail [code2docs.generators.module_docs_gen.ModuleDocsGenerator]
-```
-
-### Flow 8: generate_complex_document
+### Flow 4: generate_complex_document
 ```
 generate_complex_document [examples.06_formatters]
 ```
 
-### Flow 9: markdown_formatting_examples
+### Flow 5: markdown_formatting_examples
 ```
 markdown_formatting_examples [examples.06_formatters]
 ```
 
-### Flow 10: _diff_classes
+### Flow 6: _diff_classes
 ```
 _diff_classes [code2docs.generators.api_changelog_gen.ApiChangelogGenerator]
+```
+
+### Flow 7: _render_generator_examples
+```
+_render_generator_examples [code2docs.generators.examples_gen.ExamplesGenerator]
+```
+
+### Flow 8: build_custom_readme
+```
+build_custom_readme [examples.06_formatters]
+```
+
+### Flow 9: _render_formatter_examples
+```
+_render_formatter_examples [code2docs.generators.examples_gen.ExamplesGenerator]
+```
+
+### Flow 10: _render_sync_examples
+```
+_render_sync_examples [code2docs.generators.examples_gen.ExamplesGenerator]
 ```
 
 ## Key Classes
 
 ### code2docs.generators.readme_gen.ReadmeGenerator
 > Generate README.md from AnalysisResult.
-- **Methods**: 17
-- **Key Methods**: code2docs.generators.readme_gen.ReadmeGenerator.__init__, code2docs.generators.readme_gen.ReadmeGenerator.generate, code2docs.generators.readme_gen.ReadmeGenerator._build_context, code2docs.generators.readme_gen.ReadmeGenerator._calc_avg_complexity, code2docs.generators.readme_gen.ReadmeGenerator._build_module_tree, code2docs.generators.readme_gen.ReadmeGenerator._generate_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_metadata, code2docs.generators.readme_gen.ReadmeGenerator._extract_extras, code2docs.generators.readme_gen.ReadmeGenerator._build_manual
+- **Methods**: 21
+- **Key Methods**: code2docs.generators.readme_gen.ReadmeGenerator.__init__, code2docs.generators.readme_gen.ReadmeGenerator.generate, code2docs.generators.readme_gen.ReadmeGenerator._build_context, code2docs.generators.readme_gen.ReadmeGenerator._calc_avg_complexity, code2docs.generators.readme_gen.ReadmeGenerator._build_module_tree, code2docs.generators.readme_gen.ReadmeGenerator._generate_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_metadata, code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject, code2docs.generators.readme_gen.ReadmeGenerator._extract_contributors_from_git
+
+### code2docs.generators.module_docs_gen.ModuleDocsGenerator
+> Generate docs/modules.md — consolidated module documentation.
+- **Methods**: 20
+- **Key Methods**: code2docs.generators.module_docs_gen.ModuleDocsGenerator.__init__, code2docs.generators.module_docs_gen.ModuleDocsGenerator.generate, code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_header, code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_overview_table, code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_module_row, code2docs.generators.module_docs_gen.ModuleDocsGenerator._count_module_functions, code2docs.generators.module_docs_gen.ModuleDocsGenerator._count_module_classes, code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_detail_sections, code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_group_section, code2docs.generators.module_docs_gen.ModuleDocsGenerator._group_modules
 
 ### code2docs.generators.examples_gen.ExamplesGenerator
 > Generate examples/ — usage examples from public API signatures.
+- **Methods**: 19
+- **Key Methods**: code2docs.generators.examples_gen.ExamplesGenerator.__init__, code2docs.generators.examples_gen.ExamplesGenerator._get_example_value, code2docs.generators.examples_gen.ExamplesGenerator.generate_all, code2docs.generators.examples_gen.ExamplesGenerator._generate_quickstart, code2docs.generators.examples_gen.ExamplesGenerator._generate_advanced, code2docs.generators.examples_gen.ExamplesGenerator._render_generator_examples, code2docs.generators.examples_gen.ExamplesGenerator._find_formatter_functions, code2docs.generators.examples_gen.ExamplesGenerator._render_formatter_examples, code2docs.generators.examples_gen.ExamplesGenerator._render_sync_examples, code2docs.generators.examples_gen.ExamplesGenerator._detect_package_name
+
+### code2docs.generators.org_readme_gen.OrgReadmeGenerator
+> Generate organization README with list of projects and brief descriptions.
 - **Methods**: 15
-- **Key Methods**: code2docs.generators.examples_gen.ExamplesGenerator.__init__, code2docs.generators.examples_gen.ExamplesGenerator._get_example_value, code2docs.generators.examples_gen.ExamplesGenerator.generate_all, code2docs.generators.examples_gen.ExamplesGenerator._generate_quickstart, code2docs.generators.examples_gen.ExamplesGenerator._generate_advanced, code2docs.generators.examples_gen.ExamplesGenerator._detect_package_name, code2docs.generators.examples_gen.ExamplesGenerator._find_convenience_functions, code2docs.generators.examples_gen.ExamplesGenerator._find_api_classes, code2docs.generators.examples_gen.ExamplesGenerator._find_generator_classes, code2docs.generators.examples_gen.ExamplesGenerator._find_function_by_name
+- **Key Methods**: code2docs.generators.org_readme_gen.OrgReadmeGenerator.__init__, code2docs.generators.org_readme_gen.OrgReadmeGenerator.generate, code2docs.generators.org_readme_gen.OrgReadmeGenerator._discover_projects, code2docs.generators.org_readme_gen.OrgReadmeGenerator._analyze_project, code2docs.generators.org_readme_gen.OrgReadmeGenerator._extract_description, code2docs.generators.org_readme_gen.OrgReadmeGenerator._try_pyproject_description, code2docs.generators.org_readme_gen.OrgReadmeGenerator._try_module_docstring, code2docs.generators.org_readme_gen.OrgReadmeGenerator._try_readme_description, code2docs.generators.org_readme_gen.OrgReadmeGenerator._extract_from_readme_content, code2docs.generators.org_readme_gen.OrgReadmeGenerator._collect_description_lines
+
+### code2docs.generators.getting_started_gen.GettingStartedGenerator
+> Generate docs/getting-started.md from entry points and dependencies.
+- **Methods**: 14
+- **Key Methods**: code2docs.generators.getting_started_gen.GettingStartedGenerator.__init__, code2docs.generators.getting_started_gen.GettingStartedGenerator.generate, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_prerequisites, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_installation, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_first_usage, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_cli_example, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_python_api_example, code2docs.generators.getting_started_gen.GettingStartedGenerator._find_priority_public_function, code2docs.generators.getting_started_gen.GettingStartedGenerator._format_func_args, code2docs.generators.getting_started_gen.GettingStartedGenerator._generate_intro
 
 ### code2docs.formatters.markdown.MarkdownFormatter
 > Helper for constructing Markdown documents.
 - **Methods**: 13
 - **Key Methods**: code2docs.formatters.markdown.MarkdownFormatter.__init__, code2docs.formatters.markdown.MarkdownFormatter.heading, code2docs.formatters.markdown.MarkdownFormatter.paragraph, code2docs.formatters.markdown.MarkdownFormatter.blockquote, code2docs.formatters.markdown.MarkdownFormatter.code_block, code2docs.formatters.markdown.MarkdownFormatter.inline_code, code2docs.formatters.markdown.MarkdownFormatter.bold, code2docs.formatters.markdown.MarkdownFormatter.link, code2docs.formatters.markdown.MarkdownFormatter.list_item, code2docs.formatters.markdown.MarkdownFormatter.table
 
-### code2docs.generators.org_readme_gen.OrgReadmeGenerator
-> Generate organization README with list of projects and brief descriptions.
+### code2docs.generators.api_reference_gen.ApiReferenceGenerator
+> Generate docs/api.md — consolidated API reference.
+- **Methods**: 12
+- **Key Methods**: code2docs.generators.api_reference_gen.ApiReferenceGenerator.__init__, code2docs.generators.api_reference_gen.ApiReferenceGenerator.generate, code2docs.generators.api_reference_gen.ApiReferenceGenerator._group_modules, code2docs.generators.api_reference_gen.ApiReferenceGenerator._has_content, code2docs.generators.api_reference_gen.ApiReferenceGenerator._render_module_section, code2docs.generators.api_reference_gen.ApiReferenceGenerator._get_module_classes, code2docs.generators.api_reference_gen.ApiReferenceGenerator._get_module_functions, code2docs.generators.api_reference_gen.ApiReferenceGenerator._render_classes_table, code2docs.generators.api_reference_gen.ApiReferenceGenerator._render_class_methods, code2docs.generators.api_reference_gen.ApiReferenceGenerator._render_functions_table
+
+### code2docs.generators.contributing_gen.ContributingGenerator
+> Generate CONTRIBUTING.md by detecting dev tools from pyproject.toml.
+- **Methods**: 11
+- **Key Methods**: code2docs.generators.contributing_gen.ContributingGenerator.__init__, code2docs.generators.contributing_gen.ContributingGenerator.generate, code2docs.generators.contributing_gen.ContributingGenerator._detect_dev_tools, code2docs.generators.contributing_gen.ContributingGenerator._render_setup, code2docs.generators.contributing_gen.ContributingGenerator._render_development, code2docs.generators.contributing_gen.ContributingGenerator._render_testing, code2docs.generators.contributing_gen.ContributingGenerator._render_code_style, code2docs.generators.contributing_gen.ContributingGenerator._get_style_lines, code2docs.generators.contributing_gen.ContributingGenerator._get_jsts_style_lines, code2docs.generators.contributing_gen.ContributingGenerator._get_python_style_lines
+
+### code2docs.generators.code2llm_gen.Code2LlmGenerator
+> Generate code2llm analysis files in project/ directory.
+
+This generator wraps the code2llm CLI to pr
 - **Methods**: 10
-- **Key Methods**: code2docs.generators.org_readme_gen.OrgReadmeGenerator.__init__, code2docs.generators.org_readme_gen.OrgReadmeGenerator.generate, code2docs.generators.org_readme_gen.OrgReadmeGenerator._discover_projects, code2docs.generators.org_readme_gen.OrgReadmeGenerator._analyze_project, code2docs.generators.org_readme_gen.OrgReadmeGenerator._extract_description, code2docs.generators.org_readme_gen.OrgReadmeGenerator._truncate_description, code2docs.generators.org_readme_gen.OrgReadmeGenerator._get_version, code2docs.generators.org_readme_gen.OrgReadmeGenerator._get_repo_url, code2docs.generators.org_readme_gen.OrgReadmeGenerator._render_project_section, code2docs.generators.org_readme_gen.OrgReadmeGenerator.write
+- **Key Methods**: code2docs.generators.code2llm_gen.Code2LlmGenerator.__init__, code2docs.generators.code2llm_gen.Code2LlmGenerator.generate_all, code2docs.generators.code2llm_gen.Code2LlmGenerator._run_code2llm, code2docs.generators.code2llm_gen.Code2LlmGenerator._build_base_cmd, code2docs.generators.code2llm_gen.Code2LlmGenerator._add_config_options, code2docs.generators.code2llm_gen.Code2LlmGenerator._add_exclude_patterns, code2docs.generators.code2llm_gen.Code2LlmGenerator._get_config_skip_dirs, code2docs.generators.code2llm_gen.Code2LlmGenerator._merge_patterns, code2docs.generators.code2llm_gen.Code2LlmGenerator._execute_command, code2docs.generators.code2llm_gen.Code2LlmGenerator.get_analysis_summary
 
 ### code2docs.generators.architecture_gen.ArchitectureGenerator
 > Generate docs/architecture.md — architecture overview with diagrams.
@@ -332,35 +360,21 @@ _diff_classes [code2docs.generators.api_changelog_gen.ApiChangelogGenerator]
 - **Methods**: 9
 - **Key Methods**: code2docs.generators.depgraph_gen.DepGraphGenerator.__init__, code2docs.generators.depgraph_gen.DepGraphGenerator.generate, code2docs.generators.depgraph_gen.DepGraphGenerator._collect_edges, code2docs.generators.depgraph_gen.DepGraphGenerator._extract_imports_from_file, code2docs.generators.depgraph_gen.DepGraphGenerator._import_matches, code2docs.generators.depgraph_gen.DepGraphGenerator._render_mermaid, code2docs.generators.depgraph_gen.DepGraphGenerator._render_matrix, code2docs.generators.depgraph_gen.DepGraphGenerator._calc_degrees, code2docs.generators.depgraph_gen.DepGraphGenerator._render_degree_table
 
-### code2docs.generators.module_docs_gen.ModuleDocsGenerator
-> Generate docs/modules.md — consolidated module documentation.
-- **Methods**: 9
-- **Key Methods**: code2docs.generators.module_docs_gen.ModuleDocsGenerator.__init__, code2docs.generators.module_docs_gen.ModuleDocsGenerator.generate, code2docs.generators.module_docs_gen.ModuleDocsGenerator._group_modules, code2docs.generators.module_docs_gen.ModuleDocsGenerator._has_content, code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail, code2docs.generators.module_docs_gen.ModuleDocsGenerator._get_public_methods, code2docs.generators.module_docs_gen.ModuleDocsGenerator._count_file_lines, code2docs.generators.module_docs_gen.ModuleDocsGenerator._calc_module_avg_cc, code2docs.generators.module_docs_gen.ModuleDocsGenerator._get_module_docstring
-
 ### code2docs.generators.api_changelog_gen.ApiChangelogGenerator
 > Generate API changelog by diffing current analysis with a saved snapshot.
 - **Methods**: 9
 - **Key Methods**: code2docs.generators.api_changelog_gen.ApiChangelogGenerator.__init__, code2docs.generators.api_changelog_gen.ApiChangelogGenerator.generate, code2docs.generators.api_changelog_gen.ApiChangelogGenerator.save_snapshot, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._build_snapshot, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._load_snapshot, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._render
-
-### code2docs.generators.getting_started_gen.GettingStartedGenerator
-> Generate docs/getting-started.md from entry points and dependencies.
-- **Methods**: 8
-- **Key Methods**: code2docs.generators.getting_started_gen.GettingStartedGenerator.__init__, code2docs.generators.getting_started_gen.GettingStartedGenerator.generate, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_prerequisites, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_installation, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_first_usage, code2docs.generators.getting_started_gen.GettingStartedGenerator._generate_intro, code2docs.generators.getting_started_gen.GettingStartedGenerator._render_next_steps, code2docs.generators.getting_started_gen.GettingStartedGenerator._get_top_level_modules
-
-### code2docs.generators.contributing_gen.ContributingGenerator
-> Generate CONTRIBUTING.md by detecting dev tools from pyproject.toml.
-- **Methods**: 8
-- **Key Methods**: code2docs.generators.contributing_gen.ContributingGenerator.__init__, code2docs.generators.contributing_gen.ContributingGenerator.generate, code2docs.generators.contributing_gen.ContributingGenerator._detect_dev_tools, code2docs.generators.contributing_gen.ContributingGenerator._render_setup, code2docs.generators.contributing_gen.ContributingGenerator._render_development, code2docs.generators.contributing_gen.ContributingGenerator._render_testing, code2docs.generators.contributing_gen.ContributingGenerator._render_code_style, code2docs.generators.contributing_gen.ContributingGenerator._render_pull_request
 
 ### code2docs.generators.coverage_gen.CoverageGenerator
 > Generate docs/coverage.md — docstring coverage report.
 - **Methods**: 7
 - **Key Methods**: code2docs.generators.coverage_gen.CoverageGenerator.__init__, code2docs.generators.coverage_gen.CoverageGenerator.generate, code2docs.generators.coverage_gen.CoverageGenerator._render_summary, code2docs.generators.coverage_gen.CoverageGenerator._render_per_module, code2docs.generators.coverage_gen.CoverageGenerator._collect_module_stats, code2docs.generators.coverage_gen.CoverageGenerator._format_coverage_table, code2docs.generators.coverage_gen.CoverageGenerator._render_undocumented
 
-### code2docs.generators.api_reference_gen.ApiReferenceGenerator
-> Generate docs/api.md — consolidated API reference.
+### code2docs.generators._registry_adapters.IndexHtmlAdapter
+> Adapter for generating index.html for GitHub Pages browsing.
 - **Methods**: 7
-- **Key Methods**: code2docs.generators.api_reference_gen.ApiReferenceGenerator.__init__, code2docs.generators.api_reference_gen.ApiReferenceGenerator.generate, code2docs.generators.api_reference_gen.ApiReferenceGenerator._group_modules, code2docs.generators.api_reference_gen.ApiReferenceGenerator._has_content, code2docs.generators.api_reference_gen.ApiReferenceGenerator._render_module_section, code2docs.generators.api_reference_gen.ApiReferenceGenerator._get_public_methods, code2docs.generators.api_reference_gen.ApiReferenceGenerator._format_signature
+- **Key Methods**: code2docs.generators._registry_adapters.IndexHtmlAdapter.should_run, code2docs.generators._registry_adapters.IndexHtmlAdapter.run, code2docs.generators._registry_adapters.IndexHtmlAdapter._generate_html, code2docs.generators._registry_adapters.IndexHtmlAdapter._collect_doc_files, code2docs.generators._registry_adapters.IndexHtmlAdapter._build_github_link, code2docs.generators._registry_adapters.IndexHtmlAdapter._build_files_html, code2docs.generators._registry_adapters.IndexHtmlAdapter._build_html_template
+- **Inherits**: BaseGenerator
 
 ### code2docs.llm_helper.LLMHelper
 > Thin wrapper around litellm for documentation generation.
@@ -384,16 +398,6 @@ If LLM is unavailable or disabled, every
 - **Methods**: 6
 - **Key Methods**: code2docs.generators.changelog_gen.ChangelogGenerator.__init__, code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log, code2docs.generators.changelog_gen.ChangelogGenerator._classify_message, code2docs.generators.changelog_gen.ChangelogGenerator._group_by_type, code2docs.generators.changelog_gen.ChangelogGenerator._render
 
-### examples.05_custom_generators.MetricsReportGenerator
-> Generate a metrics report from code analysis.
-- **Methods**: 6
-- **Key Methods**: examples.05_custom_generators.MetricsReportGenerator.__init__, examples.05_custom_generators.MetricsReportGenerator.generate, examples.05_custom_generators.MetricsReportGenerator._calculate_stats, examples.05_custom_generators.MetricsReportGenerator._format_stats_table, examples.05_custom_generators.MetricsReportGenerator._list_largest_files, examples.05_custom_generators.MetricsReportGenerator._analyze_functions
-
-### code2docs.generators.mkdocs_gen.MkDocsGenerator
-> Generate mkdocs.yml from the docs/ directory structure.
-- **Methods**: 5
-- **Key Methods**: code2docs.generators.mkdocs_gen.MkDocsGenerator.__init__, code2docs.generators.mkdocs_gen.MkDocsGenerator.generate, code2docs.generators.mkdocs_gen.MkDocsGenerator._read_pyproject_mkdocs, code2docs.generators.mkdocs_gen.MkDocsGenerator._build_nav, code2docs.generators.mkdocs_gen.MkDocsGenerator.write
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
@@ -402,32 +406,36 @@ Key functions that process and transform data:
 > Format coverage stats as a Markdown table.
 - **Output to**: None.join, lines.append
 
+### code2docs.cli.DefaultGroup.parse_args
+- **Output to**: None.parse_args, super
+
+### code2docs.generators.getting_started_gen.GettingStartedGenerator._format_func_args
+> Format function arguments for example code.
+- **Output to**: None.join, enumerate
+
 ### code2docs.generators.code2llm_gen.parse_gitignore
 > Parse .gitignore file and return list of patterns to exclude.
 
 Filters out:
 - Empty lines
 - Comments
-- **Output to**: gitignore_path.exists, gitignore_path.read_text, content.split, line.strip, line.startswith
+- **Output to**: gitignore_path.exists, gitignore_path.read_text, code2docs.generators.code2llm_gen._extract_patterns
 
-### code2docs.cli.DefaultGroup.parse_args
-- **Output to**: None.parse_args, super
+### code2docs.generators.code2llm_gen._process_line
+> Process a single gitignore line, returning valid pattern or empty string.
+- **Output to**: line.strip, code2docs.generators.code2llm_gen._should_skip_line, code2docs.generators.code2llm_gen._clean_pattern, code2docs.generators.code2llm_gen._is_valid_pattern
 
 ### code2docs.generators.api_reference_gen.ApiReferenceGenerator._format_signature
 > Format a function signature string.
 - **Output to**: None.join, len
 
-### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
-> Try to parse a route decorator string.
-- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
+### code2docs.generators.examples_gen.ExamplesGenerator._find_formatter_functions
+> Find formatter functions for examples.
+- **Output to**: self._find_function_by_name, self._find_function_by_name
 
-### examples.05_custom_generators.MetricsReportGenerator._format_stats_table
-> Format statistics as markdown table.
-- **Output to**: stats.items, None.join, lines.append
-
-### examples.06_formatters.markdown_formatting_examples
-> Demonstrate markdown formatting utilities.
-- **Output to**: MarkdownFormatter, print, print, print, print
+### code2docs.generators.examples_gen.ExamplesGenerator._render_formatter_examples
+> Render formatter usage examples.
+- **Output to**: lines.append, lines.append, lines.append, lines.append, lines.append
 
 ### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
 > Parse pyproject.toml for dependencies.
@@ -461,6 +469,14 @@ Filters out:
 > Parse a dependency string like 'package>=1.0'.
 - **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
 
+### examples.05_custom_generators.MetricsReportGenerator._format_stats_table
+> Format statistics as markdown table.
+- **Output to**: stats.items, None.join, lines.append
+
+### examples.06_formatters.markdown_formatting_examples
+> Demonstrate markdown formatting utilities.
+- **Output to**: MarkdownFormatter, print, print, print, print
+
 ### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
 > Parse a docstring into structured sections (orchestrator).
 - **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
@@ -484,6 +500,10 @@ Filters out:
 > Parse an examples line.
 - **Output to**: info.examples.append
 
+### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
+> Try to parse a route decorator string.
+- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
+
 ## Behavioral Patterns
 
 ### recursion_analyze
@@ -504,7 +524,6 @@ Functions exposed as public API (no underscore prefix):
 - `code2docs.generators.architecture_gen.ArchitectureGenerator.generate` - 42 calls
 - `examples.06_formatters.generate_complex_document` - 32 calls
 - `code2docs.sync.watcher.start_watcher` - 29 calls
-- `code2docs.generators.module_docs_gen.ModuleDocsGenerator.generate` - 29 calls
 - `examples.06_formatters.markdown_formatting_examples` - 29 calls
 - `examples.06_formatters.build_custom_readme` - 27 calls
 - `examples.07_web_frameworks.generate_api_docs_from_endpoints` - 27 calls
@@ -514,13 +533,12 @@ Functions exposed as public API (no underscore prefix):
 - `code2docs.sync.updater.Updater.apply` - 19 calls
 - `code2docs.sync.differ.Differ.detect_changes` - 16 calls
 - `examples.03_programmatic_api.inspect_project_structure` - 16 calls
-- `code2docs.generators.generate_docs` - 15 calls
 - `code2docs.cli.generate` - 15 calls
+- `code2docs.generators.generate_docs` - 15 calls
 - `code2docs.analyzers.dependency_scanner.DependencyScanner.scan` - 15 calls
 - `examples.05_custom_generators.APIChangelogGenerator.generate` - 14 calls
 - `code2docs.generators.config_docs_gen.ConfigDocsGenerator.generate` - 12 calls
 - `examples.03_programmatic_api.generate_full_documentation` - 12 calls
-- `code2docs.generators.code2llm_gen.parse_gitignore` - 11 calls
 - `code2docs.generators._registry_adapters.ReadmeGeneratorAdapter.run` - 11 calls
 - `code2docs.generators._registry_adapters.OrgReadmeAdapter.run` - 11 calls
 - `examples.04_sync_and_watch.sync_with_git_changes` - 11 calls
@@ -533,13 +551,15 @@ Functions exposed as public API (no underscore prefix):
 - `examples.07_web_frameworks.document_web_project` - 9 calls
 - `code2docs.formatters.markdown.MarkdownFormatter.table` - 8 calls
 - `code2docs.generators.depgraph_gen.DepGraphGenerator.generate` - 8 calls
+- `code2docs.cli.sync` - 8 calls
 - `code2docs.generators.getting_started_gen.GettingStartedGenerator.generate` - 8 calls
 - `code2docs.generators.code2llm_gen.Code2LlmGenerator.generate_all` - 8 calls
-- `code2docs.cli.sync` - 8 calls
 - `code2docs.generators.org_readme_gen.OrgReadmeGenerator.generate` - 8 calls
 - `examples.03_programmatic_api.custom_documentation_pipeline` - 8 calls
 - `code2docs.cli.watch` - 7 calls
 - `code2docs.cli.check` - 7 calls
+- `code2docs.generators._registry_adapters.Code2LlmAdapter.run` - 7 calls
+- `code2docs.generators.contributing_gen.ContributingGenerator.generate` - 7 calls
 
 ## System Interactions
 
@@ -547,36 +567,36 @@ How components interact:
 
 ```mermaid
 graph TD
-    _generate_advanced --> _find_generator_clas
-    _generate_advanced --> _find_class_by_name
-    _generate_advanced --> append
-    _generate_advanced --> join
-    from_yaml --> Path
-    from_yaml --> cls
-    from_yaml --> get
     _generate_quickstart --> _find_convenience_fu
     _generate_quickstart --> _find_api_classes
     _generate_quickstart --> set
     _generate_quickstart --> extend
     _generate_quickstart --> append
+    from_yaml --> Path
+    from_yaml --> cls
+    from_yaml --> get
     generate --> append
     generate --> _generate_llm_summar
     generate --> _detect_layers
-    _render_module_secti --> file_link
-    _render_module_secti --> join
-    _render_module_secti --> append
-    _render_module_secti --> sorted
-    _extract_project_met --> Path
-    _extract_project_met --> exists
-    _extract_project_met --> run
-    _render_module_detai --> file_link
-    _render_module_detai --> _get_module_docstrin
-    _render_module_detai --> join
-    _render_module_detai --> append
-    _render_module_detai --> sorted
     generate_complex_doc --> MarkdownFormatter
     generate_complex_doc --> append
-    generate --> sorted
+    markdown_formatting_ --> MarkdownFormatter
+    markdown_formatting_ --> print
+    _diff_classes --> set
+    _diff_classes --> get
+    _diff_classes --> keys
+    _render_generator_ex --> append
+    build_custom_readme --> MarkdownFormatter
+    build_custom_readme --> append
+    _render_formatter_ex --> append
+    _render_sync_example --> append
+    _build_context --> DependencyScanner
+    _build_context --> scan
+    _build_context --> EndpointDetector
+    _build_context --> detect
+    _build_context --> _calc_avg_complexity
+    generate --> len
+    generate --> _group_modules
 ```
 
 ## Reverse Engineering Guidelines

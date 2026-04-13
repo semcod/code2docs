@@ -260,31 +260,43 @@ class IndexHtmlAdapter(BaseGenerator):
 
     def _generate_html(self, ctx: GenerateContext) -> str:
         project_name = self.config.project_name or ctx.project.name
-        repo_url = self.config.repo_url
-        files = []
-        if (ctx.docs_dir / 'README.md').exists():
-            files.append(('README.md', 'Project Overview', '📖'))
-        if (ctx.docs_dir / 'getting-started.md').exists():
-            files.append(('getting-started.md', 'Getting Started', '🚀'))
-        if (ctx.docs_dir / 'api.md').exists():
-            files.append(('api.md', 'API Reference', '📚'))
-        if (ctx.docs_dir / 'modules.md').exists():
-            files.append(('modules.md', 'Module Documentation', '📦'))
-        if (ctx.docs_dir / 'architecture.md').exists():
-            files.append(('architecture.md', 'Architecture', '🏗️'))
-        if (ctx.docs_dir / 'dependency-graph.md').exists():
-            files.append(('dependency-graph.md', 'Dependency Graph', '🔗'))
-        if (ctx.docs_dir / 'coverage.md').exists():
-            files.append(('coverage.md', 'Code Coverage', '📊'))
-        if (ctx.docs_dir / 'api-changelog.md').exists():
-            files.append(('api-changelog.md', 'API Changelog', '📝'))
-        if (ctx.docs_dir / 'configuration.md').exists():
-            files.append(('configuration.md', 'Configuration', '⚙️'))
-        if (ctx.docs_dir / 'CONTRIBUTING.md').exists():
-            files.append(('CONTRIBUTING.md', 'Contributing Guide', '🤝'))
-        if (ctx.docs_dir / 'examples').is_dir():
+        files = self._collect_doc_files(ctx.docs_dir)
+        github_link = self._build_github_link(self.config.repo_url)
+        files_html = self._build_files_html(files)
+        return self._build_html_template(project_name, github_link, files_html)
+
+    def _collect_doc_files(self, docs_dir: Path) -> list:
+        """Collect existing documentation files with their display info."""
+        doc_files = [
+            ('README.md', 'Project Overview', '📖'),
+            ('getting-started.md', 'Getting Started', '🚀'),
+            ('api.md', 'API Reference', '📚'),
+            ('modules.md', 'Module Documentation', '📦'),
+            ('architecture.md', 'Architecture', '🏗️'),
+            ('dependency-graph.md', 'Dependency Graph', '🔗'),
+            ('coverage.md', 'Code Coverage', '📊'),
+            ('api-changelog.md', 'API Changelog', '📝'),
+            ('configuration.md', 'Configuration', '⚙️'),
+            ('CONTRIBUTING.md', 'Contributing Guide', '🤝'),
+        ]
+        files = [(href, title, icon) for href, title, icon in doc_files if (docs_dir / href).exists()]
+        if (docs_dir / 'examples').is_dir():
             files.append(('examples/', 'Examples', '💡'))
-        github_link = f'<a href="{repo_url}" class="github-link" target="_blank" rel="noopener">View on GitHub</a>' if repo_url else ''
-        files_html = '\n'.join((f'<a href="{href}" class="doc-card"><span class="icon">{icon}</span><span class="title">{title}</span></a>' for href, title, icon in files))
+        return files
+
+    def _build_github_link(self, repo_url: str) -> str:
+        """Build GitHub link HTML if repo_url is available."""
+        if not repo_url:
+            return ''
+        return f'<a href="{repo_url}" class="github-link" target="_blank" rel="noopener">View on GitHub</a>'
+
+    def _build_files_html(self, files: list) -> str:
+        """Build HTML for file cards."""
+        return '\n'.join(
+            f'<a href="{href}" class="doc-card"><span class="icon">{icon}</span><span class="title">{title}</span></a>'
+            for href, title, icon in files
+        )
+
+    def _build_html_template(self, project_name: str, github_link: str, files_html: str) -> str:
         return f'<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>{project_name} - Documentation</title>\n    <style>\n        * {{ margin: 0; padding: 0; box-sizing: border-box; }}\n        body {{\n            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;\n            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n            min-height: 100vh;\n            padding: 40px 20px;\n        }}\n        .container {{\n            max-width: 900px;\n            margin: 0 auto;\n        }}\n        .header {{\n            text-align: center;\n            margin-bottom: 40px;\n            color: white;\n        }}\n        .header h1 {{\n            font-size: 2.5rem;\n            margin-bottom: 10px;\n            text-shadow: 0 2px 4px rgba(0,0,0,0.2);\n        }}\n        .header p {{\n            font-size: 1.1rem;\n            opacity: 0.9;\n        }}\n        .github-link {{\n            display: inline-block;\n            margin-top: 15px;\n            padding: 10px 20px;\n            background: rgba(255,255,255,0.2);\n            color: white;\n            text-decoration: none;\n            border-radius: 25px;\n            transition: background 0.3s;\n        }}\n        .github-link:hover {{ background: rgba(255,255,255,0.3); }}\n        .docs-grid {{\n            display: grid;\n            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\n            gap: 20px;\n        }}\n        .doc-card {{\n            background: white;\n            border-radius: 12px;\n            padding: 25px;\n            text-decoration: none;\n            color: #333;\n            box-shadow: 0 4px 15px rgba(0,0,0,0.1);\n            transition: transform 0.2s, box-shadow 0.2s;\n            display: flex;\n            align-items: center;\n            gap: 15px;\n        }}\n        .doc-card:hover {{\n            transform: translateY(-3px);\n            box-shadow: 0 8px 25px rgba(0,0,0,0.15);\n        }}\n        .doc-card .icon {{\n            font-size: 2rem;\n            flex-shrink: 0;\n        }}\n        .doc-card .title {{\n            font-size: 1.1rem;\n            font-weight: 600;\n        }}\n        .footer {{\n            text-align: center;\n            margin-top: 40px;\n            color: rgba(255,255,255,0.7);\n            font-size: 0.9rem;\n        }}\n        @media (max-width: 600px) {{\n            .header h1 {{ font-size: 1.8rem; }}\n            .docs-grid {{ grid-template-columns: 1fr; }}\n        }}\n    </style>\n</head>\n<body>\n    <div class="container">\n        <div class="header">\n            <h1>{project_name}</h1>\n            <p>Generated Documentation</p>\n            {github_link}\n        </div>\n        <div class="docs-grid">\n            {files_html}\n        </div>\n        <div class="footer">\n            Generated with <a href="https://github.com/wronai/code2docs" style="color: rgba(255,255,255,0.9);">code2docs</a>\n        </div>\n    </div>\n</body>\n</html>'
 ALL_ADAPTERS = [ReadmeGeneratorAdapter, ApiReferenceAdapter, ModuleDocsAdapter, ArchitectureAdapter, DepGraphAdapter, CoverageAdapter, ApiChangelogAdapter, ExamplesAdapter, GettingStartedAdapter, ConfigDocsAdapter, ContributingAdapter, MkDocsAdapter, Code2LlmAdapter, OrgReadmeAdapter, IndexHtmlAdapter]

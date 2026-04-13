@@ -248,118 +248,134 @@ class ExamplesGenerator:
             "",
         ]
 
-        # --- Individual generators ---
         gen_classes = self._find_generator_classes()
         if gen_classes:
-            lines.append('# ' + '=' * CONSTANT_50)
-            lines.append("# Using individual generators")
-            lines.append('# ' + '=' * CONSTANT_50)
-            lines.append("")
-            lines.append(f"from {pkg} import Code2DocsConfig")
-            lines.append(f"from {pkg}.analyzers.project_scanner import ProjectScanner")
-            for cls in gen_classes[:PORT_4]:
-                mod = cls.module or pkg
-                if not mod.startswith(pkg):
-                    mod = f"{pkg}.{mod}"
-                lines.append(f"from {mod} import {cls.name}")
-            lines.append("")
-            lines.append("# Step 1: Analyze the project")
-            lines.append("config = Code2DocsConfig(project_name=\"my-project\")")
-            lines.append("project_name_adv = config.project_name")
-            lines.append("scanner = ProjectScanner(config)")
-            lines.append('result = scanner.analyze(f"./{project_name_adv}") if project_name_adv != "." else scanner.analyze("./")')
-            lines.append("")
+            lines.extend(self._render_generator_examples(pkg, gen_classes))
 
-            for i, cls in enumerate(gen_classes[:PORT_4], start=2):
-                gen_name = cls.name[0].lower() + cls.name[1:]
-                gen_name = gen_name.replace("Generator", "_gen")
-                lines.append(f"# Step {i}: Generate with {cls.name}")
-                lines.append(f"{gen_name} = {cls.name}(config, result)")
-
-                # Find the main generate method
-                methods = self._get_public_methods(cls)
-                gen_method = next(
-                    (m for m in methods if m.name in ("generate", "generate_all")),
-                    methods[0] if methods else None,
-                )
-                if gen_method:
-                    ret = gen_method.returns or "str"
-                    if "Dict" in ret or "dict" in ret:
-                        lines.append(f"files = {gen_name}.{gen_method.name}()")
-                        lines.append('print(f"Generated {len(files)} files")')
-                    else:
-                        lines.append(f"content = {gen_name}.{gen_method.name}()")
-                        lines.append('print(f"Generated {len(content)} characters")')
-                lines.append("")
-
-        # --- Formatters ---
-        fmt_funcs = [
-            self._find_function_by_name("generate_badges"),
-            self._find_function_by_name("generate_toc"),
-        ]
-        fmt_funcs = [f for f in fmt_funcs if f]
+        fmt_funcs = self._find_formatter_functions()
         if fmt_funcs:
-            lines.append("")
-            lines.append('# ' + '=' * CONSTANT_50)
-            lines.append("# Formatters")
-            lines.append('# ' + '=' * CONSTANT_50)
-            lines.append("")
-            for func in fmt_funcs:
-                mod = func.module or pkg
-                if not mod.startswith(pkg):
-                    mod = f"{pkg}.{mod}"
-                lines.append(f"from {mod} import {func.name}")
-            lines.append("")
+            lines.extend(self._render_formatter_examples(pkg, fmt_funcs))
 
-            badges_func = self._find_function_by_name("generate_badges")
-            if badges_func:
-                lines.append("# Generate shields.io badges")
-                lines.append('badges = generate_badges(')
-                lines.append('    project_name="my-project",')
-                lines.append('    badge_types=["version", "python", "coverage"],')
-                lines.append('    stats={"version": "1.0.0", "python": ">=3.9"},')
-                lines.append(')')
-                lines.append('for badge in badges:')
-                lines.append('    print(badge)')
-                lines.append("")
-
-            toc_func = self._find_function_by_name("generate_toc")
-            if toc_func:
-                lines.append("# Generate table of contents")
-                lines.append('markdown = "# Title\\n## Section 1\\n## Section 2\\n### Subsection"')
-                lines.append("toc = generate_toc(markdown, max_depth=2)")
-                lines.append("print(toc)")
-                lines.append("")
-
-        # --- Sync ---
         differ_cls = self._find_class_by_name("Differ")
         if differ_cls:
-            lines.append("")
-            lines.append('# ' + '=' * CONSTANT_50)
-            lines.append("# Sync — detect and apply changes")
-            lines.append('# ' + '=' * CONSTANT_50)
-            lines.append("")
-            lines.append(f"from {pkg}.sync.differ import Differ")
-            lines.append(f"from {pkg}.sync.updater import Updater")
-            lines.append("")
-            lines.append("# Detect changes since last generation")
-            lines.append("differ = Differ(config)")
-            lines.append('changes = differ.detect_changes("./my-project")')
-            lines.append("")
-            lines.append("if changes:")
-            lines.append('    print(f"Detected {len(changes)} changed modules:")')
-            lines.append("    for change in changes:")
-            lines.append('        print(f"  {change}")')
-            lines.append("")
-            lines.append("    # Apply selective update")
-            lines.append("    updater = Updater(config)")
-            lines.append('    updater.apply("./my-project", changes)')
-            lines.append('    print("Documentation updated!")')
-            lines.append("else:")
-            lines.append('    print("No changes detected.")')
+            lines.extend(self._render_sync_examples(pkg))
 
         lines.append("")
         return "\n".join(lines)
+
+    def _render_generator_examples(self, pkg: str, gen_classes: List[ClassInfo]) -> List[str]:
+        """Render individual generator usage examples."""
+        lines = []
+        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# Using individual generators")
+        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("")
+        lines.append(f"from {pkg} import Code2DocsConfig")
+        lines.append(f"from {pkg}.analyzers.project_scanner import ProjectScanner")
+        for cls in gen_classes[:PORT_4]:
+            mod = cls.module or pkg
+            if not mod.startswith(pkg):
+                mod = f"{pkg}.{mod}"
+            lines.append(f"from {mod} import {cls.name}")
+        lines.append("")
+        lines.append("# Step 1: Analyze the project")
+        lines.append("config = Code2DocsConfig(project_name=\"my-project\")")
+        lines.append("project_name_adv = config.project_name")
+        lines.append("scanner = ProjectScanner(config)")
+        lines.append('result = scanner.analyze(f"./{project_name_adv}") if project_name_adv != "." else scanner.analyze("./")')
+        lines.append("")
+
+        for i, cls in enumerate(gen_classes[:PORT_4], start=2):
+            gen_name = cls.name[0].lower() + cls.name[1:]
+            gen_name = gen_name.replace("Generator", "_gen")
+            lines.append(f"# Step {i}: Generate with {cls.name}")
+            lines.append(f"{gen_name} = {cls.name}(config, result)")
+
+            methods = self._get_public_methods(cls)
+            gen_method = next(
+                (m for m in methods if m.name in ("generate", "generate_all")),
+                methods[0] if methods else None,
+            )
+            if gen_method:
+                ret = gen_method.returns or "str"
+                if "Dict" in ret or "dict" in ret:
+                    lines.append(f"files = {gen_name}.{gen_method.name}()")
+                    lines.append('print(f"Generated {len(files)} files")')
+                else:
+                    lines.append(f"content = {gen_name}.{gen_method.name}()")
+                    lines.append('print(f"Generated {len(content)} characters")')
+            lines.append("")
+        return lines
+
+    def _find_formatter_functions(self) -> List[FunctionInfo]:
+        """Find formatter functions for examples."""
+        funcs = [
+            self._find_function_by_name("generate_badges"),
+            self._find_function_by_name("generate_toc"),
+        ]
+        return [f for f in funcs if f]
+
+    def _render_formatter_examples(self, pkg: str, fmt_funcs: List[FunctionInfo]) -> List[str]:
+        """Render formatter usage examples."""
+        lines = [""]
+        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# Formatters")
+        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("")
+        for func in fmt_funcs:
+            mod = func.module or pkg
+            if not mod.startswith(pkg):
+                mod = f"{pkg}.{mod}"
+            lines.append(f"from {mod} import {func.name}")
+        lines.append("")
+
+        badges_func = self._find_function_by_name("generate_badges")
+        if badges_func:
+            lines.append("# Generate shields.io badges")
+            lines.append('badges = generate_badges(')
+            lines.append('    project_name="my-project",')
+            lines.append('    badge_types=["version", "python", "coverage"],')
+            lines.append('    stats={"version": "1.0.0", "python": ">=3.9"},')
+            lines.append(')')
+            lines.append('for badge in badges:')
+            lines.append('    print(badge)')
+            lines.append("")
+
+        toc_func = self._find_function_by_name("generate_toc")
+        if toc_func:
+            lines.append("# Generate table of contents")
+            lines.append('markdown = "# Title\\n## Section 1\\n## Section 2\\n### Subsection"')
+            lines.append("toc = generate_toc(markdown, max_depth=2)")
+            lines.append("print(toc)")
+            lines.append("")
+        return lines
+
+    def _render_sync_examples(self, pkg: str) -> List[str]:
+        """Render sync/diff usage examples."""
+        lines = [""]
+        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# Sync — detect and apply changes")
+        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("")
+        lines.append(f"from {pkg}.sync.differ import Differ")
+        lines.append(f"from {pkg}.sync.updater import Updater")
+        lines.append("")
+        lines.append("# Detect changes since last generation")
+        lines.append("differ = Differ(config)")
+        lines.append('changes = differ.detect_changes("./my-project")')
+        lines.append("")
+        lines.append("if changes:")
+        lines.append('    print(f"Detected {len(changes)} changed modules:")')
+        lines.append("    for change in changes:")
+        lines.append('        print(f"  {change}")')
+        lines.append("")
+        lines.append("    # Apply selective update")
+        lines.append("    updater = Updater(config)")
+        lines.append('    updater.apply("./my-project", changes)')
+        lines.append('    print("Documentation updated!")')
+        lines.append("else:")
+        lines.append('    print("No changes detected.")')
+        return lines
 
     # ── helpers ────────────────────────────────────────────────────────
 

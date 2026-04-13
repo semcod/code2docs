@@ -11,52 +11,77 @@ from ..config import Code2DocsConfig
 
 def parse_gitignore(project_path: Path) -> List[str]:
     """Parse .gitignore file and return list of patterns to exclude.
-    
+
     Filters out:
     - Empty lines
     - Comments (lines starting with #)
     - Negation patterns (starting with !)
     - Complex patterns with ** or regex
-    
+
     Returns simple directory/file patterns that can be passed to --skip-subprojects.
     """
     gitignore_path = project_path / ".gitignore"
     if not gitignore_path.exists():
         return []
-    
-    patterns = []
+
     try:
         content = gitignore_path.read_text(encoding="utf-8")
-        for line in content.split("\n"):
-            line = line.strip()
-            # Skip empty lines and comments
-            if not line or line.startswith("#"):
-                continue
-            # Skip negation patterns (too complex)
-            if line.startswith("!"):
-                continue
-            # Skip patterns with ** (globstar - too complex)
-            if "**" in line:
-                continue
-            # Skip file-specific patterns (with wildcards)
-            if "*" in line and "/" not in line:
-                # Wildcard without path - likely file pattern, skip
-                continue
-            # Clean up the pattern
-            pattern = line.rstrip("/")  # Remove trailing slash
-            # Skip patterns starting with / (root-only patterns)
-            if pattern.startswith("/"):
-                pattern = pattern[1:]
-            # Skip if still has special characters
-            if any(c in pattern for c in "[]?*"):
-                continue
-            # Valid directory pattern
-            if pattern and len(pattern) > 1:
-                patterns.append(pattern)
+        return _extract_patterns(content)
     except Exception:
-        pass  # Silently fail if can't read gitignore
-    
+        return []
+
+
+def _extract_patterns(content: str) -> List[str]:
+    """Extract valid patterns from gitignore content."""
+    patterns = []
+    for line in content.split("\n"):
+        pattern = _process_line(line)
+        if pattern:
+            patterns.append(pattern)
     return patterns
+
+
+def _process_line(line: str) -> str:
+    """Process a single gitignore line, returning valid pattern or empty string."""
+    line = line.strip()
+
+    if _should_skip_line(line):
+        return ""
+
+    pattern = _clean_pattern(line)
+    if _is_valid_pattern(pattern):
+        return pattern
+    return ""
+
+
+def _should_skip_line(line: str) -> bool:
+    """Check if line should be skipped (empty, comment, negation, globstar)."""
+    if not line or line.startswith("#"):
+        return True
+    if line.startswith("!"):
+        return True
+    if "**" in line:
+        return True
+    if "*" in line and "/" not in line:
+        return True
+    return False
+
+
+def _clean_pattern(line: str) -> str:
+    """Clean up the pattern by removing trailing slashes and leading slashes."""
+    pattern = line.rstrip("/")
+    if pattern.startswith("/"):
+        pattern = pattern[1:]
+    return pattern
+
+
+def _is_valid_pattern(pattern: str) -> bool:
+    """Check if pattern is valid (no special chars, length > 1)."""
+    if not pattern or len(pattern) <= 1:
+        return False
+    if any(c in pattern for c in "[]?*"):
+        return False
+    return True
 
 
 class Code2LlmGenerator:
@@ -124,8 +149,15 @@ class Code2LlmGenerator:
     def _run_code2llm(self, project_path: Path, output_dir: Path) -> None:
         """Execute code2llm CLI with appropriate options."""
         cfg = self.config.code2llm
-        
-        cmd = [
+
+        cmd = self._build_base_cmd(project_path, output_dir, cfg)
+        self._add_config_options(cmd, cfg)
+        self._add_exclude_patterns(cmd, cfg, project_path)
+        self._execute_command(cmd, project_path)
+
+    def _build_base_cmd(self, project_path: Path, output_dir: Path, cfg) -> List[str]:
+        """Build base command with required options."""
+        return [
             "python", "-m", "code2llm",
             str(project_path),
             "-f", ",".join(cfg.formats),
@@ -133,41 +165,51 @@ class Code2LlmGenerator:
             "--strategy", cfg.strategy,
             "--max-depth", str(cfg.max_depth),
         ]
-        
-        # Add options based on config
+
+    def _add_config_options(self, cmd: List[str], cfg) -> None:
+        """Add optional flags based on config settings."""
         if not cfg.chunk:
             cmd.append("--no-chunk")
         if cfg.no_png:
             cmd.append("--no-png")
         if self.config.verbose:
             cmd.append("-v")
-        
-        # Add exclude patterns as skip-subprojects if specified
-        if cfg.exclude_patterns:
-            # Convert patterns to skip-subprojects (folders to skip)
-            skip_dirs = [p for p in cfg.exclude_patterns if not p.startswith(".") and not p.startswith("*")]
-            if skip_dirs:
-                cmd.extend(["--skip-subprojects"] + skip_dirs[:10])  # Limit to 10
-        
-        # Add patterns from .gitignore
+
+    def _add_exclude_patterns(self, cmd: List[str], cfg, project_path: Path) -> None:
+        """Add exclude patterns from config and .gitignore."""
+        skip_dirs = self._get_config_skip_dirs(cfg)
         gitignore_patterns = parse_gitignore(project_path)
-        if gitignore_patterns:
-            # Merge with existing patterns, remove duplicates
-            existing = set(skip_dirs) if cfg.exclude_patterns else set()
-            new_patterns = [p for p in gitignore_patterns if p not in existing][:10]
-            if new_patterns:
-                if "--skip-subprojects" not in cmd:
-                    cmd.append("--skip-subprojects")
-                cmd.extend(new_patterns)
-        
-        # Run the command
+
+        all_patterns = self._merge_patterns(skip_dirs, gitignore_patterns)
+        if all_patterns:
+            cmd.append("--skip-subprojects")
+            cmd.extend(all_patterns[:10])
+
+    def _get_config_skip_dirs(self, cfg) -> List[str]:
+        """Get skip directories from config exclude patterns."""
+        if not cfg.exclude_patterns:
+            return []
+        return [p for p in cfg.exclude_patterns if not p.startswith(".") and not p.startswith("*")]
+
+    def _merge_patterns(self, config_patterns: List[str], gitignore_patterns: List[str]) -> List[str]:
+        """Merge config and gitignore patterns, removing duplicates."""
+        existing = set(config_patterns)
+        merged = list(config_patterns)
+        for p in gitignore_patterns:
+            if p not in existing:
+                merged.append(p)
+                existing.add(p)
+        return merged
+
+    def _execute_command(self, cmd: List[str], project_path: Path) -> None:
+        """Run the subprocess command and handle errors."""
         result = subprocess.run(
             cmd,
             capture_output=True,
             text=True,
             cwd=str(project_path),
         )
-        
+
         # Don't raise on mmdc/png errors (optional dependencies)
         if result.returncode != 0 and "mmdc" not in result.stderr:
             raise RuntimeError(f"code2llm failed: {result.stderr}")

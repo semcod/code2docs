@@ -1,8 +1,8 @@
 """Getting Started guide generator."""
 
-from typing import List
+from typing import List, Optional
 
-from code2llm.api import AnalysisResult
+from code2llm.api import AnalysisResult, FunctionInfo
 
 from ..config import Code2DocsConfig
 from ..analyzers.dependency_scanner import DependencyScanner
@@ -106,8 +106,15 @@ class GettingStartedGenerator:
     def _render_first_usage(self) -> str:
         """Render first usage example — CLI + Python API."""
         project = self.config.project_name or "project"
-        lines = [
-            "## Quick Start\n",
+        lines = ["## Quick Start\n"]
+        lines.extend(self._render_cli_example(project))
+        lines.append("")
+        lines.extend(self._render_python_api_example(project))
+        return "\n".join(lines)
+
+    def _render_cli_example(self, project: str) -> List[str]:
+        """Render CLI usage example section."""
+        return [
             "### Command Line\n",
             "```bash",
             f"# Generate full documentation for your project",
@@ -118,31 +125,16 @@ class GettingStartedGenerator:
             "",
             f"# Only regenerate README",
             f"{project} ./path/to/your/project --readme-only",
-            "```\n",
-            "### Python API\n",
-            "```python",
+            "```",
         ]
 
-        # Find user-facing public functions, prioritize by name
-        public_funcs = [
-            f for f in self.result.functions.values()
-            if not f.is_private and not f.is_method
-            and not f.name.startswith("_")
-        ]
-        # Prefer functions whose name suggests a user-facing API
-        priority_prefixes = ("generate", "analyze", "create", "build", "run", "process")
-        public_funcs.sort(
-            key=lambda f: (
-                0 if any(f.name.startswith(p) for p in priority_prefixes) else 1,
-                f.name,
-            )
-        )
-        if public_funcs:
-            func = public_funcs[0]
+    def _render_python_api_example(self, project: str) -> List[str]:
+        """Render Python API usage example section."""
+        lines = ["### Python API\n", "```python"]
+        func = self._find_priority_public_function()
+        if func:
             mod = func.module or project
-            args = [a for a in func.args if a != "self"]
-            args_str = ", ".join(f'"{a}"' if i == 0 else f"{a}=..."
-                                 for i, a in enumerate(args[:3]))
+            args_str = self._format_func_args(func)
             lines.append(f"from {mod} import {func.name}")
             lines.append("")
             if func.docstring:
@@ -150,30 +142,60 @@ class GettingStartedGenerator:
             lines.append(f"result = {func.name}({args_str})")
         else:
             lines.append(f"import {project}")
-
         lines.append("```")
-        return "\n".join(lines)
+        return lines
+
+    def _find_priority_public_function(self) -> Optional[FunctionInfo]:
+        """Find best public function for examples, prioritized by naming."""
+        public_funcs = [
+            f for f in self.result.functions.values()
+            if not f.is_private and not f.is_method and not f.name.startswith("_")
+        ]
+        priority_prefixes = ("generate", "analyze", "create", "build", "run", "process")
+        public_funcs.sort(
+            key=lambda f: (
+                0 if any(f.name.startswith(p) for p in priority_prefixes) else 1,
+                f.name,
+            )
+        )
+        return public_funcs[0] if public_funcs else None
+
+    def _format_func_args(self, func: FunctionInfo) -> str:
+        """Format function arguments for example code."""
+        args = [a for a in func.args if a != "self"]
+        return ", ".join(
+            f'"{a}"' if i == 0 else f"{a}=..."
+            for i, a in enumerate(args[:3])
+        )
 
     def _generate_intro(self, project: str) -> str:
         """Generate LLM-enhanced intro paragraph. Returns '' if unavailable."""
         if not self.llm.available:
             return ""
-        # Gather CLI commands
-        cli_funcs = [
-            f for f in self.result.functions.values()
-            if not f.is_private and not f.is_method
-            and f.module and "cli" in f.module
-        ]
-        cli_str = ", ".join(f.name for f in cli_funcs[:8]) or "N/A"
-        # Gather public API
-        public_funcs = [
-            f for f in self.result.functions.values()
-            if not f.is_private and not f.is_method
-            and not f.name.startswith("_")
-        ]
-        api_str = ", ".join(f"{f.name}()" for f in public_funcs[:8]) or "N/A"
+        cli_str = self._gather_filtered_functions("cli", lambda f: f.name)
+        api_str = self._gather_filtered_functions("api", lambda f: f"{f.name}()")
         result = self.llm.generate_getting_started_summary(project, cli_str, api_str)
         return result or ""
+
+    def _gather_filtered_functions(self, filter_type: str, formatter) -> str:
+        """Gather function names with optional filtering."""
+        funcs = self._get_matching_functions(filter_type)
+        names = [formatter(f) for f in funcs[:8]]
+        return ", ".join(names) or "N/A"
+
+    def _get_matching_functions(self, filter_type: str) -> List[FunctionInfo]:
+        """Get functions matching the filter criteria."""
+        if filter_type == "cli":
+            return [
+                f for f in self.result.functions.values()
+                if not f.is_private and not f.is_method
+                and f.module and "cli" in f.module
+            ]
+        else:  # api
+            return [
+                f for f in self.result.functions.values()
+                if not f.is_private and not f.is_method and not f.name.startswith("_")
+            ]
 
     def _render_next_steps(self) -> str:
         """Render next steps with links to other docs."""

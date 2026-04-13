@@ -186,36 +186,51 @@ class ContributingGenerator:
         """Render code style guidelines."""
         lang = tools.get("language", "python")
         lines = ["## Code Style\n"]
-
-        if lang in ("javascript", "typescript"):
-            if tools.get("eslint"):
-                lines.append("- **Linting:** [ESLint](https://eslint.org/) — `npx eslint .`")
-            if tools.get("prettier"):
-                lines.append("- **Formatting:** [Prettier](https://prettier.io/) — `npx prettier --write .`")
-            if tools.get("typescript"):
-                lines.append("- **Type checking:** TypeScript — `npx tsc --noEmit`")
-            if not any(tools.get(t) for t in ("eslint", "prettier")):
-                lines.append("Follow the project's ESLint/Prettier configuration.")
-        elif lang == "rust":
-            lines.append("- **Formatting:** `cargo fmt`")
-            lines.append("- **Linting:** `cargo clippy`")
-        elif lang == "go":
-            lines.append("- **Formatting:** `gofmt -w .`")
-            lines.append("- **Linting:** `go vet ./...`")
-        else:
-            if tools.get("black"):
-                lines.append("- **Formatting:** [Black](https://black.readthedocs.io/) — `black .`")
-            if tools.get("ruff"):
-                lines.append("- **Linting:** [Ruff](https://docs.astral.sh/ruff/) — `ruff check .`")
-            if tools.get("mypy"):
-                lines.append("- **Type checking:** [mypy](https://mypy.readthedocs.io/) — `mypy .`")
-            if tools.get("flake8"):
-                lines.append("- **Linting:** [flake8](https://flake8.pycqa.org/) — `flake8 .`")
-            if tools.get("isort"):
-                lines.append("- **Imports:** [isort](https://pycqa.github.io/isort/) — `isort .`")
-            if not any(tools.get(t) for t in ("black", "ruff", "mypy", "flake8", "isort")):
-                lines.append("Follow PEP 8 conventions.")
+        lines.extend(ContributingGenerator._get_style_lines(lang, tools))
         return "\n".join(lines)
+
+    @staticmethod
+    def _get_style_lines(lang: str, tools: Dict[str, bool]) -> list:
+        """Get style guideline lines for the language."""
+        if lang in ("javascript", "typescript"):
+            return ContributingGenerator._get_jsts_style_lines(tools)
+        if lang == "rust":
+            return ["- **Formatting:** `cargo fmt`", "- **Linting:** `cargo clippy`"]
+        if lang == "go":
+            return ["- **Formatting:** `gofmt -w .`", "- **Linting:** `go vet ./...`"]
+        return ContributingGenerator._get_python_style_lines(tools)
+
+    @staticmethod
+    def _get_jsts_style_lines(tools: Dict[str, bool]) -> list:
+        """Get JavaScript/TypeScript style lines."""
+        lines = []
+        if tools.get("eslint"):
+            lines.append("- **Linting:** [ESLint](https://eslint.org/) — `npx eslint .`")
+        if tools.get("prettier"):
+            lines.append("- **Formatting:** [Prettier](https://prettier.io/) — `npx prettier --write .`")
+        if tools.get("typescript"):
+            lines.append("- **Type checking:** TypeScript — `npx tsc --noEmit`")
+        if not lines:
+            lines.append("Follow the project's ESLint/Prettier configuration.")
+        return lines
+
+    @staticmethod
+    def _get_python_style_lines(tools: Dict[str, bool]) -> list:
+        """Get Python style lines."""
+        lines = []
+        if tools.get("black"):
+            lines.append("- **Formatting:** [Black](https://black.readthedocs.io/) — `black .`")
+        if tools.get("ruff"):
+            lines.append("- **Linting:** [Ruff](https://docs.astral.sh/ruff/) — `ruff check .`")
+        if tools.get("mypy"):
+            lines.append("- **Type checking:** [mypy](https://mypy.readthedocs.io/) — `mypy .`")
+        if tools.get("flake8"):
+            lines.append("- **Linting:** [flake8](https://flake8.pycqa.org/) — `flake8 .`")
+        if tools.get("isort"):
+            lines.append("- **Imports:** [isort](https://pycqa.github.io/isort/) — `isort .`")
+        if not lines:
+            lines.append("Follow PEP 8 conventions.")
+        return lines
 
     @staticmethod
     def _render_pull_request() -> str:

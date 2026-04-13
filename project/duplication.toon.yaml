@@ -1,20 +1,20 @@
-# redup/duplication | 6 groups | 54f 6535L | 2026-04-09
+# redup/duplication | 6 groups | 54f 6761L | 2026-04-13
 
 SUMMARY:
   files_scanned: 54
-  total_lines:   6535
+  total_lines:   6761
   dup_groups:    6
   dup_fragments: 19
   saved_lines:   69
-  scan_ms:       4649
+  scan_ms:       3900
 
 DUPLICATES[6] (ranked by impact):
   [88c0cfa6561a3637]   EXAC  __init__  L=3 N=9 saved=24 sim=1.00
       code2docs/base.py:32-34  (__init__)
       code2docs/generators/api_changelog_gen.py:33-35  (__init__)
       code2docs/generators/changelog_gen.py:39-41  (__init__)
-      code2docs/generators/code2llm_gen.py:75-77  (__init__)
-      code2docs/generators/config_docs_gen.py:14-16  (__init__)
+      code2docs/generators/code2llm_gen.py:100-102  (__init__)
+      code2docs/generators/config_docs_gen.py:13-15  (__init__)
       code2docs/generators/contributing_gen.py:14-16  (__init__)
       code2docs/generators/depgraph_gen.py:15-17  (__init__)
       code2docs/generators/mkdocs_gen.py:16-18  (__init__)
@@ -23,11 +23,11 @@ DUPLICATES[6] (ranked by impact):
       examples/07_web_frameworks.py:16-30  (detect_flask_endpoints)
       examples/07_web_frameworks.py:33-47  (detect_fastapi_endpoints)
   [95ed8c6095a87c3f]   EXAC  _get_public_methods  L=12 N=2 saved=12 sim=1.00
-      code2docs/generators/api_reference_gen.py:142-153  (_get_public_methods)
-      code2docs/generators/module_docs_gen.py:154-165  (_get_public_methods)
+      code2docs/generators/api_reference_gen.py:160-171  (_get_public_methods)
+      code2docs/generators/module_docs_gen.py:202-213  (_get_public_methods)
   [2de350a70c24cad1]   EXAC  _group_modules  L=10 N=2 saved=10 sim=1.00
       code2docs/generators/api_reference_gen.py:57-66  (_group_modules)
-      code2docs/generators/module_docs_gen.py:77-86  (_group_modules)
+      code2docs/generators/module_docs_gen.py:108-117  (_group_modules)
   [92e552f65b8cca0f]   EXAC  __init__  L=4 N=2 saved=4 sim=1.00
       code2docs/generators/api_reference_gen.py:16-19  (__init__)
       code2docs/generators/module_docs_gen.py:17-20  (__init__)

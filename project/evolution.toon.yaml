@@ -1,50 +1,14 @@
-# code2llm/evolution | 258 func | 34f | 2026-04-09
+# code2llm/evolution | 311 func | 34f | 2026-04-13
 
-NEXT[9] (ranked by impact):
-  [1] !! SPLIT-FUNC      ReadmeGenerator._extract_project_metadata  CC=29  fan=23
-      WHY: CC=29 exceeds 15
-      EFFORT: ~1h  IMPACT: 667
-
-  [2] !! SPLIT-FUNC      ApiReferenceGenerator._render_module_section  CC=25  fan=21
-      WHY: CC=25 exceeds 15
-      EFFORT: ~1h  IMPACT: 525
-
-  [3] !! SPLIT-FUNC      ModuleDocsGenerator._render_module_detail  CC=25  fan=16
-      WHY: CC=25 exceeds 15
-      EFFORT: ~1h  IMPACT: 400
-
-  [4] !  SPLIT-FUNC      ModuleDocsGenerator.generate  CC=18  fan=19
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 342
-
-  [5] !  SPLIT-FUNC      OrgReadmeGenerator._extract_description  CC=17  fan=20
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 340
-
-  [6] !  SPLIT-FUNC      ExamplesGenerator._generate_advanced  CC=22  fan=11
-      WHY: CC=22 exceeds 15
-      EFFORT: ~1h  IMPACT: 242
-
-  [7] !  SPLIT-FUNC      Code2LlmGenerator._run_code2llm  CC=17  fan=9
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 153
-
-  [8] !  SPLIT-FUNC      parse_gitignore  CC=15  fan=10
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 150
-
-  [9] !  SPLIT-FUNC      GettingStartedGenerator._render_first_usage  CC=15  fan=8
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 120
-
+NEXT[0]: no refactoring needed
 
 RISKS[0]: none
 
 METRICS-TARGET:
-  CC̄:          4.4 → ≤3.1
-  max-CC:      29 → ≤14
+  CC̄:          3.8 → ≤2.7
+  max-CC:      14 → ≤7
   god-modules: 0 → 0
-  high-CC(≥15): 12 → ≤6
+  high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -72,4 +36,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.4 → now CC̄=4.4
+  prev CC̄=4.2 → now CC̄=3.8

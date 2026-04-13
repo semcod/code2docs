@@ -87,7 +87,22 @@ class OrgReadmeGenerator:
 
     def _extract_description(self, project_path: Path, result: AnalysisResult) -> str:
         """Extract short description from project (max 5 lines)."""
-        # Try pyproject.toml first
+        desc = self._try_pyproject_description(project_path)
+        if desc:
+            return desc
+
+        desc = self._try_module_docstring(result)
+        if desc:
+            return desc
+
+        desc = self._try_readme_description(project_path)
+        if desc:
+            return desc
+
+        return "No description available."
+
+    def _try_pyproject_description(self, project_path: Path) -> str:
+        """Try to extract description from pyproject.toml."""
         try:
             import tomllib
             pyproject = project_path / "pyproject.toml"
@@ -96,38 +111,48 @@ class OrgReadmeGenerator:
                     data = tomllib.load(f)
                     desc = data.get("project", {}).get("description", "")
                     if desc:
-                        # Limit to ~5 lines worth of content
                         return self._truncate_description(desc)
         except Exception:
             pass
-        
-        # Try first package docstring
+        return ""
+
+    def _try_module_docstring(self, result: AnalysisResult) -> str:
+        """Try to extract description from first package docstring."""
         for mod in result.modules.values():
             if mod.is_package and hasattr(mod, "docstring") and mod.docstring:
                 return self._truncate_description(mod.docstring)
-        
-        # Try README.md first paragraph
+        return ""
+
+    def _try_readme_description(self, project_path: Path) -> str:
+        """Try to extract description from README.md first paragraph."""
         readme = project_path / "README.md"
-        if readme.exists():
-            try:
-                content = readme.read_text(encoding="utf-8")
-                # Find first paragraph after title
-                lines = content.split("\n")
-                for i, line in enumerate(lines):
-                    if line.startswith("# "):
-                        # Get next non-empty lines
-                        desc_lines = []
-                        for j in range(i + 1, min(i + 10, len(lines))):
-                            if lines[j].strip() and not lines[j].startswith("#"):
-                                desc_lines.append(lines[j].strip())
-                            if len(desc_lines) >= 5:
-                                break
-                        if desc_lines:
-                            return " ".join(desc_lines)
-            except Exception:
-                pass
-        
-        return "No description available."
+        if not readme.exists():
+            return ""
+        try:
+            content = readme.read_text(encoding="utf-8")
+            return self._extract_from_readme_content(content)
+        except Exception:
+            return ""
+
+    def _extract_from_readme_content(self, content: str) -> str:
+        """Extract first paragraph after title from README content."""
+        lines = content.split("\n")
+        for i, line in enumerate(lines):
+            if line.startswith("# "):
+                desc_lines = self._collect_description_lines(lines, i + 1)
+                if desc_lines:
+                    return " ".join(desc_lines)
+        return ""
+
+    def _collect_description_lines(self, lines: list, start: int) -> list:
+        """Collect up to 5 non-empty description lines starting from index."""
+        desc_lines = []
+        for j in range(start, min(start + 10, len(lines))):
+            if lines[j].strip() and not lines[j].startswith("#"):
+                desc_lines.append(lines[j].strip())
+            if len(desc_lines) >= 5:
+                break
+        return desc_lines
 
     def _truncate_description(self, desc: str, max_chars: int = 300) -> str:
         """Truncate description to ~5 lines of content."""

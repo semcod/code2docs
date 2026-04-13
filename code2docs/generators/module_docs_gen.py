@@ -21,58 +21,89 @@ class ModuleDocsGenerator:
 
     def generate(self) -> str:
         """Generate a single modules.md with all modules grouped by package."""
-        project = self.config.project_name or Path(self.result.project_path).name
+        lines = self._build_header()
+        lines.extend(self._build_overview_table())
+        lines.extend(self._build_detail_sections())
+        return "\n".join(lines)
 
-        lines = [
+    def _build_header(self) -> List[str]:
+        """Build document header with project stats."""
+        project = self.config.project_name or Path(self.result.project_path).name
+        return [
             f"# {project} — Module Reference\n",
             f"> {len(self.result.modules)} modules | "
             f"{len(self.result.functions)} functions | "
             f"{len(self.result.classes)} classes\n",
         ]
 
-        # Overview table of all modules
-        lines.append("## Module Overview\n")
-        lines.append("| Module | Lines | Functions | Classes | CC avg | Description | Source |")
-        lines.append("|--------|-------|-----------|---------|--------|-------------|--------|")
+    def _build_overview_table(self) -> List[str]:
+        """Build overview table of all modules."""
+        lines = [
+            "## Module Overview\n",
+            "| Module | Lines | Functions | Classes | CC avg | Description | Source |",
+            "|--------|-------|-----------|---------|--------|-------------|--------|",
+        ]
         for mod_name, mod_info in sorted(self.result.modules.items()):
-            if mod_name.startswith("_"):
-                continue
-            file_lines = self._count_file_lines(mod_info.file)
-            func_count = len([
-                f for f in self.result.functions.values()
-                if f.module == mod_name and not f.is_method
-            ])
-            class_count = len([
-                c for c in self.result.classes.values()
-                if c.module == mod_name
-            ])
-            if not func_count and not class_count:
-                continue
-            avg_cc = self._calc_module_avg_cc(mod_name)
-            cc_str = str(avg_cc) if avg_cc else "—"
-            doc = self._get_module_docstring(mod_info)
-            doc_short = doc.splitlines()[0][:60] if doc else "—"
-            src = self._linker.file_link(mod_info.file)
-            lines.append(
-                f"| `{mod_name}` | {file_lines} | {func_count} | "
-                f"{class_count} | {cc_str} | {doc_short} | {src} |"
-            )
+            row = self._build_module_row(mod_name, mod_info)
+            if row:
+                lines.append(row)
         lines.append("")
+        return lines
 
-        # Group modules by package and render details
+    def _build_module_row(self, mod_name: str, mod_info: ModuleInfo) -> str:
+        """Build a single row for the overview table."""
+        if mod_name.startswith("_"):
+            return ""
+        file_lines = self._count_file_lines(mod_info.file)
+        func_count = self._count_module_functions(mod_name)
+        class_count = self._count_module_classes(mod_name)
+        if not func_count and not class_count:
+            return ""
+        avg_cc = self._calc_module_avg_cc(mod_name)
+        cc_str = str(avg_cc) if avg_cc else "—"
+        doc = self._get_module_docstring(mod_info)
+        doc_short = doc.splitlines()[0][:60] if doc else "—"
+        src = self._linker.file_link(mod_info.file)
+        return (
+            f"| `{mod_name}` | {file_lines} | {func_count} | "
+            f"{class_count} | {cc_str} | {doc_short} | {src} |"
+        )
+
+    def _count_module_functions(self, mod_name: str) -> int:
+        """Count public functions in a module."""
+        return len([
+            f for f in self.result.functions.values()
+            if f.module == mod_name and not f.is_method
+        ])
+
+    def _count_module_classes(self, mod_name: str) -> int:
+        """Count classes in a module."""
+        return len([
+            c for c in self.result.classes.values()
+            if c.module == mod_name
+        ])
+
+    def _build_detail_sections(self) -> List[str]:
+        """Build detailed sections for each module group."""
+        lines = []
         groups = self._group_modules()
         for group_name, modules in groups.items():
-            non_trivial = [
-                (m, self.result.modules[m]) for m in modules
-                if self._has_content(m)
-            ]
-            if not non_trivial:
-                continue
-            lines.append(f"## {group_name}\n")
-            for mod_name, mod_info in non_trivial:
-                lines.append(self._render_module_detail(mod_name, mod_info))
+            group_lines = self._build_group_section(group_name, modules)
+            lines.extend(group_lines)
+        return lines
 
-        return "\n".join(lines)
+    def _build_group_section(self, group_name: str, modules: List[str]) -> List[str]:
+        """Build a single group section."""
+        non_trivial = [
+            (m, self.result.modules[m]) for m in modules
+            if self._has_content(m)
+        ]
+        if not non_trivial:
+            return []
+        lines = [f"## {group_name}\n"]
+        for mod_name, mod_info in non_trivial:
+            lines.append(self._render_module_detail(mod_name, mod_info))
+        return lines
 
     def _group_modules(self) -> Dict[str, List[str]]:
         """Group module names by top-level package."""
@@ -103,53 +134,70 @@ class ModuleDocsGenerator:
         heading = f"### `{mod_name}` {src}" if src else f"### `{mod_name}`"
         lines = [f"{heading}\n"]
 
-        # One-line description from docstring
         doc = self._get_module_docstring(mod_info)
         if doc:
             lines.append(f"{doc.splitlines()[0]}\n")
 
-        # Classes with method summary
-        module_classes = {
+        module_classes = self._get_module_classes(mod_name)
+        if module_classes:
+            lines.extend(self._render_classes_detail(module_classes))
+
+        module_functions = self._get_module_functions(mod_name)
+        if module_functions:
+            lines.extend(self._render_functions_detail(module_functions))
+
+        return "\n".join(lines)
+
+    def _get_module_classes(self, mod_name: str) -> Dict[str, ClassInfo]:
+        """Get public classes for a module."""
+        return {
             k: v for k, v in self.result.classes.items()
             if v.module == mod_name and not v.name.startswith("_")
         }
-        if module_classes:
-            for cls_name, cls_info in sorted(module_classes.items()):
-                bases = f" ({', '.join(cls_info.bases)})" if cls_info.bases else ""
-                src = self._linker.source_link(cls_info.file, cls_info.line)
-                lines.append(f"**`{cls_info.name}`**{bases} {src}")
-                if cls_info.docstring:
-                    lines.append(f": {cls_info.docstring.splitlines()[0]}")
-                lines.append("")
-                methods = self._get_public_methods(cls_info)
-                if methods:
-                    lines.append("| Method | Args | Returns | CC |")
-                    lines.append("|--------|------|---------|----|")
-                    for m in methods:
-                        args = ", ".join(a for a in m.args[:4] if a != "self")
-                        ret = m.returns or "—"
-                        cc = m.complexity.get("cyclomatic_complexity",
-                                              m.complexity.get("cyclomatic", "—"))
-                        lines.append(f"| `{m.name}` | `{args}` | `{ret}` | {cc} |")
-                    lines.append("")
 
-        # Standalone functions
-        module_functions = {
+    def _get_module_functions(self, mod_name: str) -> Dict[str, FunctionInfo]:
+        """Get public functions for a module."""
+        return {
             k: v for k, v in self.result.functions.items()
             if v.module == mod_name and not v.is_method and not v.name.startswith("_")
         }
-        if module_functions:
-            for func_name, func_info in sorted(module_functions.items()):
-                args = ", ".join(a for a in func_info.args if a != "self")
-                ret = f" → {func_info.returns}" if func_info.returns else ""
-                doc_line = ""
-                if func_info.docstring:
-                    doc_line = f" — {func_info.docstring.splitlines()[0]}"
-                src = self._linker.source_link(func_info.file, func_info.line)
-                lines.append(f"- `{func_info.name}({args}){ret}`{doc_line} {src}")
-            lines.append("")
 
-        return "\n".join(lines)
+    def _render_classes_detail(self, module_classes: Dict[str, ClassInfo]) -> List[str]:
+        """Render classes with their method summaries."""
+        lines = []
+        for cls_name, cls_info in sorted(module_classes.items()):
+            bases = f" ({', '.join(cls_info.bases)})" if cls_info.bases else ""
+            src = self._linker.source_link(cls_info.file, cls_info.line)
+            lines.append(f"**`{cls_info.name}`**{bases} {src}")
+            if cls_info.docstring:
+                lines.append(f": {cls_info.docstring.splitlines()[0]}")
+            lines.append("")
+            methods = self._get_public_methods(cls_info)
+            if methods:
+                lines.append("| Method | Args | Returns | CC |")
+                lines.append("|--------|------|---------|----|")
+                for m in methods:
+                    args = ", ".join(a for a in m.args[:4] if a != "self")
+                    ret = m.returns or "—"
+                    cc = m.complexity.get("cyclomatic_complexity",
+                                          m.complexity.get("cyclomatic", "—"))
+                    lines.append(f"| `{m.name}` | `{args}` | `{ret}` | {cc} |")
+                lines.append("")
+        return lines
+
+    def _render_functions_detail(self, module_functions: Dict[str, FunctionInfo]) -> List[str]:
+        """Render standalone functions list."""
+        lines = []
+        for func_name, func_info in sorted(module_functions.items()):
+            args = ", ".join(a for a in func_info.args if a != "self")
+            ret = f" → {func_info.returns}" if func_info.returns else ""
+            doc_line = ""
+            if func_info.docstring:
+                doc_line = f" — {func_info.docstring.splitlines()[0]}"
+            src = self._linker.source_link(func_info.file, func_info.line)
+            lines.append(f"- `{func_info.name}({args}){ret}`{doc_line} {src}")
+        lines.append("")
+        return lines
 
     def _get_public_methods(self, cls_info: ClassInfo) -> List[FunctionInfo]:
         """Get public (non-dunder) methods."""

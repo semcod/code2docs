@@ -1,56 +1,26 @@
-# vallm batch | 140f | 80✓ 10⚠ 1✗ | 2026-04-09
+# vallm batch | 140f | 79✓ 3⚠ 2✗ | 2026-04-13
 
 SUMMARY:
-  scanned: 140  passed: 80 (57.1%)  warnings: 10  errors: 1  unsupported: 59
+  scanned: 140  passed: 79 (56.4%)  warnings: 3  errors: 2  unsupported: 59
 
-WARNINGS[10]{path,score}:
-  code2docs/generators/examples_gen.py,0.93
-    issues[3]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_generate_advanced has cyclomatic complexity 22 (max: 15),216
-      complexity.lizard_cc,warning,_generate_advanced: CC=22 exceeds limit 15,216
-      complexity.lizard_length,warning,_generate_advanced: 114 lines exceeds limit 100,216
-  code2docs/generators/module_docs_gen.py,0.93
-    issues[4]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,generate has cyclomatic complexity 18 (max: 15),22
-      complexity.cyclomatic,warning,_render_module_detail has cyclomatic complexity 25 (max: 15),100
-      complexity.lizard_cc,warning,generate: CC=18 exceeds limit 15,22
-      complexity.lizard_cc,warning,_render_module_detail: CC=25 exceeds limit 15,100
-  code2docs/generators/readme_gen.py,0.96
-    issues[3]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_extract_project_metadata has cyclomatic complexity 29 (max: 15),113
-      complexity.maintainability,warning,Low maintainability index: 10.7 (threshold: 20),
-      complexity.lizard_cc,warning,_extract_project_metadata: CC=29 exceeds limit 15,113
-  code2docs/generators/api_reference_gen.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_render_module_section has cyclomatic complexity 25 (max: 15),85
-      complexity.lizard_cc,warning,_render_module_section: CC=25 exceeds limit 15,85
-  code2docs/generators/code2llm_gen.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_run_code2llm has cyclomatic complexity 17 (max: 15),124
-      complexity.lizard_cc,warning,_run_code2llm: CC=17 exceeds limit 15,124
-  code2docs/generators/contributing_gen.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_render_code_style has cyclomatic complexity 16 (max: 15),185
-      complexity.lizard_cc,warning,_render_code_style: CC=16 exceeds limit 15,185
-  code2docs/generators/getting_started_gen.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_generate_intro has cyclomatic complexity 16 (max: 15),157
-      complexity.lizard_cc,warning,_generate_intro: CC=16 exceeds limit 15,157
-  code2docs/generators/org_readme_gen.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_extract_description has cyclomatic complexity 17 (max: 15),88
-      complexity.lizard_cc,warning,_extract_description: CC=17 exceeds limit 15,88
+WARNINGS[3]{path,score}:
   code2docs/generators/_registry_adapters.py,0.98
     issues[1]{rule,severity,message,line}:
-      complexity.maintainability,warning,Low maintainability index: 17.1 (threshold: 20),
+      complexity.maintainability,warning,Low maintainability index: 18.5 (threshold: 20),
+  code2docs/generators/readme_gen.py,0.98
+    issues[1]{rule,severity,message,line}:
+      complexity.maintainability,warning,Low maintainability index: 9.8 (threshold: 20),
   tests/test_generators.py,0.98
     issues[1]{rule,severity,message,line}:
-      complexity.maintainability,warning,Low maintainability index: 1.1 (threshold: 20),
+      complexity.maintainability,warning,Low maintainability index: 0.4 (threshold: 20),
 
-ERRORS[1]{path,score}:
+ERRORS[2]{path,score}:
   code2docs/project/analysis.yaml,0.00
     issues[1]{rule,severity,message,line}:
       syntax.tree_sitter,error,tree-sitter found 1 parse error(s) in yaml,
+  examples/class_examples.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: unexpected indent,21
 
 UNSUPPORTED[3]{bucket,count}:
   *.md,31

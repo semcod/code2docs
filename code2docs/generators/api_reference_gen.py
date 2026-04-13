@@ -88,56 +88,74 @@ class ApiReferenceGenerator:
         heading = f"### `{mod_name}` {src}" if src else f"### `{mod_name}`"
         lines = [f"{heading}\n"]
 
-        # Classes table
-        module_classes = {
+        module_classes = self._get_module_classes(mod_name)
+        if module_classes:
+            lines.extend(self._render_classes_table(module_classes))
+            lines.extend(self._render_class_methods(module_classes))
+
+        module_functions = self._get_module_functions(mod_name)
+        if module_functions:
+            lines.extend(self._render_functions_table(module_functions))
+
+        return "\n".join(lines)
+
+    def _get_module_classes(self, mod_name: str) -> Dict[str, ClassInfo]:
+        """Get all public classes for a module."""
+        return {
             k: v for k, v in self.result.classes.items()
             if (v.module == mod_name or k.startswith(mod_name + "."))
             and not v.name.startswith("_")
         }
-        if module_classes:
-            lines.append("| Class | Methods | Description | Source |")
-            lines.append("|-------|---------|-------------|--------|")
-            for cls_name, cls_info in sorted(module_classes.items()):
-                doc = cls_info.docstring.splitlines()[0] if cls_info.docstring else "—"
-                public_methods = [m for m in cls_info.methods
-                                  if not m.split(".")[-1].startswith("_")]
-                src = self._linker.source_link(cls_info.file, cls_info.line)
-                lines.append(f"| `{cls_info.name}` | {len(public_methods)} | {doc} | {src} |")
-            lines.append("")
 
-            # Expand methods for important classes (>2 public methods)
-            for cls_name, cls_info in sorted(module_classes.items()):
-                methods = self._get_public_methods(cls_info)
-                if len(methods) >= 2:
-                    lines.append(f"**`{cls_info.name}` methods:**\n")
-                    for m in methods:
-                        sig = self._format_signature(m)
-                        doc = f" — {m.docstring.splitlines()[0]}" if m.docstring else ""
-                        lines.append(f"- `{sig}`{doc}")
-                    lines.append("")
-
-        # Functions table
-        module_functions = {
+    def _get_module_functions(self, mod_name: str) -> Dict[str, FunctionInfo]:
+        """Get all public functions for a module."""
+        return {
             k: v for k, v in self.result.functions.items()
             if (v.module == mod_name or k.startswith(mod_name + "."))
             and not v.is_method and not v.name.startswith("_")
         }
-        if module_functions:
-            lines.append("| Function | Signature | CC | Description | Source |")
-            lines.append("|----------|-----------|----|-----------  |--------|")
-            for func_name, func_info in sorted(module_functions.items()):
-                sig = self._format_signature(func_info)
-                cc = func_info.complexity.get(
-                    "cyclomatic_complexity",
-                    func_info.complexity.get("cyclomatic", "—"),
-                )
-                doc = func_info.docstring.splitlines()[0] if func_info.docstring else "—"
-                warn = " ⚠️" if isinstance(cc, (int, float)) and cc > 10 else ""
-                src = self._linker.source_link(func_info.file, func_info.line)
-                lines.append(f"| `{func_info.name}` | `{sig}` | {cc}{warn} | {doc} | {src} |")
-            lines.append("")
 
-        return "\n".join(lines)
+    def _render_classes_table(self, module_classes: Dict[str, ClassInfo]) -> List[str]:
+        """Render the classes summary table."""
+        lines = ["| Class | Methods | Description | Source |", "|-------|---------|-------------|--------|"]
+        for cls_name, cls_info in sorted(module_classes.items()):
+            doc = cls_info.docstring.splitlines()[0] if cls_info.docstring else "—"
+            public_methods = [m for m in cls_info.methods
+                              if not m.split(".")[-1].startswith("_")]
+            src = self._linker.source_link(cls_info.file, cls_info.line)
+            lines.append(f"| `{cls_info.name}` | {len(public_methods)} | {doc} | {src} |")
+        lines.append("")
+        return lines
+
+    def _render_class_methods(self, module_classes: Dict[str, ClassInfo]) -> List[str]:
+        """Render expanded methods for classes with >=2 public methods."""
+        lines = []
+        for cls_name, cls_info in sorted(module_classes.items()):
+            methods = self._get_public_methods(cls_info)
+            if len(methods) >= 2:
+                lines.append(f"**`{cls_info.name}` methods:**\n")
+                for m in methods:
+                    sig = self._format_signature(m)
+                    doc = f" — {m.docstring.splitlines()[0]}" if m.docstring else ""
+                    lines.append(f"- `{sig}`{doc}")
+                lines.append("")
+        return lines
+
+    def _render_functions_table(self, module_functions: Dict[str, FunctionInfo]) -> List[str]:
+        """Render the functions summary table."""
+        lines = ["| Function | Signature | CC | Description | Source |", "|----------|-----------|----|-----------  |--------|"]
+        for func_name, func_info in sorted(module_functions.items()):
+            sig = self._format_signature(func_info)
+            cc = func_info.complexity.get(
+                "cyclomatic_complexity",
+                func_info.complexity.get("cyclomatic", "—"),
+            )
+            doc = func_info.docstring.splitlines()[0] if func_info.docstring else "—"
+            warn = " ⚠️" if isinstance(cc, (int, float)) and cc > 10 else ""
+            src = self._linker.source_link(func_info.file, func_info.line)
+            lines.append(f"| `{func_info.name}` | `{sig}` | {cc}{warn} | {doc} | {src} |")
+        lines.append("")
+        return lines
 
     def _get_public_methods(self, cls_info: ClassInfo) -> List[FunctionInfo]:
         """Get public (non-dunder) methods of a class."""
