@@ -1,5 +1,23 @@
 # Changelog
 
+## [Unreleased]
+
+## [3.0.28] - 2026-04-18
+
+### Docs
+- Update README.md
+- Update code2docs/CONTRIBUTING.md
+- Update code2docs/README.md
+- Update code2docs/docs/api-changelog.md
+- Update code2docs/docs/api.md
+- Update code2docs/docs/architecture.md
+- Update code2docs/docs/coverage.md
+- Update code2docs/docs/dependency-graph.md
+- Update code2docs/docs/getting-started.md
+- Update code2docs/docs/modules.md
+- ... and 2 more files
+
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
