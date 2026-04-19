@@ -5,96 +5,19 @@ stats:
   total_edges: 42
   modules_count: 16
 nodes:
-  examples.03_programmatic_api.custom_documentation_pipeline:
-    name: custom_documentation_pipeline
-    module: examples.03_programmatic_api
-    line: 34
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 0
-  code2docs.generators.code2llm_gen._extract_patterns:
-    name: _extract_patterns
+  code2docs.generators.code2llm_gen._process_line:
+    name: _process_line
     module: code2docs.generators.code2llm_gen
-    line: 34
+    line: 44
     cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  examples.03_programmatic_api.inspect_project_structure:
-    name: inspect_project_structure
-    module: examples.03_programmatic_api
-    line: 50
-    cyclomatic_complexity: 5
-    calls_out: 16
-    calls_in: 0
-  code2docs.cli._run_sync:
-    name: _run_sync
-    module: code2docs.cli
-    line: 147
-    cyclomatic_complexity: 4
-    calls_out: 14
-    calls_in: 1
-  examples.07_web_frameworks.document_web_project:
-    name: document_web_project
-    module: examples.07_web_frameworks
-    line: 177
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 0
-  code2docs.generators.contributing_gen.ContributingGenerator._get_python_style_lines:
-    name: _get_python_style_lines
-    module: code2docs.generators.contributing_gen
-    line: 218
-    cyclomatic_complexity: 7
-    calls_out: 11
-    calls_in: 1
-  examples.06_formatters.badge_examples:
-    name: badge_examples
-    module: examples.06_formatters
-    line: 53
-    cyclomatic_complexity: 2
     calls_out: 4
-    calls_in: 0
-  code2docs.cli._run_check:
-    name: _run_check
-    module: code2docs.cli
-    line: 178
-    cyclomatic_complexity: 10
-    calls_out: 34
     calls_in: 1
-  code2docs.cli.diff:
-    name: diff
-    module: code2docs.cli
-    line: 99
+  examples.02_configuration.load_config_from_yaml:
+    name: load_config_from_yaml
+    module: examples.02_configuration
+    line: 142
     cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 0
-  code2docs.llm_helper._get_litellm:
-    name: _get_litellm
-    module: code2docs.llm_helper
-    line: 18
-    cyclomatic_complexity: 4
-    calls_out: 0
-    calls_in: 1
-  code2docs.cli._run_watch:
-    name: _run_watch
-    module: code2docs.cli
-    line: 167
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  code2docs.cli._load_config:
-    name: _load_config
-    module: code2docs.cli
-    line: 104
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 5
-  examples.05_custom_generators.generate_custom_report:
-    name: generate_custom_report
-    module: examples.05_custom_generators
-    line: 119
-    cyclomatic_complexity: 1
-    calls_out: 9
+    calls_out: 1
     calls_in: 0
   code2docs.generators.contributing_gen.ContributingGenerator._render_code_style:
     name: _render_code_style
@@ -103,19 +26,82 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 4
     calls_in: 0
-  code2docs.generators.code2llm_gen.parse_gitignore:
-    name: parse_gitignore
-    module: code2docs.generators.code2llm_gen
-    line: 12
+  examples.07_web_frameworks.document_web_project:
+    name: document_web_project
+    module: examples.07_web_frameworks
+    line: 177
     cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  examples.06_formatters.toc_examples:
+    name: toc_examples
+    module: examples.06_formatters
+    line: 60
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  code2docs.formatters.toc.generate_toc:
+    name: generate_toc
+    module: code2docs.formatters.toc
+    line: 7
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 2
+  code2docs.generators.code2llm_gen.Code2LlmGenerator._add_exclude_patterns:
+    name: _add_exclude_patterns
+    module: code2docs.generators.code2llm_gen
+    line: 178
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  code2docs.formatters.badges.generate_badges:
+    name: generate_badges
+    module: code2docs.formatters.badges
+    line: 7
+    cyclomatic_complexity: 4
     calls_out: 3
-    calls_in: 1
-  code2docs.generators.contributing_gen.ContributingGenerator._get_jsts_style_lines:
-    name: _get_jsts_style_lines
+    calls_in: 3
+  code2docs.generators.contributing_gen.ContributingGenerator._get_style_lines:
+    name: _get_style_lines
     module: code2docs.generators.contributing_gen
-    line: 204
-    cyclomatic_complexity: 5
-    calls_out: 7
+    line: 193
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  code2docs.llm_helper._get_litellm:
+    name: _get_litellm
+    module: code2docs.llm_helper
+    line: 18
+    cyclomatic_complexity: 4
+    calls_out: 0
+    calls_in: 1
+  code2docs.generators.code2llm_gen._should_skip_line:
+    name: _should_skip_line
+    module: code2docs.generators.code2llm_gen
+    line: 57
+    cyclomatic_complexity: 7
+    calls_out: 2
+    calls_in: 1
+  code2docs.cli._run_sync:
+    name: _run_sync
+    module: code2docs.cli
+    line: 147
+    cyclomatic_complexity: 4
+    calls_out: 14
+    calls_in: 1
+  code2docs.formatters.toc._slugify:
+    name: _slugify
+    module: code2docs.formatters.toc
+    line: 57
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  code2docs.generators.readme_gen.generate_readme:
+    name: generate_readme
+    module: code2docs.generators.readme_gen
+    line: 327
+    cyclomatic_complexity: 3
+    calls_out: 6
     calls_in: 1
   examples.03_programmatic_api.generate_docs_if_needed:
     name: generate_docs_if_needed
@@ -124,32 +110,39 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 10
     calls_in: 0
-  code2docs.generators.code2llm_gen._should_skip_line:
-    name: _should_skip_line
+  examples.03_programmatic_api.generate_readme_simple:
+    name: generate_readme_simple
+    module: examples.03_programmatic_api
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  code2docs.generators.code2llm_gen._extract_patterns:
+    name: _extract_patterns
     module: code2docs.generators.code2llm_gen
-    line: 57
-    cyclomatic_complexity: 7
-    calls_out: 2
+    line: 34
+    cyclomatic_complexity: 3
+    calls_out: 3
     calls_in: 1
-  code2docs.generators.code2llm_gen._is_valid_pattern:
-    name: _is_valid_pattern
-    module: code2docs.generators.code2llm_gen
-    line: 78
-    cyclomatic_complexity: 5
-    calls_out: 2
-    calls_in: 1
-  code2docs.cli._run_diff:
-    name: _run_diff
+  code2docs.cli.sync:
+    name: sync
     module: code2docs.cli
-    line: 230
+    line: 58
     cyclomatic_complexity: 2
-    calls_out: 11
+    calls_out: 8
+    calls_in: 0
+  examples.07_web_frameworks.generate_api_docs_from_endpoints:
+    name: generate_api_docs_from_endpoints
+    module: examples.07_web_frameworks
+    line: 55
+    cyclomatic_complexity: 9
+    calls_out: 27
     calls_in: 1
-  examples.06_formatters.toc_examples:
-    name: toc_examples
-    module: examples.06_formatters
-    line: 60
-    cyclomatic_complexity: 2
+  examples.07_web_frameworks.detect_fastapi_endpoints:
+    name: detect_fastapi_endpoints
+    module: examples.07_web_frameworks
+    line: 33
+    cyclomatic_complexity: 4
     calls_out: 6
     calls_in: 0
   code2docs.generators.code2llm_gen._clean_pattern:
@@ -159,6 +152,20 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 2
     calls_in: 1
+  code2docs.generators.contributing_gen.ContributingGenerator._get_jsts_style_lines:
+    name: _get_jsts_style_lines
+    module: code2docs.generators.contributing_gen
+    line: 204
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  examples.03_programmatic_api.custom_documentation_pipeline:
+    name: custom_documentation_pipeline
+    module: examples.03_programmatic_api
+    line: 34
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 0
   code2docs.config.Code2DocsConfig.from_yaml:
     name: from_yaml
     module: code2docs.config
@@ -166,97 +173,20 @@ nodes:
     cyclomatic_complexity: 10
     calls_out: 53
     calls_in: 2
-  examples.02_configuration.load_config_from_yaml:
-    name: load_config_from_yaml
-    module: examples.02_configuration
-    line: 142
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  code2docs.generators.readme_gen.ReadmeGenerator._build_context:
-    name: _build_context
-    module: code2docs.generators.readme_gen
-    line: 45
-    cyclomatic_complexity: 12
-    calls_out: 21
-    calls_in: 0
-  examples.07_web_frameworks.generate_api_docs_from_endpoints:
-    name: generate_api_docs_from_endpoints
-    module: examples.07_web_frameworks
-    line: 55
-    cyclomatic_complexity: 9
-    calls_out: 27
-    calls_in: 1
-  examples.03_programmatic_api.generate_readme_simple:
-    name: generate_readme_simple
-    module: examples.03_programmatic_api
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  examples.04_sync_and_watch.watch_and_auto_regenerate:
-    name: watch_and_auto_regenerate
-    module: examples.04_sync_and_watch
-    line: 54
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  code2docs.formatters.toc._slugify:
-    name: _slugify
-    module: code2docs.formatters.toc
-    line: 57
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  code2docs.analyzers.project_scanner.ProjectScanner.analyze:
-    name: analyze
-    module: code2docs.analyzers.project_scanner
-    line: 33
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 11
-  code2docs.formatters.toc.extract_headings:
-    name: extract_headings
-    module: code2docs.formatters.toc
-    line: 30
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 2
-  code2docs.formatters.badges._make_badge:
-    name: _make_badge
-    module: code2docs.formatters.badges
-    line: 21
-    cyclomatic_complexity: 11
-    calls_out: 4
-    calls_in: 1
-  code2docs.cli.sync:
-    name: sync
+  code2docs.cli._load_config:
+    name: _load_config
     module: code2docs.cli
-    line: 58
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 0
-  code2docs.generators.contributing_gen.ContributingGenerator._get_style_lines:
-    name: _get_style_lines
-    module: code2docs.generators.contributing_gen
-    line: 193
+    line: 104
     cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 1
-  code2docs.cli.check:
-    name: check
+    calls_out: 7
+    calls_in: 5
+  code2docs.cli.watch:
+    name: watch
     module: code2docs.cli
-    line: 91
-    cyclomatic_complexity: 1
+    line: 69
+    cyclomatic_complexity: 2
     calls_out: 7
     calls_in: 0
-  code2docs.formatters.toc.generate_toc:
-    name: generate_toc
-    module: code2docs.formatters.toc
-    line: 7
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 2
   examples.06_formatters.build_custom_readme:
     name: build_custom_readme
     module: examples.06_formatters
@@ -264,20 +194,76 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 27
     calls_in: 0
-  code2docs.generators.readme_gen.generate_readme:
-    name: generate_readme
-    module: code2docs.generators.readme_gen
-    line: 327
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 1
-  code2docs.formatters.badges.generate_badges:
-    name: generate_badges
-    module: code2docs.formatters.badges
-    line: 7
+  examples.07_web_frameworks.detect_flask_endpoints:
+    name: detect_flask_endpoints
+    module: examples.07_web_frameworks
+    line: 16
     cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 3
+    calls_out: 6
+    calls_in: 0
+  code2docs.cli._run_diff:
+    name: _run_diff
+    module: code2docs.cli
+    line: 230
+    cyclomatic_complexity: 2
+    calls_out: 11
+    calls_in: 1
+  examples.05_custom_generators.generate_custom_report:
+    name: generate_custom_report
+    module: examples.05_custom_generators
+    line: 119
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 0
+  examples.03_programmatic_api.inspect_project_structure:
+    name: inspect_project_structure
+    module: examples.03_programmatic_api
+    line: 50
+    cyclomatic_complexity: 5
+    calls_out: 16
+    calls_in: 0
+  code2docs.formatters.toc.extract_headings:
+    name: extract_headings
+    module: code2docs.formatters.toc
+    line: 30
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 2
+  code2docs.cli.diff:
+    name: diff
+    module: code2docs.cli
+    line: 99
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 0
+  code2docs.generators.code2llm_gen._is_valid_pattern:
+    name: _is_valid_pattern
+    module: code2docs.generators.code2llm_gen
+    line: 78
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 1
+  examples.06_formatters.badge_examples:
+    name: badge_examples
+    module: examples.06_formatters
+    line: 53
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  code2docs.formatters.badges._make_badge:
+    name: _make_badge
+    module: code2docs.formatters.badges
+    line: 21
+    cyclomatic_complexity: 11
+    calls_out: 4
+    calls_in: 1
+  code2docs.generators.contributing_gen.ContributingGenerator._get_python_style_lines:
+    name: _get_python_style_lines
+    module: code2docs.generators.contributing_gen
+    line: 218
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 1
   examples.03_programmatic_api.generate_full_documentation:
     name: generate_full_documentation
     module: examples.03_programmatic_api
@@ -285,33 +271,33 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 12
     calls_in: 0
-  examples.07_web_frameworks.detect_fastapi_endpoints:
-    name: detect_fastapi_endpoints
-    module: examples.07_web_frameworks
-    line: 33
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 0
-  code2docs.generators.code2llm_gen._process_line:
-    name: _process_line
-    module: code2docs.generators.code2llm_gen
-    line: 44
-    cyclomatic_complexity: 3
-    calls_out: 4
+  code2docs.cli._run_check:
+    name: _run_check
+    module: code2docs.cli
+    line: 178
+    cyclomatic_complexity: 10
+    calls_out: 34
     calls_in: 1
+  code2docs.cli._run_watch:
+    name: _run_watch
+    module: code2docs.cli
+    line: 167
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  examples.04_sync_and_watch.watch_and_auto_regenerate:
+    name: watch_and_auto_regenerate
+    module: examples.04_sync_and_watch
+    line: 54
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
   code2docs.llm_helper.LLMHelper.complete:
     name: complete
     module: code2docs.llm_helper
     line: 59
     cyclomatic_complexity: 7
     calls_out: 6
-    calls_in: 0
-  code2docs.generators.code2llm_gen.Code2LlmGenerator._add_exclude_patterns:
-    name: _add_exclude_patterns
-    module: code2docs.generators.code2llm_gen
-    line: 178
-    cyclomatic_complexity: 2
-    calls_out: 5
     calls_in: 0
   code2docs.sync.watcher.start_watcher:
     name: start_watcher
@@ -320,19 +306,33 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 29
     calls_in: 2
-  examples.07_web_frameworks.detect_flask_endpoints:
-    name: detect_flask_endpoints
-    module: examples.07_web_frameworks
-    line: 16
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 0
-  code2docs.cli.watch:
-    name: watch
+  code2docs.generators.code2llm_gen.parse_gitignore:
+    name: parse_gitignore
+    module: code2docs.generators.code2llm_gen
+    line: 12
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  code2docs.cli.check:
+    name: check
     module: code2docs.cli
-    line: 69
-    cyclomatic_complexity: 2
+    line: 91
+    cyclomatic_complexity: 1
     calls_out: 7
+    calls_in: 0
+  code2docs.analyzers.project_scanner.ProjectScanner.analyze:
+    name: analyze
+    module: code2docs.analyzers.project_scanner
+    line: 33
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 11
+  code2docs.generators.readme_gen.ReadmeGenerator._build_context:
+    name: _build_context
+    module: code2docs.generators.readme_gen
+    line: 45
+    cyclomatic_complexity: 12
+    calls_out: 21
     calls_in: 0
 edges:
 - caller: code2docs.formatters.badges.generate_badges

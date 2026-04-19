@@ -78,15 +78,15 @@
 - **Classes**: 1
 - **File**: `architecture_gen.py`
 
-### code2docs.analyzers.docstring_extractor
-- **Functions**: 10
-- **Classes**: 2
-- **File**: `docstring_extractor.py`
-
 ### code2docs.analyzers.dependency_scanner
 - **Functions**: 10
 - **Classes**: 3
 - **File**: `dependency_scanner.py`
+
+### code2docs.analyzers.docstring_extractor
+- **Functions**: 10
+- **Classes**: 2
+- **File**: `docstring_extractor.py`
 
 ### code2docs.generators.depgraph_gen
 - **Functions**: 9
@@ -345,15 +345,15 @@ This generator wraps the code2llm CLI to pr
 - **Methods**: 10
 - **Key Methods**: code2docs.generators.architecture_gen.ArchitectureGenerator.__init__, code2docs.generators.architecture_gen.ArchitectureGenerator.generate, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_pipeline_overview, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_layer_diagram, code2docs.generators.architecture_gen.ArchitectureGenerator._get_public_entry_points, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_llm_summary, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_module_graph, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_class_diagram, code2docs.generators.architecture_gen.ArchitectureGenerator._detect_layers, code2docs.generators.architecture_gen.ArchitectureGenerator._generate_metrics_table
 
-### code2docs.analyzers.docstring_extractor.DocstringExtractor
-> Extract and parse docstrings from AnalysisResult.
-- **Methods**: 10
-- **Key Methods**: code2docs.analyzers.docstring_extractor.DocstringExtractor.extract_all, code2docs.analyzers.docstring_extractor.DocstringExtractor.parse, code2docs.analyzers.docstring_extractor.DocstringExtractor._extract_summary, code2docs.analyzers.docstring_extractor.DocstringExtractor._classify_section, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line, code2docs.analyzers.docstring_extractor.DocstringExtractor.coverage_report
-
 ### code2docs.analyzers.dependency_scanner.DependencyScanner
 > Scan and parse project dependency files.
 - **Methods**: 10
 - **Key Methods**: code2docs.analyzers.dependency_scanner.DependencyScanner.scan, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject_regex, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_setup_py, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_requirements_txt, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_package_json, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_cargo_toml, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_go_mod, code2docs.analyzers.dependency_scanner.DependencyScanner._parse_dep_string, code2docs.analyzers.dependency_scanner.DependencyScanner._detect_version
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor
+> Extract and parse docstrings from AnalysisResult.
+- **Methods**: 10
+- **Key Methods**: code2docs.analyzers.docstring_extractor.DocstringExtractor.extract_all, code2docs.analyzers.docstring_extractor.DocstringExtractor.parse, code2docs.analyzers.docstring_extractor.DocstringExtractor._extract_summary, code2docs.analyzers.docstring_extractor.DocstringExtractor._classify_section, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line, code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line, code2docs.analyzers.docstring_extractor.DocstringExtractor.coverage_report
 
 ### code2docs.generators.depgraph_gen.DepGraphGenerator
 > Generate docs/dependency-graph.md with Mermaid diagrams.
@@ -437,37 +437,6 @@ Filters out:
 > Render formatter usage examples.
 - **Output to**: lines.append, lines.append, lines.append, lines.append, lines.append
 
-### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
-> Parse a docstring into structured sections (orchestrator).
-- **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections
-> Walk remaining lines, dispatching content to the right section.
-- **Output to**: None.strip, line.strip, self._classify_section, desc_lines.append, None.join
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line
-> Parse a single param line: 'name: description'.
-- **Output to**: line.split, pdesc.strip, pname.strip
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line
-> Parse a returns line.
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line
-> Parse a raises line.
-- **Output to**: info.raises.append
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line
-> Parse an examples line.
-- **Output to**: info.examples.append
-
-### examples.05_custom_generators.MetricsReportGenerator._format_stats_table
-> Format statistics as markdown table.
-- **Output to**: stats.items, None.join, lines.append
-
-### examples.06_formatters.markdown_formatting_examples
-> Demonstrate markdown formatting utilities.
-- **Output to**: MarkdownFormatter, print, print, print, print
-
 ### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
 > Parse pyproject.toml for dependencies.
 - **Output to**: ProjectDependencies, data.get, project.get, project.get, project.get
@@ -500,9 +469,40 @@ Filters out:
 > Parse a dependency string like 'package>=1.0'.
 - **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
 
+### examples.05_custom_generators.MetricsReportGenerator._format_stats_table
+> Format statistics as markdown table.
+- **Output to**: stats.items, None.join, lines.append
+
+### examples.06_formatters.markdown_formatting_examples
+> Demonstrate markdown formatting utilities.
+- **Output to**: MarkdownFormatter, print, print, print, print
+
 ### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
 > Try to parse a route decorator string.
 - **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
+> Parse a docstring into structured sections (orchestrator).
+- **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections
+> Walk remaining lines, dispatching content to the right section.
+- **Output to**: None.strip, line.strip, self._classify_section, desc_lines.append, None.join
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line
+> Parse a single param line: 'name: description'.
+- **Output to**: line.split, pdesc.strip, pname.strip
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line
+> Parse a returns line.
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line
+> Parse a raises line.
+- **Output to**: info.raises.append
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line
+> Parse an examples line.
+- **Output to**: info.examples.append
 
 ## Behavioral Patterns
 

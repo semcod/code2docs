@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [3.0.29] - 2026-04-19
+
+### Docs
+- Update README.md
+- Update project/context.md
+- Update redsl_refactor_plan.md
+
+### Other
+- Update Taskfile.yml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/index.html
+
 ## [3.0.28] - 2026-04-18
 
 ### Docs

@@ -19,30 +19,30 @@ HUBS[20]:
     CC=5  in:0  out:16  total:16
   code2docs.cli._run_sync
     CC=4  in:1  out:14  total:15
-  code2docs.generators.contributing_gen.ContributingGenerator._get_python_style_lines
-    CC=7  in:1  out:11  total:12
   code2docs.cli._load_config
     CC=4  in:5  out:7  total:12
   code2docs.cli._run_diff
     CC=2  in:1  out:11  total:12
-  code2docs.analyzers.project_scanner.ProjectScanner.analyze
-    CC=1  in:11  out:1  total:12
   code2docs.formatters.toc.extract_headings
     CC=6  in:2  out:10  total:12
+  code2docs.generators.contributing_gen.ContributingGenerator._get_python_style_lines
+    CC=7  in:1  out:11  total:12
   examples.03_programmatic_api.generate_full_documentation
     CC=2  in:0  out:12  total:12
+  code2docs.analyzers.project_scanner.ProjectScanner.analyze
+    CC=1  in:11  out:1  total:12
   examples.03_programmatic_api.generate_docs_if_needed
     CC=3  in:0  out:10  total:10
   examples.07_web_frameworks.document_web_project
     CC=3  in:0  out:9  total:9
   examples.05_custom_generators.generate_custom_report
     CC=1  in:0  out:9  total:9
-  examples.03_programmatic_api.custom_documentation_pipeline
-    CC=1  in:0  out:8  total:8
-  code2docs.cli._run_watch
-    CC=2  in:1  out:7  total:8
+  code2docs.cli.sync
+    CC=2  in:0  out:8  total:8
   code2docs.generators.contributing_gen.ContributingGenerator._get_jsts_style_lines
     CC=5  in:1  out:7  total:8
+  examples.03_programmatic_api.custom_documentation_pipeline
+    CC=1  in:0  out:8  total:8
 
 MODULES:
   code2docs.analyzers.project_scanner  [1 funcs]
