@@ -141,13 +141,13 @@ Main execution flows into the system:
 > Diff class definitions.
 - **Calls**: set, set, old.get, new.get, old.keys, new.keys, changes.append, ApiChange
 
-### examples.06_formatters.build_custom_readme
-> Build a custom README using formatters.
-- **Calls**: MarkdownFormatter, parts.append, parts.append, parts.append, parts.append, parts.append, parts.append, None.join
-
 ### code2docs.generators.examples_gen.ExamplesGenerator._render_generator_examples
 > Render individual generator usage examples.
 - **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append
+
+### examples.06_formatters.build_custom_readme
+> Build a custom README using formatters.
+- **Calls**: MarkdownFormatter, parts.append, parts.append, parts.append, parts.append, parts.append, parts.append, None.join
 
 ### examples.05_custom_generators.MetricsReportGenerator.generate
 > Generate the metrics report.
@@ -157,13 +157,13 @@ Main execution flows into the system:
 > Render formatter usage examples.
 - **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, self._find_function_by_name, self._find_function_by_name, lines.append
 
-### code2docs.generators.readme_gen.ReadmeGenerator._build_context
-> Build template context from analysis result.
-- **Calls**: DependencyScanner, dep_scanner.scan, EndpointDetector, endpoint_detector.detect, self._calc_avg_complexity, self._build_module_tree, self._generate_description, self._extract_project_metadata
-
 ### code2docs.generators.examples_gen.ExamplesGenerator._render_sync_examples
 > Render sync/diff usage examples.
 - **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append
+
+### code2docs.generators.readme_gen.ReadmeGenerator._build_context
+> Build template context from analysis result.
+- **Calls**: DependencyScanner, dep_scanner.scan, EndpointDetector, endpoint_detector.detect, self._calc_avg_complexity, self._build_module_tree, self._generate_description, self._extract_project_metadata
 
 ### code2docs.generators.api_reference_gen.ApiReferenceGenerator.generate
 > Generate a single api.md with all public API grouped by package.
@@ -173,13 +173,13 @@ Main execution flows into the system:
 > Set up a custom watcher with pre/post generation hooks.
 - **Calls**: Code2DocsConfig, signal.signal, Differ, Updater, print, print, print, print
 
-### code2docs.sync.updater.Updater.apply
-> Regenerate documentation for changed modules.
-- **Calls**: None.resolve, ProjectScanner, scanner.analyze, ReadmeGenerator, readme_gen.generate, readme_gen.write, docs_dir.mkdir, Differ
-
 ### code2docs.generators.architecture_gen.ArchitectureGenerator._generate_metrics_table
 > Generate metrics summary table.
 - **Calls**: stats.get, lines.append, None.join, f.complexity.get, round, lines.append, lines.append, f.complexity.get
+
+### code2docs.sync.updater.Updater.apply
+> Regenerate documentation for changed modules.
+- **Calls**: None.resolve, ProjectScanner, scanner.analyze, ReadmeGenerator, readme_gen.generate, readme_gen.write, docs_dir.mkdir, Differ
 
 ### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
 > Parse pyproject.toml for dependencies.
@@ -201,25 +201,25 @@ Main execution flows into the system:
 > Render a dataclass as a Markdown table.
 - **Calls**: fields, None.join, getattr, type_str.replace, isinstance, self._FIELD_DOCS.get, lines.append, str
 
-### code2docs.sync.differ.Differ.detect_changes
-> Compare current file hashes with saved state. Return list of changes.
-- **Calls**: None.resolve, self._load_state, self._compute_state, new_state.items, old_state.items, old_state.get, Path, changes.append
-
 ### code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_classes_detail
 > Render classes with their method summaries.
 - **Calls**: sorted, module_classes.items, self._linker.source_link, lines.append, lines.append, self._get_public_methods, lines.append, lines.append
 
-### code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject
-> Extract metadata from pyproject.toml files.
-- **Calls**: pyproject_path.exists, Path, data.get, project.get, project.get, project.get, isinstance, Path
+### code2docs.generators.architecture_gen.ArchitectureGenerator._generate_class_diagram
+> Generate Mermaid class diagram for key classes.
+- **Calls**: lines.append, None.join, sorted, lines.append, lines.append, self.result.classes.values, len, lines.append
 
 ### examples.03_programmatic_api.inspect_project_structure
 > Inspect project structure from analysis.
 - **Calls**: code2docs.analyzers.project_scanner.ProjectScanner.analyze, print, print, print, print, print, print, result.functions.items
 
-### code2docs.generators.architecture_gen.ArchitectureGenerator._generate_class_diagram
-> Generate Mermaid class diagram for key classes.
-- **Calls**: lines.append, None.join, sorted, lines.append, lines.append, self.result.classes.values, len, lines.append
+### code2docs.sync.differ.Differ.detect_changes
+> Compare current file hashes with saved state. Return list of changes.
+- **Calls**: None.resolve, self._load_state, self._compute_state, new_state.items, old_state.items, old_state.get, Path, changes.append
+
+### code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject
+> Extract metadata from pyproject.toml files.
+- **Calls**: pyproject_path.exists, Path, data.get, project.get, project.get, project.get, isinstance, Path
 
 ### code2docs.generators.generate_docs
 > High-level function to generate all documentation.
@@ -271,14 +271,14 @@ markdown_formatting_examples [examples.06_formatters]
 _diff_classes [code2docs.generators.api_changelog_gen.ApiChangelogGenerator]
 ```
 
-### Flow 7: build_custom_readme
-```
-build_custom_readme [examples.06_formatters]
-```
-
-### Flow 8: _render_generator_examples
+### Flow 7: _render_generator_examples
 ```
 _render_generator_examples [code2docs.generators.examples_gen.ExamplesGenerator]
+```
+
+### Flow 8: build_custom_readme
+```
+build_custom_readme [examples.06_formatters]
 ```
 
 ### Flow 9: _render_formatter_examples
@@ -286,9 +286,9 @@ _render_generator_examples [code2docs.generators.examples_gen.ExamplesGenerator]
 _render_formatter_examples [code2docs.generators.examples_gen.ExamplesGenerator]
 ```
 
-### Flow 10: _build_context
+### Flow 10: _render_sync_examples
 ```
-_build_context [code2docs.generators.readme_gen.ReadmeGenerator]
+_render_sync_examples [code2docs.generators.examples_gen.ExamplesGenerator]
 ```
 
 ## Key Classes
@@ -388,15 +388,15 @@ If LLM is unavailable or disabled, every
 - **Methods**: 6
 - **Key Methods**: code2docs.generators._source_links.SourceLinker.__init__, code2docs.generators._source_links.SourceLinker.source_link, code2docs.generators._source_links.SourceLinker.file_link, code2docs.generators._source_links.SourceLinker._relative_path, code2docs.generators._source_links.SourceLinker._find_git_root, code2docs.generators._source_links.SourceLinker._detect_branch
 
-### code2docs.sync.differ.Differ
-> Detect changes between current source and previous state.
-- **Methods**: 6
-- **Key Methods**: code2docs.sync.differ.Differ.__init__, code2docs.sync.differ.Differ.detect_changes, code2docs.sync.differ.Differ.save_state, code2docs.sync.differ.Differ._load_state, code2docs.sync.differ.Differ._compute_state, code2docs.sync.differ.Differ._file_to_module
-
 ### code2docs.generators.changelog_gen.ChangelogGenerator
 > Generate CHANGELOG.md from git log and analysis diff.
 - **Methods**: 6
 - **Key Methods**: code2docs.generators.changelog_gen.ChangelogGenerator.__init__, code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log, code2docs.generators.changelog_gen.ChangelogGenerator._classify_message, code2docs.generators.changelog_gen.ChangelogGenerator._group_by_type, code2docs.generators.changelog_gen.ChangelogGenerator._render
+
+### examples.05_custom_generators.MetricsReportGenerator
+> Generate a metrics report from code analysis.
+- **Methods**: 6
+- **Key Methods**: examples.05_custom_generators.MetricsReportGenerator.__init__, examples.05_custom_generators.MetricsReportGenerator.generate, examples.05_custom_generators.MetricsReportGenerator._calculate_stats, examples.05_custom_generators.MetricsReportGenerator._format_stats_table, examples.05_custom_generators.MetricsReportGenerator._list_largest_files, examples.05_custom_generators.MetricsReportGenerator._analyze_functions
 
 ## Data Transformation Functions
 
@@ -426,10 +426,6 @@ Filters out:
 > Format a function signature string.
 - **Output to**: None.join, len
 
-### examples.06_formatters.markdown_formatting_examples
-> Demonstrate markdown formatting utilities.
-- **Output to**: MarkdownFormatter, print, print, print, print
-
 ### code2docs.generators.examples_gen.ExamplesGenerator._find_formatter_functions
 > Find formatter functions for examples.
 - **Output to**: self._find_function_by_name, self._find_function_by_name
@@ -442,8 +438,9 @@ Filters out:
 > Format statistics as markdown table.
 - **Output to**: stats.items, None.join, lines.append
 
-### code2docs.cli.DefaultGroup.parse_args
-- **Output to**: None.parse_args, super
+### examples.06_formatters.markdown_formatting_examples
+> Demonstrate markdown formatting utilities.
+- **Output to**: MarkdownFormatter, print, print, print, print
 
 ### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
 > Try to parse a route decorator string.
@@ -504,6 +501,10 @@ Filters out:
 > Parse go.mod for Go dependencies.
 - **Output to**: ProjectDependencies, path.read_text, re.search, re.search, re.finditer
 
+### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_dep_string
+> Parse a dependency string like 'package>=1.0'.
+- **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
+
 ## Behavioral Patterns
 
 ### recursion_analyze
@@ -525,15 +526,15 @@ Functions exposed as public API (no underscore prefix):
 - `examples.06_formatters.generate_complex_document` - 32 calls
 - `code2docs.sync.watcher.start_watcher` - 29 calls
 - `examples.06_formatters.markdown_formatting_examples` - 29 calls
-- `examples.06_formatters.build_custom_readme` - 27 calls
 - `examples.07_web_frameworks.generate_api_docs_from_endpoints` - 27 calls
+- `examples.06_formatters.build_custom_readme` - 27 calls
 - `examples.05_custom_generators.MetricsReportGenerator.generate` - 24 calls
 - `code2docs.generators.api_reference_gen.ApiReferenceGenerator.generate` - 20 calls
 - `examples.04_sync_and_watch.custom_watcher_with_hooks` - 20 calls
 - `code2docs.sync.updater.Updater.apply` - 19 calls
 - `code2docs.analyzers.dependency_scanner.DependencyScanner.scan` - 17 calls
-- `code2docs.sync.differ.Differ.detect_changes` - 16 calls
 - `examples.03_programmatic_api.inspect_project_structure` - 16 calls
+- `code2docs.sync.differ.Differ.detect_changes` - 16 calls
 - `code2docs.generators.generate_docs` - 15 calls
 - `code2docs.cli.generate` - 15 calls
 - `examples.05_custom_generators.APIChangelogGenerator.generate` - 14 calls
@@ -545,15 +546,15 @@ Functions exposed as public API (no underscore prefix):
 - `code2docs.formatters.toc.extract_headings` - 10 calls
 - `examples.03_programmatic_api.generate_docs_if_needed` - 10 calls
 - `code2docs.cli.init` - 10 calls
-- `code2docs.generators.readme_gen.ReadmeGenerator.write` - 9 calls
-- `examples.07_web_frameworks.document_web_project` - 9 calls
 - `examples.05_custom_generators.generate_custom_report` - 9 calls
+- `examples.07_web_frameworks.document_web_project` - 9 calls
 - `code2docs.config.LLMConfig.from_env` - 9 calls
+- `code2docs.generators.readme_gen.ReadmeGenerator.write` - 9 calls
 - `code2docs.generators.depgraph_gen.DepGraphGenerator.generate` - 8 calls
 - `code2docs.generators.getting_started_gen.GettingStartedGenerator.generate` - 8 calls
+- `code2docs.formatters.markdown.MarkdownFormatter.table` - 8 calls
 - `code2docs.generators.code2llm_gen.Code2LlmGenerator.generate_all` - 8 calls
 - `code2docs.generators.org_readme_gen.OrgReadmeGenerator.generate` - 8 calls
-- `code2docs.formatters.markdown.MarkdownFormatter.table` - 8 calls
 - `examples.03_programmatic_api.custom_documentation_pipeline` - 8 calls
 - `code2docs.cli.sync` - 8 calls
 - `code2docs.generators.contributing_gen.ContributingGenerator.generate` - 7 calls
@@ -585,16 +586,16 @@ graph TD
     _diff_classes --> set
     _diff_classes --> get
     _diff_classes --> keys
+    _render_generator_ex --> append
     build_custom_readme --> MarkdownFormatter
     build_custom_readme --> append
-    _render_generator_ex --> append
     _render_formatter_ex --> append
+    _render_sync_example --> append
     _build_context --> DependencyScanner
     _build_context --> scan
     _build_context --> EndpointDetector
     _build_context --> detect
     _build_context --> _calc_avg_complexity
-    _render_sync_example --> append
     generate --> len
     generate --> _group_modules
 ```

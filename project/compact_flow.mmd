@@ -15,9 +15,9 @@ flowchart TD
     examples__03_programmatic_api ==>|5| code2docs__analyzers
     examples__07_web_frameworks ==>|4| code2docs__analyzers
     code2docs__cli -->|2| code2docs__config
-    code2docs__generators -->|1| code2docs__formatters
     examples__04_sync_and_watch -->|1| code2docs__sync
-    examples__03_programmatic_api -->|1| code2docs__generators
-    examples__02_configuration -->|1| code2docs__config
     examples__05_custom_generators -->|1| code2docs__analyzers
+    examples__02_configuration -->|1| code2docs__config
+    examples__03_programmatic_api -->|1| code2docs__generators
+    code2docs__generators -->|1| code2docs__formatters
     code2docs__cli -->|1| code2docs__sync

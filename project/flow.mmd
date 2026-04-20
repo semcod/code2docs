@@ -21,7 +21,9 @@ flowchart TD
     end
 
     subgraph Core
-        code2docs__sync__updater__Updater__apply["apply"]
+        code2docs__registry__GeneratorRegistry__add["add"]
+        code2docs__registry__GeneratorRegistry__run_all["run_all"]
+        code2docs__registry__GeneratorRegistry__run_only["run_only"]
         code2docs__generators___source_links__SourceLinker__source_link["source_link"]
         code2docs__generators___source_links__SourceLinker__file_link["file_link"]
         code2docs__generators___source_links__SourceLinker___relative_path["_relative_path"]
@@ -34,9 +36,7 @@ flowchart TD
         code2docs__generators__coverage_gen__CoverageGenerator___format_coverage_table["_format_coverage_table"]
         code2docs__generators__coverage_gen__CoverageGenerator___render_undocumented["_render_undocumented"]
         code2docs__generators__depgraph_gen__DepGraphGenerator__generate["generate"]
-        code2docs__generators__depgraph_gen__DepGraphGenerator___collect_edges["_collect_edges"]
-        code2docs__generators__depgraph_gen__DepGraphGenerator___extract_imports_from_file["_extract_imports_from_file"]
         ...["+248 more"]
     end
 
-    class code2docs__sync__updater__Updater__apply,code2docs__generators___source_links__SourceLinker__source_link,code2docs__generators___source_links__SourceLinker__file_link,code2docs__generators___source_links__SourceLinker___relative_path,code2docs__generators___source_links__SourceLinker___find_git_root,code2docs__generators___source_links__SourceLinker___detect_branch,code2docs__generators__coverage_gen__CoverageGenerator__generate,code2docs__generators__coverage_gen__CoverageGenerator___render_summary,code2docs__generators__coverage_gen__CoverageGenerator___render_per_module,code2docs__generators__coverage_gen__CoverageGenerator___collect_module_stats entry
+    class code2docs__registry__GeneratorRegistry__add,code2docs__registry__GeneratorRegistry__run_all,code2docs__registry__GeneratorRegistry__run_only,code2docs__generators___source_links__SourceLinker__source_link,code2docs__generators___source_links__SourceLinker__file_link,code2docs__generators___source_links__SourceLinker___relative_path,code2docs__generators___source_links__SourceLinker___find_git_root,code2docs__generators___source_links__SourceLinker___detect_branch,code2docs__generators__coverage_gen__CoverageGenerator__generate,code2docs__generators__coverage_gen__CoverageGenerator___render_summary entry

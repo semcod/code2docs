@@ -17,32 +17,32 @@ HUBS[20]:
     CC=5  in:0  out:16  total:16
   code2docs.cli._run_sync
     CC=4  in:1  out:14  total:15
-  examples.03_programmatic_api.generate_full_documentation
-    CC=2  in:0  out:12  total:12
+  code2docs.formatters.toc.extract_headings
+    CC=6  in:2  out:10  total:12
   code2docs.cli._load_config
     CC=4  in:5  out:7  total:12
+  code2docs.cli._run_diff
+    CC=2  in:1  out:11  total:12
+  examples.03_programmatic_api.generate_full_documentation
+    CC=2  in:0  out:12  total:12
   code2docs.analyzers.project_scanner.ProjectScanner.analyze
     CC=1  in:11  out:1  total:12
   code2docs.generators.contributing_gen.ContributingGenerator._get_python_style_lines
     CC=7  in:1  out:11  total:12
-  code2docs.cli._run_diff
-    CC=2  in:1  out:11  total:12
-  code2docs.formatters.toc.extract_headings
-    CC=6  in:2  out:10  total:12
   examples.03_programmatic_api.generate_docs_if_needed
     CC=3  in:0  out:10  total:10
-  examples.07_web_frameworks.document_web_project
-    CC=3  in:0  out:9  total:9
   examples.05_custom_generators.generate_custom_report
     CC=1  in:0  out:9  total:9
-  code2docs.generators.contributing_gen.ContributingGenerator._get_jsts_style_lines
-    CC=5  in:1  out:7  total:8
-  examples.03_programmatic_api.custom_documentation_pipeline
-    CC=1  in:0  out:8  total:8
+  examples.07_web_frameworks.document_web_project
+    CC=3  in:0  out:9  total:9
   code2docs.cli.sync
     CC=2  in:0  out:8  total:8
+  examples.03_programmatic_api.custom_documentation_pipeline
+    CC=1  in:0  out:8  total:8
   code2docs.cli._run_watch
     CC=2  in:1  out:7  total:8
+  code2docs.generators.contributing_gen.ContributingGenerator._get_jsts_style_lines
+    CC=5  in:1  out:7  total:8
 
 MODULES:
   code2docs.analyzers.project_scanner  [1 funcs]
@@ -110,10 +110,10 @@ MODULES:
     generate_api_docs_from_endpoints  CC=9  out:27
 
 EDGES:
-  code2docs.formatters.toc.generate_toc → code2docs.formatters.toc.extract_headings
-  code2docs.formatters.toc.extract_headings → code2docs.formatters.toc._slugify
   code2docs.formatters.badges.generate_badges → code2docs.formatters.badges._make_badge
   code2docs.formatters.badges._make_badge → code2docs.formatters.badges._runtime_badge
+  code2docs.formatters.toc.generate_toc → code2docs.formatters.toc.extract_headings
+  code2docs.formatters.toc.extract_headings → code2docs.formatters.toc._slugify
   code2docs.generators.code2llm_gen.parse_gitignore → code2docs.generators.code2llm_gen._extract_patterns
   code2docs.generators.code2llm_gen._extract_patterns → code2docs.generators.code2llm_gen._process_line
   code2docs.generators.code2llm_gen._process_line → code2docs.generators.code2llm_gen._should_skip_line
@@ -123,24 +123,24 @@ EDGES:
   code2docs.generators.contributing_gen.ContributingGenerator._render_code_style → code2docs.generators.contributing_gen.ContributingGenerator._get_style_lines
   code2docs.generators.contributing_gen.ContributingGenerator._get_style_lines → code2docs.generators.contributing_gen.ContributingGenerator._get_python_style_lines
   code2docs.generators.contributing_gen.ContributingGenerator._get_style_lines → code2docs.generators.contributing_gen.ContributingGenerator._get_jsts_style_lines
+  examples.04_sync_and_watch.watch_and_auto_regenerate → code2docs.sync.watcher.start_watcher
+  examples.05_custom_generators.generate_custom_report → code2docs.analyzers.project_scanner.ProjectScanner.analyze
+  examples.07_web_frameworks.detect_flask_endpoints → code2docs.analyzers.project_scanner.ProjectScanner.analyze
+  examples.07_web_frameworks.detect_fastapi_endpoints → code2docs.analyzers.project_scanner.ProjectScanner.analyze
+  examples.07_web_frameworks.generate_api_docs_from_endpoints → code2docs.analyzers.project_scanner.ProjectScanner.analyze
+  examples.07_web_frameworks.document_web_project → code2docs.analyzers.project_scanner.ProjectScanner.analyze
+  examples.07_web_frameworks.document_web_project → examples.07_web_frameworks.generate_api_docs_from_endpoints
   examples.06_formatters.badge_examples → code2docs.formatters.badges.generate_badges
   examples.06_formatters.toc_examples → code2docs.formatters.toc.generate_toc
   examples.06_formatters.toc_examples → code2docs.formatters.toc.extract_headings
   examples.06_formatters.build_custom_readme → code2docs.formatters.toc.generate_toc
-  examples.04_sync_and_watch.watch_and_auto_regenerate → code2docs.sync.watcher.start_watcher
+  examples.02_configuration.load_config_from_yaml → code2docs.config.Code2DocsConfig.from_yaml
   examples.03_programmatic_api.generate_readme_simple → code2docs.analyzers.project_scanner.ProjectScanner.analyze
   examples.03_programmatic_api.generate_readme_simple → code2docs.generators.readme_gen.generate_readme
   examples.03_programmatic_api.generate_full_documentation → code2docs.analyzers.project_scanner.ProjectScanner.analyze
   examples.03_programmatic_api.custom_documentation_pipeline → code2docs.analyzers.project_scanner.ProjectScanner.analyze
   examples.03_programmatic_api.inspect_project_structure → code2docs.analyzers.project_scanner.ProjectScanner.analyze
   examples.03_programmatic_api.generate_docs_if_needed → code2docs.analyzers.project_scanner.ProjectScanner.analyze
-  examples.02_configuration.load_config_from_yaml → code2docs.config.Code2DocsConfig.from_yaml
-  examples.07_web_frameworks.detect_flask_endpoints → code2docs.analyzers.project_scanner.ProjectScanner.analyze
-  examples.07_web_frameworks.detect_fastapi_endpoints → code2docs.analyzers.project_scanner.ProjectScanner.analyze
-  examples.07_web_frameworks.generate_api_docs_from_endpoints → code2docs.analyzers.project_scanner.ProjectScanner.analyze
-  examples.07_web_frameworks.document_web_project → code2docs.analyzers.project_scanner.ProjectScanner.analyze
-  examples.07_web_frameworks.document_web_project → examples.07_web_frameworks.generate_api_docs_from_endpoints
-  examples.05_custom_generators.generate_custom_report → code2docs.analyzers.project_scanner.ProjectScanner.analyze
   code2docs.cli.sync → code2docs.cli._load_config
   code2docs.cli.sync → code2docs.cli._run_sync
   code2docs.cli.watch → code2docs.cli._load_config

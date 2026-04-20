@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+## [3.0.33] - 2026-04-20
+
+### Docs
+- Update README.md
+- Update project/context.md
+
+### Other
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/duplication.toon.yaml
+- Update project/flow.mmd
+- Update project/index.html
+- Update project/map.toon.yaml
+- Update project/mermaid.export
+- ... and 2 more files
+
 ## [3.0.32] - 2026-04-20
 
 ### Docs

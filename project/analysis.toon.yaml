@@ -7,15 +7,15 @@ REFACTOR[1]:
   1. break 1 circular dependencies
 
 PIPELINES[292]:
-  [1] Src [__init__]: __init__
+  [1] Src [__getattr__]: __getattr__
       PURITY: 100% pure
-  [2] Src [apply]: apply
+  [2] Src [add]: add
       PURITY: 100% pure
-  [3] Src [__getattr__]: __getattr__
+  [3] Src [run_all]: run_all
       PURITY: 100% pure
-  [4] Src [__init__]: __init__
+  [4] Src [run_only]: run_only
       PURITY: 100% pure
-  [5] Src [source_link]: source_link
+  [5] Src [__init__]: __init__
       PURITY: 100% pure
 
 LAYERS:
@@ -58,8 +58,8 @@ LAYERS:
   │ __init__                    24L  0C    1m  CC=4      ←0
   │ __init__                    13L  0C    0m  CC=0.0    ←0
   │ __init__                     7L  0C    0m  CC=0.0    ←0
-  │ __main__                     6L  0C    0m  CC=0.0    ←0
   │ __init__                     6L  0C    0m  CC=0.0    ←0
+  │ __main__                     6L  0C    0m  CC=0.0    ←0
   │
   examples/                       CC̄=2.2    ←in:0  →out:18  !! split
   │ 07_web_frameworks          221L  0C    5m  CC=9      ←0
