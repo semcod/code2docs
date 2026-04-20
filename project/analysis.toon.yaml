@@ -1,32 +1,32 @@
-# code2llm | 39f 5459L | python:38,shell:1 | 2026-04-19
-# CC̄=3.8 | critical:0/351 | dups:0 | cycles:1
+# code2llm | 54f 6801L | python:53,shell:1 | 2026-04-20
+# CC̄=3.7 | critical:0/353 | dups:0 | cycles:1
 
 HEALTH[0]: ok
 
 REFACTOR[1]:
   1. break 1 circular dependencies
 
-PIPELINES[291]:
-  [1] Src [add]: add
+PIPELINES[292]:
+  [1] Src [__init__]: __init__
       PURITY: 100% pure
-  [2] Src [run_all]: run_all
+  [2] Src [apply]: apply
       PURITY: 100% pure
-  [3] Src [run_only]: run_only
+  [3] Src [__getattr__]: __getattr__
       PURITY: 100% pure
-  [4] Src [__getattr__]: __getattr__
+  [4] Src [__init__]: __init__
       PURITY: 100% pure
-  [5] Src [__init__]: __init__
+  [5] Src [source_link]: source_link
       PURITY: 100% pure
 
 LAYERS:
-  code2docs/                      CC̄=3.8    ←in:0  →out:1
+  code2docs/                      CC̄=3.8    ←in:1  →out:1
   │ examples_gen               492L  1C   19m  CC=13     ←0
-  │ readme_gen                 339L  1C   22m  CC=12     ←1
+  │ readme_gen                 340L  1C   22m  CC=13     ←1
   │ _registry_adapters         302L  15C   35m  CC=7      ←0
   │ architecture_gen           294L  1C   10m  CC=13     ←0
+  │ dependency_scanner         273L  3C   11m  CC=9      ←0
   │ org_readme_gen             252L  1C   15m  CC=8      ←0
   │ code2llm_gen               248L  1C   17m  CC=7      ←0
-  │ dependency_scanner         248L  3C   10m  CC=9      ←0
   │ module_docs_gen            246L  1C   20m  CC=9      ←0
   │ contributing_gen           246L  1C   11m  CC=7      ←0
   │ cli                        245L  1C   14m  CC=10     ←0
@@ -43,13 +43,15 @@ LAYERS:
   │ endpoint_detector          112L  2C    3m  CC=5      ←0
   │ mkdocs_gen                 110L  1C    5m  CC=5      ←0
   │ coverage_gen               104L  1C    7m  CC=12     ←0
+  │ advanced_usage              89L  0C    0m  CC=0.0    ←0
   │ _source_links               76L  1C    6m  CC=5      ←0
   │ watcher                     75L  0C    1m  CC=5      ←2
   │ markdown                    73L  1C   13m  CC=4      ←0
+  │ badges                      72L  0C    3m  CC=14     ←2
   │ toc                         63L  0C    3m  CC=6      ←1
   │ __init__                    59L  0C    1m  CC=5      ←0
-  │ badges                      52L  0C    2m  CC=11     ←2
   │ updater                     51L  1C    2m  CC=4      ←0
+  │ quickstart                  48L  0C    0m  CC=0.0    ←0
   │ base                        46L  2C    3m  CC=1      ←0
   │ project_scanner             41L  1C    4m  CC=2      ←3
   │ registry                    35L  1C    4m  CC=4      ←0
@@ -59,17 +61,39 @@ LAYERS:
   │ __main__                     6L  0C    0m  CC=0.0    ←0
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │
+  examples/                       CC̄=2.2    ←in:0  →out:18  !! split
+  │ 07_web_frameworks          221L  0C    5m  CC=9      ←0
+  │ 02_configuration           161L  0C    4m  CC=1      ←0
+  │ 05_custom_generators       144L  3C   13m  CC=8      ←0
+  │ 04_sync_and_watch          120L  0C    6m  CC=4      ←0
+  │ 06_formatters               96L  0C    5m  CC=2      ←0
+  │ 03_programmatic_api         85L  0C    5m  CC=5      ←0
+  │ 01_cli_usage                70L  0C    2m  CC=1      ←0
+  │ advanced_usage              51L  0C    0m  CC=0.0    ←0
+  │ entry_points                29L  0C    0m  CC=0.0    ←0
+  │ quickstart                  22L  0C    0m  CC=0.0    ←0
+  │ basic_usage                 22L  0C    0m  CC=0.0    ←0
+  │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ project.sh                  35L  0C    0m  CC=0.0    ←0
   │
+  docs/                           CC̄=0.0    ←in:0  →out:0
+  │ advanced_usage              90L  0C    0m  CC=0.0    ←0
+  │ quickstart                  48L  0C    0m  CC=0.0    ←0
+  │
 
 COUPLING:
-                                   code2docs  code2docs.formatters  code2docs.generators        code2docs.sync
-             code2docs                    ──                                                                 1
-  code2docs.formatters                                          ──                    ←1                      
-  code2docs.generators                                           1                    ──                      
-        code2docs.sync                    ←1                                                                ──
+                                    examples   code2docs.analyzers  code2docs.formatters             code2docs  code2docs.generators        code2docs.sync
+              examples                    ──                    10                     5                     1                     1                     1  !! fan-out
+   code2docs.analyzers                   ←10                    ──                                                                                          hub
+  code2docs.formatters                    ←5                                          ──                                          ←1                        hub
+             code2docs                    ←1                                                                ──                                           1
+  code2docs.generators                    ←1                                           1                                          ──                      
+        code2docs.sync                    ←1                                                                ←1                                          ──
   CYCLES: 1
+  HUB: code2docs.analyzers/ (fan-in=10)
+  HUB: code2docs.formatters/ (fan-in=6)
+  SMELL: examples/ fan-out=18 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

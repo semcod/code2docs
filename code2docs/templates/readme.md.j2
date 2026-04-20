@@ -23,6 +23,50 @@
 {% if "install" in sections %}
 ## Installation
 
+{% if language == 'php' %}
+### Requirements
+
+{% if dependencies and dependencies.runtime_version %}- PHP {{ dependencies.runtime_version }}
+{% else %}- PHP 8.0+
+{% endif %}- [Composer](https://getcomposer.org/)
+
+### From Source
+
+```bash
+git clone {{ repo_url or '<repository-url>' }}
+cd {{ project_name }}
+composer install
+```
+{% elif language in ('javascript', 'typescript') %}
+### Requirements
+
+{% if dependencies and dependencies.runtime_version %}- Node.js {{ dependencies.runtime_version }}
+{% else %}- Node.js 18+
+{% endif %}
+### From Source
+
+```bash
+git clone {{ repo_url or '<repository-url>' }}
+cd {{ project_name }}
+{{ dependencies.install_command if dependencies and dependencies.install_command else 'npm install' }}
+```
+{% elif language == 'rust' %}
+### From Source
+
+```bash
+git clone {{ repo_url or '<repository-url>' }}
+cd {{ project_name }}
+cargo build --release
+```
+{% elif language == 'go' %}
+### From Source
+
+```bash
+git clone {{ repo_url or '<repository-url>' }}
+cd {{ project_name }}
+go build ./...
+```
+{% else %}
 ### From PyPI
 
 ```bash
@@ -46,10 +90,37 @@ pip install -e .
 ```
 {% endif %}
 {% endif %}
+{% endif %}
 
 {% if "quickstart" in sections %}
 ## Quick Start
 
+{% if language == 'php' %}
+Serve the project with your preferred PHP runtime (built-in server shown for local development):
+
+```bash
+php -S localhost:8000
+```
+
+Or with Docker Compose if a `docker-compose.yml` is provided:
+
+```bash
+docker compose up
+```
+{% elif language in ('javascript', 'typescript') %}
+```bash
+{% if dependencies and dependencies.install_command %}{{ dependencies.install_command }}
+{% endif %}npm start
+```
+{% elif language == 'rust' %}
+```bash
+cargo run
+```
+{% elif language == 'go' %}
+```bash
+go run .
+```
+{% else %}
 ### CLI Usage
 
 ```bash
@@ -81,6 +152,7 @@ generate_readme("./my-project")
 config = Code2DocsConfig(project_name="mylib", verbose=True)
 docs = generate_docs("./my-project", config=config)
 ```
+{% endif %}
 {% endif %}
 
 {% if "generated_output" in sections %}
@@ -171,8 +243,12 @@ Content outside the markers is preserved when regenerating. Enable this with `sy
 
 ```
 {{ project_name }}/
-{% for mod_name, mod in modules.items()|list %}{% if not mod_name.startswith('_') %}{% set parts = mod_name.split('.') %}{{ '    ' * (parts|length - 1) }}├── {{ parts[-1] }}{% if mod.is_package %}/{% endif %}
-{% endif %}{% endfor %}
+{% for mod_name, mod in modules.items()|list -%}
+{% if not mod_name.startswith('_') -%}
+{% set parts = mod_name.split('.') -%}
+{{ '    ' * (parts|length - 1) }}├── {{ parts[-1] }}{% if mod.is_package %}/{% endif %}{{ "\n" -}}
+{% endif -%}
+{% endfor -%}
 ```
 {% endif %}
 
@@ -249,11 +325,31 @@ We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for gu
 git clone {{ repo_url or '<repository-url>' }}
 cd {{ project_name }}
 
+{% if language == 'php' %}
+# Install dependencies
+composer install
+
+# Run tests
+vendor/bin/phpunit
+{% elif language in ('javascript', 'typescript') %}
+# Install dependencies
+{{ dependencies.install_command if dependencies and dependencies.install_command else 'npm install' }}
+
+# Run tests
+npm test
+{% elif language == 'rust' %}
+# Run tests
+cargo test
+{% elif language == 'go' %}
+# Run tests
+go test ./...
+{% else %}
 # Install in development mode
 pip install -e ".[dev]"
 
 # Run tests
 pytest
+{% endif %}
 ```
 {% endif %}
 

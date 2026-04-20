@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [3.0.30] - 2026-04-20
+
+### Docs
+- Update README.md
+- Update docs/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update .gitignore
+- Update code2docs/analyzers/dependency_scanner.py
+- Update code2docs/config.py
+- Update code2docs/formatters/badges.py
+- Update code2docs/generators/readme_gen.py
+- Update code2docs/templates/readme.md.j2
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- ... and 12 more files
+
 ## [3.0.29] - 2026-04-19
 
 ### Docs

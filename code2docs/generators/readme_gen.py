@@ -57,7 +57,8 @@ class ReadmeGenerator:
         project_description = self._generate_description(project_name, entry_points)
         metadata = self._extract_project_metadata()
         extras = self._extract_extras()
-        return {'project_name': project_name, 'project_path': self.result.project_path, 'project_description': project_description, 'badges': generate_badges(project_name, self.config.readme.badges, stats, deps), 'stats': stats, 'avg_complexity': avg_complexity, 'dependencies': deps, 'endpoints': endpoints, 'public_functions': public_functions, 'public_classes': public_classes, 'entry_points': entry_points, 'module_tree': module_tree, 'modules': self.result.modules, 'sync_markers': self.config.readme.sync_markers, 'author': metadata.get('author', ''), 'license': metadata.get('license', ''), 'license_file': metadata.get('license_file', ''), 'contributors': metadata.get('contributors', []), 'repo_url': self.config.repo_url, 'version': metadata.get('version', '0.1.0'), 'extras': extras}
+        lang = getattr(deps, 'language', 'python') or 'python'
+        return {'project_name': project_name, 'project_path': self.result.project_path, 'project_description': project_description, 'badges': generate_badges(project_name, self.config.readme.badges, stats, deps), 'stats': stats, 'avg_complexity': avg_complexity, 'dependencies': deps, 'language': lang, 'endpoints': endpoints, 'public_functions': public_functions, 'public_classes': public_classes, 'entry_points': entry_points, 'module_tree': module_tree, 'modules': self.result.modules, 'sync_markers': self.config.readme.sync_markers, 'author': metadata.get('author', ''), 'license': metadata.get('license', ''), 'license_file': metadata.get('license_file', ''), 'contributors': metadata.get('contributors', []), 'repo_url': self.config.repo_url, 'version': metadata.get('version', '0.1.0'), 'extras': extras}
 
     def _calc_avg_complexity(self) -> float:
         """Calculate average cyclomatic complexity."""

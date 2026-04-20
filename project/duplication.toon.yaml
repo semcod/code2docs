@@ -1,12 +1,12 @@
-# redup/duplication | 6 groups | 54f 6761L | 2026-04-18
+# redup/duplication | 6 groups | 54f 6807L | 2026-04-20
 
 SUMMARY:
   files_scanned: 54
-  total_lines:   6761
+  total_lines:   6807
   dup_groups:    6
   dup_fragments: 19
   saved_lines:   69
-  scan_ms:       3972
+  scan_ms:       4456
 
 HOTSPOTS[7] (files with most duplication):
   examples/07_web_frameworks.py  dup=30L  groups=1  frags=2  (0.4%)

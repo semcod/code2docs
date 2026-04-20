@@ -1,4 +1,4 @@
-"""Scan project dependencies from requirements.txt, pyproject.toml, setup.py, package.json, Cargo.toml, go.mod."""
+"""Scan project dependencies from requirements.txt, pyproject.toml, setup.py, package.json, composer.json, Cargo.toml, go.mod."""
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -49,6 +49,11 @@ class DependencyScanner:
             tsconfig = project / 'tsconfig.json'
             if tsconfig.exists():
                 deps.language = 'typescript'
+            return deps
+        composer_json = project / 'composer.json'
+        if composer_json.exists():
+            deps = self._parse_composer_json(composer_json)
+            deps.source_file = 'composer.json'
             return deps
         cargo_toml = project / 'Cargo.toml'
         if cargo_toml.exists():
@@ -169,6 +174,26 @@ class DependencyScanner:
             deps.install_command = 'npm install'
         if name:
             deps.keywords = data.get('keywords', [])
+        return deps
+
+    def _parse_composer_json(self, path: Path) -> ProjectDependencies:
+        """Parse composer.json for PHP dependencies."""
+        import json
+        deps = ProjectDependencies(language='php')
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+        except (json.JSONDecodeError, OSError):
+            return deps
+        deps.version = data.get('version', '')
+        deps.keywords = data.get('keywords', []) or []
+        for dep_name, ver in (data.get('require', {}) or {}).items():
+            if dep_name.lower() == 'php':
+                deps.runtime_version = ver
+                continue
+            deps.dependencies.append(DependencyInfo(name=dep_name, version_spec=ver))
+        for dep_name, ver in (data.get('require-dev', {}) or {}).items():
+            deps.dev_dependencies.append(DependencyInfo(name=dep_name, version_spec=ver, group='dev'))
+        deps.install_command = 'composer install'
         return deps
 
     def _parse_cargo_toml(self, path: Path) -> ProjectDependencies:

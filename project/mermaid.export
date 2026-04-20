@@ -1,0 +1,275 @@
+flowchart TD
+    subgraph code2docs
+        code2docs____getattr__["__getattr__"]
+    end
+    subgraph code2docs__analyzers
+        code2docs__analyzers__endpoint_detector__EndpointDetector__detect["detect"]
+        code2docs__analyzers__endpoint_detector__EndpointDetector___parse_decorator["_parse_decorator"]
+        code2docs__analyzers__endpoint_detector__EndpointDetector___scan_django_urls["_scan_django_urls"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor__extract_all["extract_all"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor__parse["parse"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor___extract_summary["_extract_summary"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor___classify_section["_classify_section"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor___parse_sections("_parse_sections CC=8")
+        code2docs__analyzers__docstring_extractor__DocstringExtractor___parse_param_line["_parse_param_line"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor___parse_returns_line["_parse_returns_line"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor___parse_raises_line["_parse_raises_line"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor___parse_examples_line["_parse_examples_line"]
+        code2docs__analyzers__docstring_extractor__DocstringExtractor__coverage_report("coverage_report CC=8")
+        code2docs__analyzers__dependency_scanner__DependencyScanner__scan("scan CC=9")
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_pyproject("_parse_pyproject CC=8")
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_pyproject_regex["_parse_pyproject_regex"]
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_setup_py["_parse_setup_py"]
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_requirements_txt["_parse_requirements_txt"]
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_package_json["_parse_package_json"]
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_composer_json("_parse_composer_json CC=8")
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_cargo_toml("_parse_cargo_toml CC=9")
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_go_mod("_parse_go_mod CC=8")
+        code2docs__analyzers__dependency_scanner__DependencyScanner___parse_dep_string["_parse_dep_string"]
+        code2docs__analyzers__dependency_scanner__DependencyScanner___detect_version["_detect_version"]
+        code2docs__analyzers__project_scanner__ProjectScanner____init__["__init__"]
+        code2docs__analyzers__project_scanner__ProjectScanner___build_llm_config["_build_llm_config"]
+        code2docs__analyzers__project_scanner__ProjectScanner__analyze["analyze"]
+        code2docs__analyzers__project_scanner__analyze_and_document["analyze_and_document"]
+    end
+    subgraph code2docs__base
+        code2docs__base__BaseGenerator____init__["__init__"]
+        code2docs__base__BaseGenerator__should_run["should_run"]
+        code2docs__base__BaseGenerator__run["run"]
+    end
+    subgraph code2docs__cli
+        code2docs__cli__DefaultGroup__parse_args["parse_args"]
+        code2docs__cli__main["main"]
+        code2docs__cli__generate["generate"]
+        code2docs__cli__sync["sync"]
+        code2docs__cli__watch["watch"]
+        code2docs__cli__init["init"]
+        code2docs__cli__check["check"]
+        code2docs__cli__diff["diff"]
+        code2docs__cli___load_config["_load_config"]
+        code2docs__cli___run_generate["_run_generate"]
+        code2docs__cli___run_sync["_run_sync"]
+        code2docs__cli___run_watch["_run_watch"]
+        code2docs__cli___run_check("_run_check CC=10")
+        code2docs__cli___run_diff["_run_diff"]
+    end
+    subgraph code2docs__config
+        code2docs__config__LLMConfig__from_env["from_env"]
+        code2docs__config__Code2DocsConfig____post_init__["__post_init__"]
+        code2docs__config__Code2DocsConfig___detect_repo_url["_detect_repo_url"]
+        code2docs__config__Code2DocsConfig__from_yaml("from_yaml CC=10")
+        code2docs__config__Code2DocsConfig__to_yaml["to_yaml"]
+    end
+    subgraph code2docs__formatters
+        code2docs__formatters__toc__generate_toc["generate_toc"]
+        code2docs__formatters__toc__extract_headings["extract_headings"]
+        code2docs__formatters__toc___slugify["_slugify"]
+        code2docs__formatters__badges__generate_badges["generate_badges"]
+        code2docs__formatters__badges___make_badge("_make_badge CC=14")
+        code2docs__formatters__badges___runtime_badge["_runtime_badge"]
+        code2docs__formatters__markdown__MarkdownFormatter____init__["__init__"]
+        code2docs__formatters__markdown__MarkdownFormatter__heading["heading"]
+        code2docs__formatters__markdown__MarkdownFormatter__paragraph["paragraph"]
+        code2docs__formatters__markdown__MarkdownFormatter__blockquote["blockquote"]
+        code2docs__formatters__markdown__MarkdownFormatter__code_block["code_block"]
+        code2docs__formatters__markdown__MarkdownFormatter__inline_code["inline_code"]
+        code2docs__formatters__markdown__MarkdownFormatter__bold["bold"]
+        code2docs__formatters__markdown__MarkdownFormatter__link["link"]
+        code2docs__formatters__markdown__MarkdownFormatter__list_item["list_item"]
+        code2docs__formatters__markdown__MarkdownFormatter__table["table"]
+        code2docs__formatters__markdown__MarkdownFormatter__separator["separator"]
+        code2docs__formatters__markdown__MarkdownFormatter__blank["blank"]
+        code2docs__formatters__markdown__MarkdownFormatter__render["render"]
+    end
+    subgraph code2docs__generators
+        code2docs__generators___source_links__SourceLinker____init__["__init__"]
+        code2docs__generators___source_links__SourceLinker__source_link["source_link"]
+        code2docs__generators___source_links__SourceLinker__file_link["file_link"]
+        code2docs__generators___source_links__SourceLinker___relative_path["_relative_path"]
+        code2docs__generators___source_links__SourceLinker___find_git_root["_find_git_root"]
+        code2docs__generators___source_links__SourceLinker___detect_branch["_detect_branch"]
+        code2docs__generators__coverage_gen__CoverageGenerator____init__["__init__"]
+        code2docs__generators__coverage_gen__CoverageGenerator__generate["generate"]
+        code2docs__generators__coverage_gen__CoverageGenerator___render_summary["_render_summary"]
+        code2docs__generators__coverage_gen__CoverageGenerator___render_per_module["_render_per_module"]
+        code2docs__generators__coverage_gen__CoverageGenerator___collect_module_stats("_collect_module_stats CC=12")
+        code2docs__generators__coverage_gen__CoverageGenerator___format_coverage_table["_format_coverage_table"]
+        code2docs__generators__coverage_gen__CoverageGenerator___render_undocumented("_render_undocumented CC=8")
+        code2docs__generators__depgraph_gen__DepGraphGenerator____init__["__init__"]
+        code2docs__generators__depgraph_gen__DepGraphGenerator__generate["generate"]
+        code2docs__generators__depgraph_gen__DepGraphGenerator___collect_edges["_collect_edges"]
+        code2docs__generators__depgraph_gen__DepGraphGenerator___extract_imports_from_file["_extract_imports_from_file"]
+        code2docs__generators__depgraph_gen__DepGraphGenerator___import_matches["_import_matches"]
+        code2docs__generators__depgraph_gen__DepGraphGenerator___render_mermaid["_render_mermaid"]
+        code2docs__generators__depgraph_gen__DepGraphGenerator___render_matrix("_render_matrix CC=9")
+        code2docs__generators__depgraph_gen__DepGraphGenerator___calc_degrees["_calc_degrees"]
+        code2docs__generators__depgraph_gen__DepGraphGenerator___render_degree_table["_render_degree_table"]
+        code2docs__generators__generate_docs["generate_docs"]
+        code2docs__generators__config_docs_gen__ConfigDocsGenerator____init__["__init__"]
+        code2docs__generators__config_docs_gen__ConfigDocsGenerator__generate["generate"]
+        code2docs__generators__config_docs_gen__ConfigDocsGenerator___render_section("_render_section CC=10")
+        code2docs__generators__config_docs_gen__ConfigDocsGenerator___render_example["_render_example"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator____init__["__init__"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator__generate["generate"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___render_prerequisites("_render_prerequisites CC=10")
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___render_installation("_render_installation CC=8")
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___render_first_usage["_render_first_usage"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___render_cli_example["_render_cli_example"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___render_python_api_example["_render_python_api_example"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___find_priority_public_function("_find_priority_public_function CC=8")
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___format_func_args["_format_func_args"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___generate_intro["_generate_intro"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___gather_filtered_functions["_gather_filtered_functions"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___get_matching_functions("_get_matching_functions CC=11")
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___render_next_steps["_render_next_steps"]
+        code2docs__generators__getting_started_gen__GettingStartedGenerator___get_top_level_modules["_get_top_level_modules"]
+        code2docs__generators__code2llm_gen__parse_gitignore["parse_gitignore"]
+        code2docs__generators__code2llm_gen___extract_patterns["_extract_patterns"]
+        code2docs__generators__code2llm_gen___process_line["_process_line"]
+        code2docs__generators__code2llm_gen___should_skip_line["_should_skip_line"]
+        code2docs__generators__code2llm_gen___clean_pattern["_clean_pattern"]
+        code2docs__generators__code2llm_gen___is_valid_pattern["_is_valid_pattern"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator____init__["__init__"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator__generate_all["generate_all"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___run_code2llm["_run_code2llm"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___build_base_cmd["_build_base_cmd"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___add_config_options["_add_config_options"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___add_exclude_patterns["_add_exclude_patterns"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___get_config_skip_dirs["_get_config_skip_dirs"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___merge_patterns["_merge_patterns"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator___execute_command["_execute_command"]
+        code2docs__generators__code2llm_gen__Code2LlmGenerator__get_analysis_summary["get_analysis_summary"]
+        code2docs__generators__code2llm_gen__generate_code2llm_analysis["generate_code2llm_analysis"]
+        code2docs__generators__org_readme_gen__OrgReadmeGenerator____init__["__init__"]
+        code2docs__generators__org_readme_gen__OrgReadmeGenerator__generate["generate"]
+    end
+    subgraph code2docs__llm_helper
+        code2docs__llm_helper___get_litellm["_get_litellm"]
+        code2docs__llm_helper__LLMHelper____init__["__init__"]
+        code2docs__llm_helper__LLMHelper__complete["complete"]
+        code2docs__llm_helper__LLMHelper__generate_project_description["generate_project_description"]
+        code2docs__llm_helper__LLMHelper__generate_architecture_summary["generate_architecture_summary"]
+        code2docs__llm_helper__LLMHelper__generate_getting_started_summary["generate_getting_started_summary"]
+        code2docs__llm_helper__LLMHelper__enhance_module_docstring["enhance_module_docstring"]
+    end
+    subgraph code2docs__registry
+        code2docs__registry__GeneratorRegistry____init__["__init__"]
+        code2docs__registry__GeneratorRegistry__add["add"]
+        code2docs__registry__GeneratorRegistry__run_all["run_all"]
+        code2docs__registry__GeneratorRegistry__run_only["run_only"]
+    end
+    subgraph code2docs__sync
+        code2docs__sync__watcher__start_watcher["start_watcher"]
+        code2docs__sync__updater__Updater____init__["__init__"]
+        code2docs__sync__updater__Updater__apply["apply"]
+        code2docs__sync__differ__ChangeInfo____str__["__str__"]
+        code2docs__sync__differ__Differ____init__["__init__"]
+        code2docs__sync__differ__Differ__detect_changes["detect_changes"]
+        code2docs__sync__differ__Differ__save_state["save_state"]
+        code2docs__sync__differ__Differ___load_state["_load_state"]
+        code2docs__sync__differ__Differ___compute_state["_compute_state"]
+        code2docs__sync__differ__Differ___file_to_module["_file_to_module"]
+    end
+    subgraph examples__01_cli_usage
+        examples__01_cli_usage__run_cli_basic["run_cli_basic"]
+        examples__01_cli_usage__run_cli_with_config["run_cli_with_config"]
+    end
+    subgraph examples__02_configuration
+        examples__02_configuration__create_basic_config["create_basic_config"]
+        examples__02_configuration__create_advanced_config["create_advanced_config"]
+        examples__02_configuration__save_yaml_config_example["save_yaml_config_example"]
+        examples__02_configuration__load_config_from_yaml["load_config_from_yaml"]
+    end
+    subgraph examples__03_programmatic_api
+        examples__03_programmatic_api__generate_readme_simple["generate_readme_simple"]
+        examples__03_programmatic_api__generate_full_documentation["generate_full_documentation"]
+        examples__03_programmatic_api__custom_documentation_pipeline["custom_documentation_pipeline"]
+        examples__03_programmatic_api__inspect_project_structure["inspect_project_structure"]
+        examples__03_programmatic_api__generate_docs_if_needed["generate_docs_if_needed"]
+    end
+    subgraph examples__04_sync_and_watch
+        examples__04_sync_and_watch__detect_changes_example["detect_changes_example"]
+        examples__04_sync_and_watch__update_docs_incrementally["update_docs_incrementally"]
+        examples__04_sync_and_watch__force_full_regeneration["force_full_regeneration"]
+        examples__04_sync_and_watch__watch_and_auto_regenerate["watch_and_auto_regenerate"]
+        examples__04_sync_and_watch__custom_watcher_with_hooks["custom_watcher_with_hooks"]
+        examples__04_sync_and_watch__sync_with_git_changes["sync_with_git_changes"]
+    end
+    subgraph examples__05_custom_generators
+        examples__05_custom_generators__MetricsReportGenerator____init__["__init__"]
+        examples__05_custom_generators__MetricsReportGenerator__generate["generate"]
+        examples__05_custom_generators__MetricsReportGenerator___calculate_stats["_calculate_stats"]
+        examples__05_custom_generators__MetricsReportGenerator___format_stats_table["_format_stats_table"]
+        examples__05_custom_generators__MetricsReportGenerator___list_largest_files["_list_largest_files"]
+        examples__05_custom_generators__MetricsReportGenerator___analyze_functions["_analyze_functions"]
+        examples__05_custom_generators__APIChangelogGenerator____init__["__init__"]
+        examples__05_custom_generators__APIChangelogGenerator__generate("generate CC=8")
+        examples__05_custom_generators__APIChangelogGenerator___list_new_apis["_list_new_apis"]
+        examples__05_custom_generators__APIChangelogGenerator___compare_apis["_compare_apis"]
+        examples__05_custom_generators__generate_custom_report["generate_custom_report"]
+        examples__05_custom_generators__CustomGenerator__generate["generate"]
+        examples__05_custom_generators__CustomGenerator__write["write"]
+    end
+    subgraph examples__06_formatters
+        examples__06_formatters__markdown_formatting_examples["markdown_formatting_examples"]
+        examples__06_formatters__generate_complex_document["generate_complex_document"]
+        examples__06_formatters__badge_examples["badge_examples"]
+        examples__06_formatters__toc_examples["toc_examples"]
+        examples__06_formatters__build_custom_readme["build_custom_readme"]
+    end
+    subgraph examples__07_web_frameworks
+        examples__07_web_frameworks__detect_flask_endpoints["detect_flask_endpoints"]
+        examples__07_web_frameworks__detect_fastapi_endpoints["detect_fastapi_endpoints"]
+        examples__07_web_frameworks__generate_api_docs_from_endpoints("generate_api_docs_from_endpoints CC=9")
+        examples__07_web_frameworks__create_example_web_apps["create_example_web_apps"]
+        examples__07_web_frameworks__document_web_project["document_web_project"]
+    end
+    code2docs__formatters__toc__generate_toc --> code2docs__formatters__toc__extract_headings
+    code2docs__formatters__toc__extract_headings --> code2docs__formatters__toc___slugify
+    code2docs__formatters__badges__generate_badges --> code2docs__formatters__badges___make_badge
+    code2docs__formatters__badges___make_badge --> code2docs__formatters__badges___runtime_badge
+    code2docs__generators__code2llm_gen__parse_gitignore --> code2docs__generators__code2llm_gen___extract_patterns
+    code2docs__generators__code2llm_gen___extract_patterns --> code2docs__generators__code2llm_gen___process_line
+    code2docs__generators__code2llm_gen___process_line --> code2docs__generators__code2llm_gen___should_skip_line
+    code2docs__generators__code2llm_gen___process_line --> code2docs__generators__code2llm_gen___clean_pattern
+    code2docs__generators__code2llm_gen___process_line --> code2docs__generators__code2llm_gen___is_valid_pattern
+    code2docs__generators__code2llm_gen__Code2LlmGenerator___add_exclude_patterns --> code2docs__generators__code2llm_gen__parse_gitignore
+    code2docs__generators__readme_gen__ReadmeGenerator___build_context --> code2docs__formatters__badges__generate_badges
+    code2docs__generators__contributing_gen__ContributingGenerator___render_code_style --> code2docs__generators__contributing_gen__ContributingGenerator___get_style_lines
+    code2docs__generators__contributing_gen__ContributingGenerator___get_style_lines --> code2docs__generators__contributing_gen__ContributingGenerator___get_python_style_lines
+    code2docs__generators__contributing_gen__ContributingGenerator___get_style_lines --> code2docs__generators__contributing_gen__ContributingGenerator___get_jsts_style_lines
+    examples__06_formatters__badge_examples --> code2docs__formatters__badges__generate_badges
+    examples__06_formatters__toc_examples --> code2docs__formatters__toc__generate_toc
+    examples__06_formatters__toc_examples --> code2docs__formatters__toc__extract_headings
+    examples__06_formatters__build_custom_readme --> code2docs__formatters__toc__generate_toc
+    examples__04_sync_and_watch__watch_and_auto_regenerate --> code2docs__sync__watcher__start_watcher
+    examples__03_programmatic_api__generate_readme_simple --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__03_programmatic_api__generate_readme_simple --> code2docs__generators__readme_gen__generate_readme
+    examples__03_programmatic_api__generate_full_documentation --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__03_programmatic_api__custom_documentation_pipeline --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__03_programmatic_api__inspect_project_structure --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__03_programmatic_api__generate_docs_if_needed --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__02_configuration__load_config_from_yaml --> code2docs__config__Code2DocsConfig__from_yaml
+    examples__07_web_frameworks__detect_flask_endpoints --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__07_web_frameworks__detect_fastapi_endpoints --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__07_web_frameworks__generate_api_docs_from_endpoints --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__07_web_frameworks__document_web_project --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    examples__07_web_frameworks__document_web_project --> examples__07_web_frameworks__generate_api_docs_from_endpoints
+    examples__05_custom_generators__generate_custom_report --> code2docs__analyzers__project_scanner__ProjectScanner__analyze
+    code2docs__cli__generate --> code2docs__cli___load_config
+    code2docs__cli__generate --> code2docs__cli___run_generate
+    code2docs__cli__sync --> code2docs__cli___load_config
+    code2docs__cli__sync --> code2docs__cli___run_sync
+    code2docs__cli__watch --> code2docs__cli___load_config
+    code2docs__cli__watch --> code2docs__cli___run_watch
+    code2docs__cli__check --> code2docs__cli___load_config
+    code2docs__cli__check --> code2docs__cli___run_check
+    code2docs__cli__diff --> code2docs__cli___load_config
+    code2docs__cli__diff --> code2docs__cli___run_diff
+    code2docs__cli___load_config --> code2docs__config__Code2DocsConfig__from_yaml
+    code2docs__cli___run_watch --> code2docs__sync__watcher__start_watcher
+    code2docs__llm_helper__LLMHelper__complete --> code2docs__llm_helper___get_litellm
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class code2docs__formatters__badges___make_badge,code2docs__generators__coverage_gen__CoverageGenerator___collect_module_stats,code2docs__generators__coverage_gen__CoverageGenerator___render_undocumented,code2docs__generators__depgraph_gen__DepGraphGenerator___render_matrix,code2docs__generators__config_docs_gen__ConfigDocsGenerator___render_section,code2docs__generators__getting_started_gen__GettingStartedGenerator___render_prerequisites,code2docs__generators__getting_started_gen__GettingStartedGenerator___render_installation,code2docs__generators__getting_started_gen__GettingStartedGenerator___find_priority_public_function,code2docs__generators__getting_started_gen__GettingStartedGenerator___get_matching_functions,code2docs__generators__org_readme_gen__OrgReadmeGenerator___truncate_description,code2docs__generators__module_docs_gen__ModuleDocsGenerator___render_classes_detail,code2docs__generators__readme_gen__ReadmeGenerator___build_context,code2docs__generators__readme_gen__ReadmeGenerator___extract_project_description,code2docs__generators__readme_gen__ReadmeGenerator___extract_from_pyproject,code2docs__generators__readme_gen__ReadmeGenerator___detect_license,code2docs__generators__readme_gen__ReadmeGenerator___build_install_section,code2docs__generators__api_reference_gen__ApiReferenceGenerator__generate,code2docs__generators__api_reference_gen__ApiReferenceGenerator___has_content,code2docs__generators__api_changelog_gen__ApiChangelogGenerator___diff_functions,code2docs__generators__api_changelog_gen__ApiChangelogGenerator___diff_classes,code2docs__generators__api_changelog_gen__ApiChangelogGenerator___render,code2docs__generators__examples_gen__ExamplesGenerator___generate_quickstart,code2docs__generators__examples_gen__ExamplesGenerator___render_generator_examples,code2docs__generators__examples_gen__ExamplesGenerator___build_realistic_args,code2docs__generators__examples_gen__ExamplesGenerator___example_from_type,examples__07_web_frameworks__generate_api_docs_from_endpoints,code2docs__generators__architecture_gen__ArchitectureGenerator__generate,code2docs__generators__architecture_gen__ArchitectureGenerator___get_public_entry_points,code2docs__generators__architecture_gen__ArchitectureGenerator___generate_module_graph,code2docs__generators__architecture_gen__ArchitectureGenerator___generate_class_diagram medCC

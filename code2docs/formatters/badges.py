@@ -27,6 +27,9 @@ def _make_badge(badge_type: str, project_name: str,
         return f"![version](https://img.shields.io/badge/version-0.1.0-blue)"
 
     elif badge_type == "python":
+        lang = getattr(deps, "language", "python") if deps else "python"
+        if lang and lang != "python":
+            return _runtime_badge(lang, deps)
         py_version = ""
         if deps and hasattr(deps, "python_version"):
             py_version = deps.python_version
@@ -50,3 +53,20 @@ def _make_badge(badge_type: str, project_name: str,
         return f"![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)"
 
     return None
+
+
+_RUNTIME_LABELS = {
+    "php": ("php", "777BB4"),
+    "javascript": ("node", "339933"),
+    "typescript": ("typescript", "3178C6"),
+    "rust": ("rust", "B7410E"),
+    "go": ("go", "00ADD8"),
+}
+
+
+def _runtime_badge(lang: str, deps) -> Optional[str]:
+    """Generate a runtime badge for non-Python languages."""
+    label, color = _RUNTIME_LABELS.get(lang, (lang, "blue"))
+    version = getattr(deps, "runtime_version", "") if deps else ""
+    version = version or "any"
+    return f"![{label}](https://img.shields.io/badge/{quote(label)}-{quote(version)}-{color})"

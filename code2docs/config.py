@@ -14,7 +14,7 @@ except ImportError:
 @dataclass
 class ReadmeConfig:
     """Configuration for README generation."""
-    sections: List[str] = field(default_factory=lambda: ['overview', 'install', 'quickstart', 'generated_output', 'config', 'sync_markers', 'architecture', 'api', 'structure', 'requirements', 'contributing', 'docs_nav'])
+    sections: List[str] = field(default_factory=lambda: ['overview', 'install', 'quickstart', 'architecture', 'api', 'structure', 'requirements', 'endpoints', 'contributing', 'docs_nav'])
     badges: List[str] = field(default_factory=lambda: ['version', 'python', 'coverage', 'complexity'])
     sync_markers: bool = True
 
