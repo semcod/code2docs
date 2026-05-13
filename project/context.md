@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/code2docs
 - **Primary Language**: python
-- **Languages**: python: 53, shell: 1
+- **Languages**: python: 55, shell: 1
 - **Analysis Mode**: static
-- **Total Functions**: 353
-- **Total Classes**: 60
-- **Modules**: 54
-- **Entry Points**: 330
+- **Total Functions**: 365
+- **Total Classes**: 62
+- **Modules**: 56
+- **Entry Points**: 335
 
 ## Architecture by Module
 
@@ -19,7 +19,7 @@
 - **File**: `_registry_adapters.py`
 
 ### code2docs.generators.readme_gen
-- **Functions**: 22
+- **Functions**: 23
 - **Classes**: 1
 - **File**: `readme_gen.py`
 
@@ -43,15 +43,15 @@
 - **Classes**: 1
 - **File**: `org_readme_gen.py`
 
+### code2docs.cli
+- **Functions**: 15
+- **Classes**: 1
+- **File**: `cli.py`
+
 ### code2docs.generators.getting_started_gen
 - **Functions**: 14
 - **Classes**: 1
 - **File**: `getting_started_gen.py`
-
-### code2docs.cli
-- **Functions**: 14
-- **Classes**: 1
-- **File**: `cli.py`
 
 ### code2docs.formatters.markdown
 - **Functions**: 13
@@ -83,6 +83,11 @@
 - **Classes**: 1
 - **File**: `architecture_gen.py`
 
+### code2docs.analyzers.markdown_validator
+- **Functions**: 10
+- **Classes**: 2
+- **File**: `markdown_validator.py`
+
 ### code2docs.analyzers.docstring_extractor
 - **Functions**: 10
 - **Classes**: 2
@@ -107,11 +112,6 @@
 - **Functions**: 7
 - **Classes**: 2
 - **File**: `differ.py`
-
-### code2docs.llm_helper
-- **Functions**: 7
-- **Classes**: 1
-- **File**: `llm_helper.py`
 
 ## Key Entry Points
 
@@ -149,6 +149,14 @@ Main execution flows into the system:
 > Build a custom README using formatters.
 - **Calls**: MarkdownFormatter, parts.append, parts.append, parts.append, parts.append, parts.append, parts.append, None.join
 
+### code2docs.cli.validate
+> Validate generated markdown: broken links, table shape, duplicate headings.
+- **Calls**: main.command, click.argument, click.option, click.option, None.resolve, console.print, code2docs.analyzers.markdown_validator.validate_markdown_tree, Table
+
+### code2docs.generators.readme_gen.ReadmeGenerator._build_context
+> Build template context from analysis result.
+- **Calls**: DependencyScanner, dep_scanner.scan, EndpointDetector, endpoint_detector.detect, self._calc_avg_complexity, self._build_module_tree, self._generate_description, self._extract_project_metadata
+
 ### examples.05_custom_generators.MetricsReportGenerator.generate
 > Generate the metrics report.
 - **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, self._calculate_stats, lines.append, lines.append
@@ -160,10 +168,6 @@ Main execution flows into the system:
 ### code2docs.generators.examples_gen.ExamplesGenerator._render_sync_examples
 > Render sync/diff usage examples.
 - **Calls**: lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append, lines.append
-
-### code2docs.generators.readme_gen.ReadmeGenerator._build_context
-> Build template context from analysis result.
-- **Calls**: DependencyScanner, dep_scanner.scan, EndpointDetector, endpoint_detector.detect, self._calc_avg_complexity, self._build_module_tree, self._generate_description, self._extract_project_metadata
 
 ### code2docs.generators.api_reference_gen.ApiReferenceGenerator.generate
 > Generate a single api.md with all public API grouped by package.
@@ -233,10 +237,6 @@ Main execution flows into the system:
 > Render prerequisites section.
 - **Calls**: DependencyScanner, dep_scanner.scan, None.join, lines.append, lines.append, lines.append, lines.append, lines.append
 
-### code2docs.generators.org_readme_gen.OrgReadmeGenerator._get_repo_url
-> Get repository URL from git or pyproject.toml.
-- **Calls**: pyproject.exists, subprocess.run, result.stdout.strip, url.startswith, url.removesuffix, open, tomllib.load, None.get
-
 ## Process Flows
 
 Key execution flows identified:
@@ -281,22 +281,22 @@ _render_generator_examples [code2docs.generators.examples_gen.ExamplesGenerator]
 build_custom_readme [examples.06_formatters]
 ```
 
-### Flow 9: _render_formatter_examples
+### Flow 9: validate
 ```
-_render_formatter_examples [code2docs.generators.examples_gen.ExamplesGenerator]
+validate [code2docs.cli]
 ```
 
-### Flow 10: _render_sync_examples
+### Flow 10: _build_context
 ```
-_render_sync_examples [code2docs.generators.examples_gen.ExamplesGenerator]
+_build_context [code2docs.generators.readme_gen.ReadmeGenerator]
 ```
 
 ## Key Classes
 
 ### code2docs.generators.readme_gen.ReadmeGenerator
 > Generate README.md from AnalysisResult.
-- **Methods**: 21
-- **Key Methods**: code2docs.generators.readme_gen.ReadmeGenerator.__init__, code2docs.generators.readme_gen.ReadmeGenerator.generate, code2docs.generators.readme_gen.ReadmeGenerator._build_context, code2docs.generators.readme_gen.ReadmeGenerator._calc_avg_complexity, code2docs.generators.readme_gen.ReadmeGenerator._build_module_tree, code2docs.generators.readme_gen.ReadmeGenerator._generate_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_metadata, code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject, code2docs.generators.readme_gen.ReadmeGenerator._extract_contributors_from_git
+- **Methods**: 22
+- **Key Methods**: code2docs.generators.readme_gen.ReadmeGenerator.__init__, code2docs.generators.readme_gen.ReadmeGenerator.generate, code2docs.generators.readme_gen.ReadmeGenerator._build_context, code2docs.generators.readme_gen.ReadmeGenerator._collect_existing_docs, code2docs.generators.readme_gen.ReadmeGenerator._calc_avg_complexity, code2docs.generators.readme_gen.ReadmeGenerator._build_module_tree, code2docs.generators.readme_gen.ReadmeGenerator._generate_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_description, code2docs.generators.readme_gen.ReadmeGenerator._extract_project_metadata, code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject
 
 ### code2docs.generators.module_docs_gen.ModuleDocsGenerator
 > Generate docs/modules.md — consolidated module documentation.
@@ -442,32 +442,16 @@ Filters out:
 > Demonstrate markdown formatting utilities.
 - **Output to**: MarkdownFormatter, print, print, print, print
 
-### code2docs.analyzers.endpoint_detector.EndpointDetector._parse_decorator
-> Try to parse a route decorator string.
-- **Output to**: self.FASTAPI_PATTERNS.search, self.FLASK_PATTERNS.search, Endpoint, Endpoint, None.upper
+### code2docs.analyzers.markdown_validator.validate_markdown_file
+> Validate a single markdown file.
 
-### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
-> Parse a docstring into structured sections (orchestrator).
-- **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
+Checks:
+- Local links/images resolve to existing files (skips URLs
+- **Output to**: Path, issues.extend, issues.extend, issues.extend, md_path.exists
 
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections
-> Walk remaining lines, dispatching content to the right section.
-- **Output to**: None.strip, line.strip, self._classify_section, desc_lines.append, None.join
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line
-> Parse a single param line: 'name: description'.
-- **Output to**: line.split, pdesc.strip, pname.strip
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line
-> Parse a returns line.
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line
-> Parse a raises line.
-- **Output to**: info.raises.append
-
-### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_examples_line
-> Parse an examples line.
-- **Output to**: info.examples.append
+### code2docs.analyzers.markdown_validator.validate_markdown_tree
+> Validate every markdown file under ``root`` matching ``patterns``.
+- **Output to**: Path, set, ValidationReport, set, root.rglob
 
 ### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
 > Parse pyproject.toml for dependencies.
@@ -505,6 +489,25 @@ Filters out:
 > Parse a dependency string like 'package>=1.0'.
 - **Output to**: re.match, DependencyInfo, dep_str.strip, DependencyInfo, dep_str.strip
 
+### code2docs.analyzers.docstring_extractor.DocstringExtractor.parse
+> Parse a docstring into structured sections (orchestrator).
+- **Output to**: None.splitlines, DocstringInfo, self._extract_summary, self._parse_sections, DocstringInfo
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_sections
+> Walk remaining lines, dispatching content to the right section.
+- **Output to**: None.strip, line.strip, self._classify_section, desc_lines.append, None.join
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_param_line
+> Parse a single param line: 'name: description'.
+- **Output to**: line.split, pdesc.strip, pname.strip
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_returns_line
+> Parse a returns line.
+
+### code2docs.analyzers.docstring_extractor.DocstringExtractor._parse_raises_line
+> Parse a raises line.
+- **Output to**: info.raises.append
+
 ## Behavioral Patterns
 
 ### recursion_analyze
@@ -528,6 +531,7 @@ Functions exposed as public API (no underscore prefix):
 - `examples.06_formatters.markdown_formatting_examples` - 29 calls
 - `examples.07_web_frameworks.generate_api_docs_from_endpoints` - 27 calls
 - `examples.06_formatters.build_custom_readme` - 27 calls
+- `code2docs.cli.validate` - 26 calls
 - `examples.05_custom_generators.MetricsReportGenerator.generate` - 24 calls
 - `code2docs.generators.api_reference_gen.ApiReferenceGenerator.generate` - 20 calls
 - `examples.04_sync_and_watch.custom_watcher_with_hooks` - 20 calls
@@ -535,6 +539,7 @@ Functions exposed as public API (no underscore prefix):
 - `code2docs.analyzers.dependency_scanner.DependencyScanner.scan` - 17 calls
 - `examples.03_programmatic_api.inspect_project_structure` - 16 calls
 - `code2docs.sync.differ.Differ.detect_changes` - 16 calls
+- `code2docs.analyzers.markdown_validator.validate_markdown_file` - 16 calls
 - `code2docs.generators.generate_docs` - 15 calls
 - `code2docs.cli.generate` - 15 calls
 - `examples.05_custom_generators.APIChangelogGenerator.generate` - 14 calls
@@ -546,21 +551,19 @@ Functions exposed as public API (no underscore prefix):
 - `code2docs.formatters.toc.extract_headings` - 10 calls
 - `examples.03_programmatic_api.generate_docs_if_needed` - 10 calls
 - `code2docs.cli.init` - 10 calls
-- `examples.05_custom_generators.generate_custom_report` - 9 calls
 - `examples.07_web_frameworks.document_web_project` - 9 calls
-- `code2docs.config.LLMConfig.from_env` - 9 calls
+- `examples.05_custom_generators.generate_custom_report` - 9 calls
 - `code2docs.generators.readme_gen.ReadmeGenerator.write` - 9 calls
+- `code2docs.analyzers.markdown_validator.validate_markdown_tree` - 9 calls
+- `code2docs.config.LLMConfig.from_env` - 9 calls
+- `code2docs.formatters.markdown.MarkdownFormatter.table` - 8 calls
 - `code2docs.generators.depgraph_gen.DepGraphGenerator.generate` - 8 calls
 - `code2docs.generators.getting_started_gen.GettingStartedGenerator.generate` - 8 calls
-- `code2docs.formatters.markdown.MarkdownFormatter.table` - 8 calls
 - `code2docs.generators.code2llm_gen.Code2LlmGenerator.generate_all` - 8 calls
 - `code2docs.generators.org_readme_gen.OrgReadmeGenerator.generate` - 8 calls
 - `examples.03_programmatic_api.custom_documentation_pipeline` - 8 calls
 - `code2docs.cli.sync` - 8 calls
 - `code2docs.generators.contributing_gen.ContributingGenerator.generate` - 7 calls
-- `examples.04_sync_and_watch.update_docs_incrementally` - 7 calls
-- `examples.07_web_frameworks.create_example_web_apps` - 7 calls
-- `code2docs.generators._registry_adapters.Code2LlmAdapter.run` - 7 calls
 
 ## System Interactions
 
@@ -589,15 +592,15 @@ graph TD
     _render_generator_ex --> append
     build_custom_readme --> MarkdownFormatter
     build_custom_readme --> append
-    _render_formatter_ex --> append
-    _render_sync_example --> append
+    validate --> command
+    validate --> argument
+    validate --> option
+    validate --> resolve
     _build_context --> DependencyScanner
     _build_context --> scan
     _build_context --> EndpointDetector
     _build_context --> detect
     _build_context --> _calc_avg_complexity
-    generate --> len
-    generate --> _group_modules
 ```
 
 ## Reverse Engineering Guidelines

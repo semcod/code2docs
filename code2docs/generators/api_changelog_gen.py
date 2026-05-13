@@ -15,8 +15,9 @@ SNAPSHOT_FILE = ".code2docs.api_snapshot.json"
 @dataclass
 class ApiChange:
     """A single API change between two analysis snapshots."""
-    kind: str          # added, removed, changed
-    item_type: str     # function, class, method
+
+    kind: str  # added, removed, changed
+    item_type: str  # function, class, method
     name: str
     old_signature: str = ""
     new_signature: str = ""
@@ -109,22 +110,34 @@ class ApiChangelogGenerator:
             item_type = "method" if (new_fn or old_fn or {}).get("is_method") else "function"
 
             if old_fn and not new_fn:
-                changes.append(ApiChange(
-                    kind="removed", item_type=item_type, name=name,
-                    old_signature=old_fn["signature"],
-                ))
+                changes.append(
+                    ApiChange(
+                        kind="removed",
+                        item_type=item_type,
+                        name=name,
+                        old_signature=old_fn["signature"],
+                    )
+                )
             elif new_fn and not old_fn:
-                changes.append(ApiChange(
-                    kind="added", item_type=item_type, name=name,
-                    new_signature=new_fn["signature"],
-                ))
+                changes.append(
+                    ApiChange(
+                        kind="added",
+                        item_type=item_type,
+                        name=name,
+                        new_signature=new_fn["signature"],
+                    )
+                )
             elif old_fn["signature"] != new_fn["signature"]:
-                changes.append(ApiChange(
-                    kind="changed", item_type=item_type, name=name,
-                    old_signature=old_fn["signature"],
-                    new_signature=new_fn["signature"],
-                    detail="signature changed",
-                ))
+                changes.append(
+                    ApiChange(
+                        kind="changed",
+                        item_type=item_type,
+                        name=name,
+                        old_signature=old_fn["signature"],
+                        new_signature=new_fn["signature"],
+                        detail="signature changed",
+                    )
+                )
 
     @staticmethod
     def _diff_classes(old: Dict, new: Dict, changes: List[ApiChange]) -> None:
@@ -135,13 +148,21 @@ class ApiChangelogGenerator:
             new_cls = new.get(name)
 
             if old_cls and not new_cls:
-                changes.append(ApiChange(
-                    kind="removed", item_type="class", name=name,
-                ))
+                changes.append(
+                    ApiChange(
+                        kind="removed",
+                        item_type="class",
+                        name=name,
+                    )
+                )
             elif new_cls and not old_cls:
-                changes.append(ApiChange(
-                    kind="added", item_type="class", name=name,
-                ))
+                changes.append(
+                    ApiChange(
+                        kind="added",
+                        item_type="class",
+                        name=name,
+                    )
+                )
             else:
                 diffs = []
                 if set(old_cls.get("bases", [])) != set(new_cls.get("bases", [])):
@@ -155,10 +176,14 @@ class ApiChangelogGenerator:
                 if removed:
                     diffs.append(f"removed methods: {', '.join(sorted(removed))}")
                 if diffs:
-                    changes.append(ApiChange(
-                        kind="changed", item_type="class", name=name,
-                        detail="; ".join(diffs),
-                    ))
+                    changes.append(
+                        ApiChange(
+                            kind="changed",
+                            item_type="class",
+                            name=name,
+                            detail="; ".join(diffs),
+                        )
+                    )
 
     @staticmethod
     def _render(project_name: str, changes: List[ApiChange], has_baseline: bool) -> str:
@@ -179,7 +204,11 @@ class ApiChangelogGenerator:
         lines.append(f"> {len(changes)} change(s) detected\n")
 
         # Group by kind
-        for kind_label, kind_key in [("Added", "added"), ("Changed", "changed"), ("Removed", "removed")]:
+        for kind_label, kind_key in [
+            ("Added", "added"),
+            ("Changed", "changed"),
+            ("Removed", "removed"),
+        ]:
             group = [c for c in changes if c.kind == kind_key]
             if not group:
                 continue

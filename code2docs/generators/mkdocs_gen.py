@@ -29,18 +29,25 @@ class MkDocsGenerator:
             "site_name": f"{project_name} Documentation",
             "theme": mkdocs_config.get("theme", {"name": "material"}),
             "nav": nav,
-            "markdown_extensions": mkdocs_config.get("markdown_extensions", [
-                "admonition",
-                "pymdownx.highlight",
-                "pymdownx.superfences",
-                {"pymdownx.superfences": {
-                    "custom_fences": [{
-                        "name": "mermaid",
-                        "class": "mermaid",
-                        "format": "!!python/name:pymdownx.superfences.fence_code_format",
-                    }]
-                }},
-            ]),
+            "markdown_extensions": mkdocs_config.get(
+                "markdown_extensions",
+                [
+                    "admonition",
+                    "pymdownx.highlight",
+                    "pymdownx.superfences",
+                    {
+                        "pymdownx.superfences": {
+                            "custom_fences": [
+                                {
+                                    "name": "mermaid",
+                                    "class": "mermaid",
+                                    "format": "!!python/name:pymdownx.superfences.fence_code_format",
+                                }
+                            ]
+                        }
+                    },
+                ],
+            ),
         }
 
         # Add extra fields from pyproject.toml if present
@@ -64,6 +71,7 @@ class MkDocsGenerator:
 
         try:
             import tomllib
+
             with open(pyproject_path, "rb") as f:
                 data = tomllib.load(f)
 

@@ -526,3 +526,20 @@ code2docs/
 ## License
 
 Licensed under Apache-2.0.
+
+<!-- taskill:status:start -->
+
+## Status
+
+_Last updated by [taskill](https://github.com/oqlos/taskill) at 2026-04-25 18:20 UTC_
+
+| Metric | Value |
+|---|---|
+| HEAD | `42f2ec4` |
+| Coverage | — |
+| Failing tests | — |
+| Commits in last cycle | 0 |
+
+> No commits or file changes since the last run. The project state is unchanged; TODO.md shows a number of completed lints/tasks but there are still active issues to address.
+
+<!-- taskill:status:end -->

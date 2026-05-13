@@ -117,13 +117,13 @@ class GettingStartedGenerator:
         return [
             "### Command Line\n",
             "```bash",
-            f"# Generate full documentation for your project",
+            "# Generate full documentation for your project",
             f"{project} ./path/to/your/project",
             "",
-            f"# Preview what would be generated (no file writes)",
+            "# Preview what would be generated (no file writes)",
             f"{project} ./path/to/your/project --dry-run",
             "",
-            f"# Only regenerate README",
+            "# Only regenerate README",
             f"{project} ./path/to/your/project --readme-only",
             "```",
         ]
@@ -148,7 +148,8 @@ class GettingStartedGenerator:
     def _find_priority_public_function(self) -> Optional[FunctionInfo]:
         """Find best public function for examples, prioritized by naming."""
         public_funcs = [
-            f for f in self.result.functions.values()
+            f
+            for f in self.result.functions.values()
             if not f.is_private and not f.is_method and not f.name.startswith("_")
         ]
         priority_prefixes = ("generate", "analyze", "create", "build", "run", "process")
@@ -163,10 +164,7 @@ class GettingStartedGenerator:
     def _format_func_args(self, func: FunctionInfo) -> str:
         """Format function arguments for example code."""
         args = [a for a in func.args if a != "self"]
-        return ", ".join(
-            f'"{a}"' if i == 0 else f"{a}=..."
-            for i, a in enumerate(args[:3])
-        )
+        return ", ".join(f'"{a}"' if i == 0 else f"{a}=..." for i, a in enumerate(args[:3]))
 
     def _generate_intro(self, project: str) -> str:
         """Generate LLM-enhanced intro paragraph. Returns '' if unavailable."""
@@ -187,13 +185,14 @@ class GettingStartedGenerator:
         """Get functions matching the filter criteria."""
         if filter_type == "cli":
             return [
-                f for f in self.result.functions.values()
-                if not f.is_private and not f.is_method
-                and f.module and "cli" in f.module
+                f
+                for f in self.result.functions.values()
+                if not f.is_private and not f.is_method and f.module and "cli" in f.module
             ]
         else:  # api
             return [
-                f for f in self.result.functions.values()
+                f
+                for f in self.result.functions.values()
                 if not f.is_private and not f.is_method and not f.name.startswith("_")
             ]
 

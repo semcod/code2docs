@@ -43,7 +43,7 @@ def extract_headings(content: str, max_depth: int = 3) -> List[Tuple[int, str, s
         if in_code_block:
             continue
 
-        match = re.match(r'^(#{1,6})\s+(.+)$', line)
+        match = re.match(r"^(#{1,6})\s+(.+)$", line)
         if match:
             level = len(match.group(1))
             if level <= max_depth:
@@ -57,7 +57,7 @@ def extract_headings(content: str, max_depth: int = 3) -> List[Tuple[int, str, s
 def _slugify(text: str) -> str:
     """Convert heading text to GitHub-compatible anchor slug."""
     slug = text.lower()
-    slug = re.sub(r'[^\w\s-]', '', slug)
-    slug = re.sub(r'[\s]+', '-', slug)
-    slug = slug.strip('-')
+    slug = re.sub(r"[^\w\s-]", "", slug)
+    slug = re.sub(r"[\s]+", "-", slug)
+    slug = slug.strip("-")
     return slug

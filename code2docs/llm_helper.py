@@ -21,6 +21,7 @@ def _get_litellm():
     if _litellm is None:
         try:
             import litellm
+
             litellm.suppress_debug_info = True
             _litellm = litellm
         except ImportError:
@@ -44,16 +45,17 @@ class LLMHelper:
         """Check if LLM is configured and litellm is installed."""
         if self._available is None:
             self._available = (
-                self.config.enabled
-                and bool(self.config.model)
-                and _get_litellm() is not None
+                self.config.enabled and bool(self.config.model) and _get_litellm() is not None
             )
             if self._available:
                 logger.info("LLM enabled: model=%s", self.config.model)
             else:
-                logger.debug("LLM disabled (enabled=%s, model=%s, litellm=%s)",
-                             self.config.enabled, bool(self.config.model),
-                             _get_litellm() is not None)
+                logger.debug(
+                    "LLM disabled (enabled=%s, model=%s, litellm=%s)",
+                    self.config.enabled,
+                    bool(self.config.model),
+                    _get_litellm() is not None,
+                )
         return self._available
 
     def complete(self, prompt: str, system: str = "") -> Optional[str]:
@@ -89,9 +91,9 @@ class LLMHelper:
 
     # ── High-level doc helpers (return None if LLM unavailable) ────────
 
-    def generate_project_description(self, project_name: str,
-                                     modules_summary: str,
-                                     entry_points: str) -> Optional[str]:
+    def generate_project_description(
+        self, project_name: str, modules_summary: str, entry_points: str
+    ) -> Optional[str]:
         """Generate a concise project description from analysis data."""
         system = (
             "You are a technical writer generating concise project documentation. "
@@ -106,10 +108,9 @@ class LLMHelper:
         )
         return self.complete(prompt, system)
 
-    def generate_architecture_summary(self, project_name: str,
-                                      layers: str,
-                                      patterns: str,
-                                      metrics: str) -> Optional[str]:
+    def generate_architecture_summary(
+        self, project_name: str, layers: str, patterns: str, metrics: str
+    ) -> Optional[str]:
         """Generate a natural-language architecture overview."""
         system = (
             "You are a software architect explaining a codebase. "
@@ -126,9 +127,9 @@ class LLMHelper:
         )
         return self.complete(prompt, system)
 
-    def generate_getting_started_summary(self, project_name: str,
-                                         cli_commands: str,
-                                         public_api: str) -> Optional[str]:
+    def generate_getting_started_summary(
+        self, project_name: str, cli_commands: str, public_api: str
+    ) -> Optional[str]:
         """Generate a getting-started introduction."""
         system = (
             "You are writing a getting-started guide for developers. "
@@ -144,9 +145,9 @@ class LLMHelper:
         )
         return self.complete(prompt, system)
 
-    def enhance_module_docstring(self, module_name: str,
-                                 functions: str,
-                                 classes: str) -> Optional[str]:
+    def enhance_module_docstring(
+        self, module_name: str, functions: str, classes: str
+    ) -> Optional[str]:
         """Generate a module-level summary from its contents."""
         system = (
             "You are a technical writer documenting a Python module. "

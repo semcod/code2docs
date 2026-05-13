@@ -35,7 +35,9 @@ class ProjectScanner:
         return analyze(project_path, self._llm_config)
 
 
-def analyze_and_document(project_path: str, config: Optional[Code2DocsConfig] = None) -> AnalysisResult:
+def analyze_and_document(
+    project_path: str, config: Optional[Code2DocsConfig] = None
+) -> AnalysisResult:
     """Convenience function: analyze a project in one call."""
     scanner = ProjectScanner(config)
     return scanner.analyze(project_path)

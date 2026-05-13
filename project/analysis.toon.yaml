@@ -1,37 +1,37 @@
-# code2llm | 54f 6801L | python:53,shell:1 | 2026-04-20
-# CC̄=3.7 | critical:0/353 | dups:0 | cycles:1
+# code2llm | 56f 7082L | python:55,shell:1 | 2026-04-20
+# CC̄=3.7 | critical:0/365 | dups:0 | cycles:0
 
 HEALTH[0]: ok
 
-REFACTOR[1]:
-  1. break 1 circular dependencies
+REFACTOR[0]: none needed
 
-PIPELINES[292]:
-  [1] Src [__getattr__]: __getattr__
+PIPELINES[295]:
+  [1] Src [heading]: heading
       PURITY: 100% pure
-  [2] Src [add]: add
+  [2] Src [paragraph]: paragraph
       PURITY: 100% pure
-  [3] Src [run_all]: run_all
+  [3] Src [blockquote]: blockquote
       PURITY: 100% pure
-  [4] Src [run_only]: run_only
+  [4] Src [code_block]: code_block
       PURITY: 100% pure
-  [5] Src [__init__]: __init__
+  [5] Src [list_item]: list_item
       PURITY: 100% pure
 
 LAYERS:
-  code2docs/                      CC̄=3.8    ←in:1  →out:1
-  │ examples_gen               492L  1C   19m  CC=13     ←0
-  │ readme_gen                 340L  1C   22m  CC=13     ←1
+  code2docs/                      CC̄=3.9    ←in:1  →out:2
+  │ examples_gen               464L  1C   19m  CC=13     ←0
+  │ readme_gen                 375L  1C   23m  CC=13     ←1
   │ _registry_adapters         302L  15C   35m  CC=7      ←0
   │ architecture_gen           294L  1C   10m  CC=13     ←0
+  │ cli                        275L  1C   15m  CC=10     ←0
   │ dependency_scanner         273L  3C   11m  CC=9      ←0
   │ org_readme_gen             252L  1C   15m  CC=8      ←0
   │ code2llm_gen               248L  1C   17m  CC=7      ←0
   │ module_docs_gen            246L  1C   20m  CC=9      ←0
   │ contributing_gen           246L  1C   11m  CC=7      ←0
-  │ cli                        245L  1C   14m  CC=10     ←0
   │ getting_started_gen        218L  1C   14m  CC=11     ←0
   │ api_changelog_gen          196L  2C    9m  CC=14     ←0
+  │ markdown_validator         194L  2C   10m  CC=12     ←1
   │ api_reference_gen          181L  1C   12m  CC=11     ←0
   │ llm_helper                 161L  1C    7m  CC=7      ←0
   │ config                     155L  7C    5m  CC=10     ←2
@@ -56,10 +56,10 @@ LAYERS:
   │ project_scanner             41L  1C    4m  CC=2      ←3
   │ registry                    35L  1C    4m  CC=4      ←0
   │ __init__                    24L  0C    1m  CC=4      ←0
-  │ __init__                    13L  0C    0m  CC=0.0    ←0
+  │ __init__                    23L  0C    0m  CC=0.0    ←0
   │ __init__                     7L  0C    0m  CC=0.0    ←0
-  │ __init__                     6L  0C    0m  CC=0.0    ←0
   │ __main__                     6L  0C    0m  CC=0.0    ←0
+  │ __init__                     6L  0C    0m  CC=0.0    ←0
   │
   examples/                       CC̄=2.2    ←in:0  →out:18  !! split
   │ 07_web_frameworks          221L  0C    5m  CC=9      ←0
@@ -70,6 +70,7 @@ LAYERS:
   │ 03_programmatic_api         85L  0C    5m  CC=5      ←0
   │ 01_cli_usage                70L  0C    2m  CC=1      ←0
   │ advanced_usage              51L  0C    0m  CC=0.0    ←0
+  │ class_examples              40L  0C    0m  CC=0.0    ←0
   │ entry_points                29L  0C    0m  CC=0.0    ←0
   │ quickstart                  22L  0C    0m  CC=0.0    ←0
   │ basic_usage                 22L  0C    0m  CC=0.0    ←0
@@ -85,13 +86,13 @@ LAYERS:
 COUPLING:
                                     examples   code2docs.analyzers  code2docs.formatters             code2docs  code2docs.generators        code2docs.sync
               examples                    ──                    10                     5                     1                     1                     1  !! fan-out
-   code2docs.analyzers                   ←10                    ──                                                                                          hub
+   code2docs.analyzers                   ←10                    ──                                          ←1                                              hub
   code2docs.formatters                    ←5                                          ──                                          ←1                        hub
-             code2docs                    ←1                                                                ──                                           1
+             code2docs                    ←1                     1                                          ──                                           1
   code2docs.generators                    ←1                                           1                                          ──                      
         code2docs.sync                    ←1                                                                ←1                                          ──
-  CYCLES: 1
-  HUB: code2docs.analyzers/ (fan-in=10)
+  CYCLES: none
+  HUB: code2docs.analyzers/ (fan-in=11)
   HUB: code2docs.formatters/ (fan-in=6)
   SMELL: examples/ fan-out=18 → split needed
 

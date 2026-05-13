@@ -11,6 +11,7 @@ from code2llm.api import AnalysisResult, FunctionInfo
 @dataclass
 class Endpoint:
     """Represents a detected web endpoint."""
+
     method: str  # GET, POST, PUT, DELETE, etc.
     path: str
     function_name: str
@@ -28,12 +29,8 @@ class EndpointDetector:
     FASTAPI_PATTERNS = re.compile(
         r'@(?:app|router)\.(get|post|put|delete|patch|options|head)\s*\(\s*["\']([^"\']+)["\']'
     )
-    FLASK_PATTERNS = re.compile(
-        r'@(?:app|blueprint|bp)\.route\s*\(\s*["\']([^"\']+)["\']'
-    )
-    DJANGO_URL_PATTERN = re.compile(
-        r'(?:path|re_path|url)\s*\(\s*["\']([^"\']+)["\']'
-    )
+    FLASK_PATTERNS = re.compile(r'@(?:app|blueprint|bp)\.route\s*\(\s*["\']([^"\']+)["\']')
+    DJANGO_URL_PATTERN = re.compile(r'(?:path|re_path|url)\s*\(\s*["\']([^"\']+)["\']')
 
     def detect(self, result: AnalysisResult, project_path: str) -> List[Endpoint]:
         """Detect all endpoints from the analysis result."""
@@ -98,14 +95,16 @@ class EndpointDetector:
             try:
                 source = urls_file.read_text(encoding="utf-8")
                 for match in self.DJANGO_URL_PATTERN.finditer(source):
-                    endpoints.append(Endpoint(
-                        method="GET",
-                        path=match.group(1),
-                        function_name="",
-                        file=str(urls_file),
-                        line=source[:match.start()].count("\n") + 1,
-                        framework="django",
-                    ))
+                    endpoints.append(
+                        Endpoint(
+                            method="GET",
+                            path=match.group(1),
+                            function_name="",
+                            file=str(urls_file),
+                            line=source[: match.start()].count("\n") + 1,
+                            framework="django",
+                        )
+                    )
             except (OSError, UnicodeDecodeError):
                 continue
 

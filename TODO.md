@@ -8,29 +8,6 @@
 
 ## ✅ Completed Tasks
 
-- [x] code2docs/analyzers/dependency_scanner.py:11 - Expected an indented block after `except` clause
-- [x] code2docs/analyzers/endpoint_detector.py:7 - Unused import: 'Dict'
-- [x] code2docs/analyzers/docstring_extractor.py:3 - Unused import: 'ast'
-- [x] code2docs/analyzers/docstring_extractor.py:5 - Unused import: 'Path'
-- [x] code2docs/analyzers/docstring_extractor.py:6 - Unused import: 'Tuple'
-- [x] code2docs/analyzers/project_scanner.py:6 - Unused import: 'FAST_CONFIG'
-- [x] code2docs/config.py:11 - Expected `except` or `finally` after `try` block
-- [x] code2docs/config.py:13 - Expected a statement
-- [x] code2docs/config.py:13 - Expected an expression
-- [x] code2docs/config.py:32 - Example class in production code
-- [x] code2docs/config.py:11 - module execution block
-- [x] code2docs/examples/quickstart.py:11 - Unused import: 'analyze_and_document'
-- [x] code2docs/formatters/markdown.py:3 - Unused import: 'Optional'
-- [x] code2docs/generators/_registry_adapters.py:13 - Expected an indented block after `class` definition
-- [x] code2docs/generators/_registry_adapters.py:129 - Example class in production code
-- [x] code2docs/generators/_registry_adapters.py:13 - module execution block
-- [x] code2docs/generators/api_changelog_gen.py:6 - Unused import: 'Tuple'
-- [x] docs/examples/quickstart.py:11 - Unused import: 'analyze_and_document'
-- [x] examples/advanced_usage.py:32 - Unexpected indentation
-- [x] examples/advanced_usage.py:33 - Expected a statement
-- [x] examples/advanced_usage.py:40 - Unexpected indentation
-- [x] examples/quickstart.py:17 - Unexpected indentation
-- [x] examples/quickstart.py:21 - Expected a statement
 
 ## 📋 Current Issues
 
@@ -236,3 +213,32 @@
 ---
 
 *To execute all tasks, run: `prefact -a --execute-todos`*
+
+## Done (moved to CHANGELOG)
+
+- [x] code2docs/analyzers/dependency_scanner.py:11 - Expected an indented block after `except` clause
+- [x] code2docs/config.py:11 - Expected `except` or `finally` after `try` block
+- [x] code2docs/formatters/markdown.py:3 - Unused import: 'Optional'
+- [x] code2docs/generators/_registry_adapters.py:13 - Expected an indented block after `class` definition
+- [x] code2docs/generators/api_changelog_gen.py:6 - Unused import: 'Tuple'
+- [x] docs/examples/quickstart.py:11 - Unused import: 'analyze_and_document'
+
+## Done (moved to CHANGELOG)
+
+- [x] code2docs/analyzers/endpoint_detector.py:7 - Unused import: 'Dict'
+- [x] code2docs/analyzers/docstring_extractor.py:3 - Unused import: 'ast'
+- [x] code2docs/analyzers/docstring_extractor.py:5 - Unused import: 'Path'
+- [x] code2docs/analyzers/docstring_extractor.py:6 - Unused import: 'Tuple'
+- [x] code2docs/analyzers/project_scanner.py:6 - Unused import: 'FAST_CONFIG'
+- [x] code2docs/config.py:13 - Expected a statement
+- [x] code2docs/config.py:13 - Expected an expression
+- [x] code2docs/config.py:32 - Example class in production code
+- [x] code2docs/config.py:11 - module execution block
+- [x] code2docs/examples/quickstart.py:11 - Unused import: 'analyze_and_document'
+- [x] code2docs/generators/_registry_adapters.py:129 - Example class in production code
+- [x] code2docs/generators/_registry_adapters.py:13 - module execution block
+- [x] examples/advanced_usage.py:32 - Unexpected indentation
+- [x] examples/advanced_usage.py:33 - Expected a statement
+- [x] examples/advanced_usage.py:40 - Unexpected indentation
+- [x] examples/quickstart.py:17 - Unexpected indentation
+- [x] examples/quickstart.py:21 - Expected a statement

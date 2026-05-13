@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+
+- docs(docs): add markdown output
+- docs(docs): update README
+- docs: regenerate documentation
+- refactor(docs): code analysis engine
+- refactor(docs): configuration management system
+- fix: repair syntax errors and module-level definitions
+- feat(tests): add tests for code analysis engine
+- feat(docs): code analysis engine
+
 ## [3.0.33] - 2026-04-20
 
 ### Docs

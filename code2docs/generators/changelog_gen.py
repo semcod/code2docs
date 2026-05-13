@@ -13,6 +13,7 @@ from ..config import Code2DocsConfig
 @dataclass
 class ChangelogEntry:
     """A single changelog entry."""
+
     date: str
     hash: str
     author: str
@@ -55,10 +56,17 @@ class ChangelogGenerator:
         """Extract git log entries."""
         try:
             result = subprocess.run(
-                ["git", "log", f"--max-count={max_entries}",
-                 "--format=%H|%ad|%an|%s", "--date=short"],
+                [
+                    "git",
+                    "log",
+                    f"--max-count={max_entries}",
+                    "--format=%H|%ad|%an|%s",
+                    "--date=short",
+                ],
                 cwd=str(project_path),
-                capture_output=True, text=True, timeout=10,
+                capture_output=True,
+                text=True,
+                timeout=10,
             )
             if result.returncode != 0:
                 return []
@@ -105,9 +113,7 @@ class ChangelogGenerator:
             if entries:
                 lines.append(f"## {type_label}\n")
                 for entry in entries:
-                    lines.append(
-                        f"- {entry.message} (`{entry.hash}` — {entry.date})"
-                    )
+                    lines.append(f"- {entry.message} (`{entry.hash}` — {entry.date})")
                 lines.append("")
 
         # Other

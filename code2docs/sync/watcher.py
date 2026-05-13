@@ -17,8 +17,7 @@ def start_watcher(project_path: str, config: Optional[Code2DocsConfig] = None) -
         from watchdog.events import FileSystemEventHandler, FileModifiedEvent
     except ImportError:
         raise ImportError(
-            "watchdog is required for watch mode. "
-            "Install with: pip install code2docs[watch]"
+            "watchdog is required for watch mode. Install with: pip install code2docs[watch]"
         )
 
     config = config or Code2DocsConfig()

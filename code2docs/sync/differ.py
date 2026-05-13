@@ -14,6 +14,7 @@ STATE_FILE = ".code2docs.state"
 @dataclass
 class ChangeInfo:
     """Describes a detected change."""
+
     module: str
     file: str
     change_type: str  # added, modified, deleted
@@ -44,30 +45,36 @@ class Differ:
         for filepath, new_hash in new_state.items():
             old_hash = old_state.get(filepath, "")
             if not old_hash:
-                changes.append(ChangeInfo(
-                    module=self._file_to_module(filepath, project),
-                    file=filepath,
-                    change_type="added",
-                    new_hash=new_hash,
-                ))
+                changes.append(
+                    ChangeInfo(
+                        module=self._file_to_module(filepath, project),
+                        file=filepath,
+                        change_type="added",
+                        new_hash=new_hash,
+                    )
+                )
             elif old_hash != new_hash:
-                changes.append(ChangeInfo(
-                    module=self._file_to_module(filepath, project),
-                    file=filepath,
-                    change_type="modified",
-                    old_hash=old_hash,
-                    new_hash=new_hash,
-                ))
+                changes.append(
+                    ChangeInfo(
+                        module=self._file_to_module(filepath, project),
+                        file=filepath,
+                        change_type="modified",
+                        old_hash=old_hash,
+                        new_hash=new_hash,
+                    )
+                )
 
         # Detect deleted
         for filepath, old_hash in old_state.items():
             if filepath not in new_state:
-                changes.append(ChangeInfo(
-                    module=self._file_to_module(filepath, project),
-                    file=filepath,
-                    change_type="deleted",
-                    old_hash=old_hash,
-                ))
+                changes.append(
+                    ChangeInfo(
+                        module=self._file_to_module(filepath, project),
+                        file=filepath,
+                        change_type="deleted",
+                        old_hash=old_hash,
+                    )
+                )
 
         return changes
 

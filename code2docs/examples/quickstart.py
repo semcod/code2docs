@@ -5,7 +5,6 @@ Minimal working examples for the most common use cases.
 Run: python examples/quickstart.py
 """
 
-
 from code2docs import Code2DocsConfig
 from code2docs import generate_docs
 from code2docs import generate_readme

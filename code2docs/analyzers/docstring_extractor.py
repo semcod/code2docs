@@ -9,6 +9,7 @@ from code2llm.api import AnalysisResult
 @dataclass
 class DocstringInfo:
     """Parsed docstring with sections."""
+
     raw: str
     summary: str = ""
     description: str = ""
@@ -131,8 +132,8 @@ class DocstringExtractor:
             "classes_documented": documented_classes,
             "classes_coverage": (documented_classes / total_classes * 100) if total_classes else 0,
             "overall_coverage": (
-                (documented_funcs + documented_classes)
-                / (total_funcs + total_classes)
-                * 100
-            ) if (total_funcs + total_classes) else 0,
+                (documented_funcs + documented_classes) / (total_funcs + total_classes) * 100
+            )
+            if (total_funcs + total_classes)
+            else 0,
         }

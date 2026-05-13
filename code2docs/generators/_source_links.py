@@ -66,10 +66,12 @@ class SourceLinker:
     def _detect_branch() -> str:
         """Detect current git branch, default to 'main'."""
         import subprocess
+
         try:
             branch = subprocess.check_output(
                 ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                stderr=subprocess.DEVNULL, text=True,
+                stderr=subprocess.DEVNULL,
+                text=True,
             ).strip()
             return branch or "main"
         except (subprocess.CalledProcessError, FileNotFoundError):

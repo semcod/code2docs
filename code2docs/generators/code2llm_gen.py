@@ -86,7 +86,7 @@ def _is_valid_pattern(pattern: str) -> bool:
 
 class Code2LlmGenerator:
     """Generate code2llm analysis files in project/ directory.
-    
+
     This generator wraps the code2llm CLI to produce comprehensive
     code analysis files including:
     - analysis.toon (health diagnostics)
@@ -103,18 +103,18 @@ class Code2LlmGenerator:
 
     def generate_all(self) -> Dict[str, str]:
         """Generate all code2llm analysis files.
-        
+
         Returns:
             Dict mapping file names to their content or status.
         """
         project_path = Path(self.result.project_path)
         output_dir = project_path / "project"
-        
+
         # Ensure output directory exists
         output_dir.mkdir(parents=True, exist_ok=True)
-        
+
         results = {}
-        
+
         # Run code2llm analysis
         try:
             self._run_code2llm(project_path, output_dir)
@@ -122,28 +122,28 @@ class Code2LlmGenerator:
         except Exception as e:
             results["status"] = f"error: {e}"
             return results
-        
+
         # Read generated files for reporting
         generated_files = [
             "analysis.toon",
-            "context.md", 
+            "context.md",
             "evolution.toon",
             "project.toon",
             "flow.toon",
             "map.toon",
             "README.md",
         ]
-        
+
         for filename in generated_files:
             file_path = output_dir / filename
             if file_path.exists():
                 results[filename] = f"generated ({file_path.stat().st_size} bytes)"
-        
+
         # Count Mermaid files
         mmd_files = list(output_dir.glob("*.mmd"))
         if mmd_files:
             results["diagrams"] = f"{len(mmd_files)} Mermaid files"
-        
+
         return results
 
     def _run_code2llm(self, project_path: Path, output_dir: Path) -> None:
@@ -158,12 +158,18 @@ class Code2LlmGenerator:
     def _build_base_cmd(self, project_path: Path, output_dir: Path, cfg) -> List[str]:
         """Build base command with required options."""
         return [
-            "python", "-m", "code2llm",
+            "python",
+            "-m",
+            "code2llm",
             str(project_path),
-            "-f", ",".join(cfg.formats),
-            "-o", str(output_dir),
-            "--strategy", cfg.strategy,
-            "--max-depth", str(cfg.max_depth),
+            "-f",
+            ",".join(cfg.formats),
+            "-o",
+            str(output_dir),
+            "--strategy",
+            cfg.strategy,
+            "--max-depth",
+            str(cfg.max_depth),
         ]
 
     def _add_config_options(self, cmd: List[str], cfg) -> None:
@@ -191,7 +197,9 @@ class Code2LlmGenerator:
             return []
         return [p for p in cfg.exclude_patterns if not p.startswith(".") and not p.startswith("*")]
 
-    def _merge_patterns(self, config_patterns: List[str], gitignore_patterns: List[str]) -> List[str]:
+    def _merge_patterns(
+        self, config_patterns: List[str], gitignore_patterns: List[str]
+    ) -> List[str]:
         """Merge config and gitignore patterns, removing duplicates."""
         existing = set(config_patterns)
         merged = list(config_patterns)
@@ -218,31 +226,32 @@ class Code2LlmGenerator:
         """Get a summary of the analysis for integration with other docs."""
         project_path = Path(self.result.project_path)
         analysis_file = project_path / "project" / "analysis.toon"
-        
+
         if not analysis_file.exists():
             return "Analysis not yet generated."
-        
+
         content = analysis_file.read_text(encoding="utf-8")
         lines = content.split("\n")[:10]
         return "\n".join(lines)
 
 
-def generate_code2llm_analysis(project_path: str, 
-                                config: Optional[Code2DocsConfig] = None) -> Dict[str, str]:
+def generate_code2llm_analysis(
+    project_path: str, config: Optional[Code2DocsConfig] = None
+) -> Dict[str, str]:
     """Convenience function to generate code2llm analysis.
-    
+
     Args:
         project_path: Path to the project to analyze
         config: Optional configuration
-        
+
     Returns:
         Dictionary with generation status and file list
     """
     from ..analyzers.project_scanner import ProjectScanner
-    
+
     config = config or Code2DocsConfig()
     scanner = ProjectScanner(config)
     result = scanner.analyze(project_path)
-    
+
     gen = Code2LlmGenerator(config, result)
     return gen.generate_all()

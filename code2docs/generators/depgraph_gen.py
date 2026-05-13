@@ -24,8 +24,7 @@ class DepGraphGenerator:
 
         lines = [
             f"# {project_name} — Dependency Graph\n",
-            f"> {len(self.result.modules)} modules, "
-            f"{len(edges)} dependency edges\n",
+            f"> {len(self.result.modules)} modules, {len(edges)} dependency edges\n",
             "## Module Dependencies\n",
             self._render_mermaid(edges),
             "",

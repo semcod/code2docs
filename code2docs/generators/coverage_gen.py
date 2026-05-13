@@ -57,21 +57,27 @@ class CoverageGenerator:
         """Collect coverage data per module."""
         rows = []
         for mod_name in sorted(self.result.modules.keys()):
-            funcs = [f for f in self.result.functions.values()
-                     if f.module == mod_name and not f.is_method]
-            classes = [c for c in self.result.classes.values()
-                       if c.module == mod_name]
+            funcs = [
+                f
+                for f in self.result.functions.values()
+                if f.module == mod_name and not f.is_method
+            ]
+            classes = [c for c in self.result.classes.values() if c.module == mod_name]
             total = len(funcs) + len(classes)
             doc_funcs = sum(1 for f in funcs if f.docstring)
             doc_classes = sum(1 for c in classes if c.docstring)
             documented = doc_funcs + doc_classes
             pct = (documented / total * 100) if total else 100.0
-            rows.append({
-                "module": mod_name,
-                "doc_funcs": doc_funcs, "total_funcs": len(funcs),
-                "doc_classes": doc_classes, "total_classes": len(classes),
-                "pct": pct,
-            })
+            rows.append(
+                {
+                    "module": mod_name,
+                    "doc_funcs": doc_funcs,
+                    "total_funcs": len(funcs),
+                    "doc_classes": doc_classes,
+                    "total_classes": len(classes),
+                    "pct": pct,
+                }
+            )
         return rows
 
     @staticmethod

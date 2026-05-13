@@ -44,8 +44,7 @@ class ApiReferenceGenerator:
 
         # Render each group
         for group_name, modules in groups.items():
-            non_trivial = [(m, self.result.modules[m]) for m in modules
-                           if self._has_content(m)]
+            non_trivial = [(m, self.result.modules[m]) for m in modules if self._has_content(m)]
             if not non_trivial:
                 continue
             lines.append(f"## {group_name}\n")
@@ -102,26 +101,30 @@ class ApiReferenceGenerator:
     def _get_module_classes(self, mod_name: str) -> Dict[str, ClassInfo]:
         """Get all public classes for a module."""
         return {
-            k: v for k, v in self.result.classes.items()
-            if (v.module == mod_name or k.startswith(mod_name + "."))
-            and not v.name.startswith("_")
+            k: v
+            for k, v in self.result.classes.items()
+            if (v.module == mod_name or k.startswith(mod_name + ".")) and not v.name.startswith("_")
         }
 
     def _get_module_functions(self, mod_name: str) -> Dict[str, FunctionInfo]:
         """Get all public functions for a module."""
         return {
-            k: v for k, v in self.result.functions.items()
+            k: v
+            for k, v in self.result.functions.items()
             if (v.module == mod_name or k.startswith(mod_name + "."))
-            and not v.is_method and not v.name.startswith("_")
+            and not v.is_method
+            and not v.name.startswith("_")
         }
 
     def _render_classes_table(self, module_classes: Dict[str, ClassInfo]) -> List[str]:
         """Render the classes summary table."""
-        lines = ["| Class | Methods | Description | Source |", "|-------|---------|-------------|--------|"]
+        lines = [
+            "| Class | Methods | Description | Source |",
+            "|-------|---------|-------------|--------|",
+        ]
         for cls_name, cls_info in sorted(module_classes.items()):
             doc = cls_info.docstring.splitlines()[0] if cls_info.docstring else "—"
-            public_methods = [m for m in cls_info.methods
-                              if not m.split(".")[-1].startswith("_")]
+            public_methods = [m for m in cls_info.methods if not m.split(".")[-1].startswith("_")]
             src = self._linker.source_link(cls_info.file, cls_info.line)
             lines.append(f"| `{cls_info.name}` | {len(public_methods)} | {doc} | {src} |")
         lines.append("")
@@ -143,7 +146,10 @@ class ApiReferenceGenerator:
 
     def _render_functions_table(self, module_functions: Dict[str, FunctionInfo]) -> List[str]:
         """Render the functions summary table."""
-        lines = ["| Function | Signature | CC | Description | Source |", "|----------|-----------|----|-----------  |--------|"]
+        lines = [
+            "| Function | Signature | CC | Description | Source |",
+            "|----------|-----------|----|-----------  |--------|",
+        ]
         for func_name, func_info in sorted(module_functions.items()):
             sig = self._format_signature(func_info)
             cc = func_info.complexity.get(

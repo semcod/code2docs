@@ -66,7 +66,7 @@ class ExamplesGenerator:
     def _get_example_value(self, arg_name: str) -> str:
         """Get realistic example value based on actual project config."""
         project_name = self.config.project_name or Path(self.result.project_path).name
-        
+
         # Map argument names to actual config values
         arg_mappings = {
             "project_path": f'"./{project_name}"',
@@ -74,7 +74,9 @@ class ExamplesGenerator:
             "source": f'"{self.config.source}"' if self.config.source else '"./src"',
             "output": f'"{self.config.output}"' if self.config.output else '"./docs"',
             "output_dir": f'"{self.config.output}"' if self.config.output else '"./docs"',
-            "output_path": f'"{self.config.readme_output}"' if self.config.readme_output else '"./docs/README.md"',
+            "output_path": f'"{self.config.readme_output}"'
+            if self.config.readme_output
+            else '"./docs/README.md"',
             "config": "config",
             "config_path": '"code2docs.yaml"',
             "result": "result",
@@ -94,10 +96,10 @@ class ExamplesGenerator:
             "sync_markers": "True",
             "docstring": '"""My function docstring."""',
         }
-        
+
         if arg_name in arg_mappings:
             return arg_mappings[arg_name]
-        
+
         # Fallback to original static examples
         return _ARG_EXAMPLES.get(arg_name, '"..."')
 
@@ -114,12 +116,12 @@ class ExamplesGenerator:
         """Generate quickstart.py — minimal working example."""
         pkg = self._pkg
         lines = [
-            f'"""',
+            '"""',
             f"Quickstart — {pkg}",
-            f"",
-            f"Minimal working examples for the most common use cases.",
-            f"Run: python examples/quickstart.py",
-            f'"""',
+            "",
+            "Minimal working examples for the most common use cases.",
+            "Run: python examples/quickstart.py",
+            '"""',
             "",
             "from pathlib import Path",
             "",
@@ -146,9 +148,9 @@ class ExamplesGenerator:
         source = self.config.source or "./"
         output = self.config.output or "./docs"
         if config_cls:
-            lines.append('# ' + '=' * CONSTANT_50)
+            lines.append("# " + "=" * CONSTANT_50)
             lines.append("# Example 1: Configuration")
-            lines.append('# ' + '=' * CONSTANT_50)
+            lines.append("# " + "=" * CONSTANT_50)
             lines.append("")
             lines.append(f"config = {config_cls.name}(")
             lines.append(f'    project_name="{project_name}",')
@@ -160,11 +162,11 @@ class ExamplesGenerator:
 
         # --- Example 2: Quick generate ---
         lines.append("")
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("# Example 2: Generate documentation")
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("")
-        
+
         project_path = f'"./{project_name}"' if project_name != "." else '"./"'
 
         gen_func = self._find_function_by_name("generate_readme")
@@ -177,9 +179,9 @@ class ExamplesGenerator:
         if docs_func:
             lines.append("# Generate all documentation")
             if config_cls:
-                lines.append(f'docs = generate_docs({project_path}, config=config)')
+                lines.append(f"docs = generate_docs({project_path}, config=config)")
             else:
-                lines.append(f'docs = generate_docs({project_path})')
+                lines.append(f"docs = generate_docs({project_path})")
             lines.append('print(f"Generated {len(docs)} documentation sections")')
             lines.append("")
 
@@ -187,14 +189,14 @@ class ExamplesGenerator:
         scanner_cls = self._find_class_by_name("ProjectScanner")
         if scanner_cls:
             lines.append("")
-            lines.append('# ' + '=' * CONSTANT_50)
+            lines.append("# " + "=" * CONSTANT_50)
             lines.append("# Example 3: Analyze a project programmatically")
-            lines.append('# ' + '=' * CONSTANT_50)
+            lines.append("# " + "=" * CONSTANT_50)
             lines.append("")
             lines.append(f"from {pkg}.analyzers.project_scanner import ProjectScanner")
             lines.append("")
             lines.append("scanner = ProjectScanner(config)")
-            lines.append(f'result = scanner.analyze({project_path})')
+            lines.append(f"result = scanner.analyze({project_path})")
             lines.append("")
             lines.append('print(f"Found {len(result.functions)} functions")')
             lines.append('print(f"Found {len(result.classes)} classes")')
@@ -209,12 +211,12 @@ class ExamplesGenerator:
         """Generate advanced_usage.py — individual generator usage, sync, etc."""
         pkg = self._pkg
         lines = [
-            f'"""',
+            '"""',
             f"Advanced usage — {pkg}",
-            f"",
-            f"Shows how to use individual generators, sync, and formatters.",
-            f"Run: python examples/advanced_usage.py",
-            f'"""',
+            "",
+            "Shows how to use individual generators, sync, and formatters.",
+            "Run: python examples/advanced_usage.py",
+            '"""',
             "",
             "from pathlib import Path",
             "",
@@ -238,9 +240,9 @@ class ExamplesGenerator:
     def _render_generator_examples(self, pkg: str, gen_classes: List[ClassInfo]) -> List[str]:
         """Render individual generator usage examples."""
         lines = []
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("# Using individual generators")
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("")
         lines.append(f"from {pkg} import Code2DocsConfig")
         lines.append(f"from {pkg}.analyzers.project_scanner import ProjectScanner")
@@ -251,10 +253,12 @@ class ExamplesGenerator:
             lines.append(f"from {mod} import {cls.name}")
         lines.append("")
         lines.append("# Step 1: Analyze the project")
-        lines.append("config = Code2DocsConfig(project_name=\"my-project\")")
+        lines.append('config = Code2DocsConfig(project_name="my-project")')
         lines.append("project_name_adv = config.project_name")
         lines.append("scanner = ProjectScanner(config)")
-        lines.append('result = scanner.analyze(f"./{project_name_adv}") if project_name_adv != "." else scanner.analyze("./")')
+        lines.append(
+            'result = scanner.analyze(f"./{project_name_adv}") if project_name_adv != "." else scanner.analyze("./")'
+        )
         lines.append("")
 
         for i, cls in enumerate(gen_classes[:PORT_4], start=2):
@@ -290,9 +294,9 @@ class ExamplesGenerator:
     def _render_formatter_examples(self, pkg: str, fmt_funcs: List[FunctionInfo]) -> List[str]:
         """Render formatter usage examples."""
         lines = [""]
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("# Formatters")
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("")
         for func in fmt_funcs:
             mod = func.module or pkg
@@ -304,13 +308,13 @@ class ExamplesGenerator:
         badges_func = self._find_function_by_name("generate_badges")
         if badges_func:
             lines.append("# Generate shields.io badges")
-            lines.append('badges = generate_badges(')
+            lines.append("badges = generate_badges(")
             lines.append('    project_name="my-project",')
             lines.append('    badge_types=["version", "python", "coverage"],')
             lines.append('    stats={"version": "1.0.0", "python": ">=3.9"},')
-            lines.append(')')
-            lines.append('for badge in badges:')
-            lines.append('    print(badge)')
+            lines.append(")")
+            lines.append("for badge in badges:")
+            lines.append("    print(badge)")
             lines.append("")
 
         toc_func = self._find_function_by_name("generate_toc")
@@ -325,9 +329,9 @@ class ExamplesGenerator:
     def _render_sync_examples(self, pkg: str) -> List[str]:
         """Render sync/diff usage examples."""
         lines = [""]
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("# Sync — detect and apply changes")
-        lines.append('# ' + '=' * CONSTANT_50)
+        lines.append("# " + "=" * CONSTANT_50)
         lines.append("")
         lines.append(f"from {pkg}.sync.differ import Differ")
         lines.append(f"from {pkg}.sync.updater import Updater")
@@ -357,6 +361,7 @@ class ExamplesGenerator:
 
         # Count which top-level root appears most often in modules
         from collections import Counter
+
         roots = Counter()
         for mod_name in self.result.modules:
             root = mod_name.split(".")[0]
@@ -387,8 +392,12 @@ class ExamplesGenerator:
 
     def _find_generator_classes(self) -> List[ClassInfo]:
         """Find Generator classes, prioritized by user-facing importance."""
-        priority = ["ReadmeGenerator", "ArchitectureGenerator",
-                    "CoverageGenerator", "DepGraphGenerator"]
+        priority = [
+            "ReadmeGenerator",
+            "ArchitectureGenerator",
+            "CoverageGenerator",
+            "DepGraphGenerator",
+        ]
         found = []
         for name in priority:
             cls = self._find_class_by_name(name)
@@ -427,7 +436,7 @@ class ExamplesGenerator:
     def _example_from_type(self, func: FunctionInfo, arg: str) -> Optional[str]:
         """Try to infer example value from type annotation."""
         project_name = self.config.project_name or Path(self.result.project_path).name
-        
+
         # FunctionInfo.returns gives return type, but arg types
         # are not always available; use naming heuristics
         if "path" in arg.lower():

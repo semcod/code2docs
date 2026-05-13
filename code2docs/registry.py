@@ -1,7 +1,9 @@
 """Generator registry — pluggable generator system."""
+
 from typing import List
 import click
 from .base import BaseGenerator, GenerateContext
+
 
 class GeneratorRegistry:
     """Registry of documentation generators.
@@ -17,13 +19,13 @@ class GeneratorRegistry:
         """Add a generator instance to the registry."""
         self._generators.append(generator)
 
-    def run_all(self, ctx: GenerateContext, *, readme_only: bool=False) -> None:
+    def run_all(self, ctx: GenerateContext, *, readme_only: bool = False) -> None:
         """Run every registered generator that should execute."""
         for gen in self._generators:
             if gen.should_run(readme_only=readme_only):
                 msg = gen.run(ctx)
                 if msg:
-                    click.echo(f'  {msg}')
+                    click.echo(f"  {msg}")
 
     def run_only(self, name: str, ctx: GenerateContext) -> None:
         """Run a single generator by name."""
@@ -31,5 +33,5 @@ class GeneratorRegistry:
             if gen.name == name:
                 msg = gen.run(ctx)
                 if msg:
-                    click.echo(f'  {msg}')
+                    click.echo(f"  {msg}")
                 return

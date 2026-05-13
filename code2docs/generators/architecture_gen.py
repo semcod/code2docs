@@ -128,18 +128,18 @@ class ArchitectureGenerator:
         for i, (layer, modules) in enumerate(layers.items()):
             safe_id = layer.replace(" ", "_").replace("/", "_")
             count = len(modules)
-            lines.append(f"    {safe_id}[\"{layer}<br/>{count} modules\"]")
+            lines.append(f'    {safe_id}["{layer}<br/>{count} modules"]')
         # Connect layers top-down
         layer_ids = [l.replace(" ", "_").replace("/", "_") for l in layers]
         for i in range(len(layer_ids) - 1):
-            lines.append(f"    {layer_ids[i]} --> {layer_ids[i+1]}")
+            lines.append(f"    {layer_ids[i]} --> {layer_ids[i + 1]}")
         lines.append("```")
         return "\n".join(lines)
 
     def _get_public_entry_points(self) -> List[tuple]:
         """Get filtered public entry points with descriptions."""
         results = []
-        for ep in (self.result.entry_points or []):
+        for ep in self.result.entry_points or []:
             parts = ep.split(".")
             # Skip dunders, private, and class methods
             if any(seg.startswith("_") or (seg[0].isupper() if seg else False) for seg in parts):
@@ -156,13 +156,14 @@ class ArchitectureGenerator:
         if not self.llm.available:
             return ""
         layers = self._detect_layers()
-        layers_str = "\n".join(
-            f"- {name}: {len(mods)} modules" for name, mods in layers.items()
+        layers_str = "\n".join(f"- {name}: {len(mods)} modules" for name, mods in layers.items())
+        patterns_str = (
+            "\n".join(
+                f"- {p.name} ({p.type}, confidence={p.confidence:.0%})"
+                for p in self.result.patterns
+            )
+            or "None detected"
         )
-        patterns_str = "\n".join(
-            f"- {p.name} ({p.type}, confidence={p.confidence:.0%})"
-            for p in self.result.patterns
-        ) or "None detected"
         stats = self.result.stats or {}
         metrics_str = (
             f"Modules: {len(self.result.modules)}, "

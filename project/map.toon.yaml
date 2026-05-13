@@ -1,19 +1,20 @@
-# code2docs | 54f 6801L | shell:1,python:53 | 2026-04-20
-# stats: 353 func | 0 cls | 54 mod | CC̄=3.7 | critical:0 | cycles:0
-# alerts[5]: fan-out _run_check=24; fan-out start_watcher=22; fan-out Code2DocsConfig.from_yaml=19; fan-out ReadmeGenerator._build_context=18; fan-out DependencyScanner.scan=17
-# hotspots[5]: _run_check fan=24; start_watcher fan=22; Code2DocsConfig.from_yaml fan=19; ReadmeGenerator._build_context fan=18; DependencyScanner.scan fan=17
+# code2docs | 56f 7082L | shell:1,python:55 | 2026-04-20
+# stats: 365 func | 0 cls | 56 mod | CC̄=3.7 | critical:0 | cycles:0
+# alerts[5]: fan-out _run_check=24; fan-out start_watcher=22; fan-out ReadmeGenerator._build_context=21; fan-out Code2DocsConfig.from_yaml=19; fan-out DependencyScanner.scan=17
+# hotspots[5]: _run_check fan=24; start_watcher fan=22; ReadmeGenerator._build_context fan=21; Code2DocsConfig.from_yaml fan=19; DependencyScanner.scan fan=17
 # evolution: CC̄ 3.8→3.7 (improved -0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[54]:
+M[56]:
   code2docs/__init__.py,24
   code2docs/__main__.py,6
-  code2docs/analyzers/__init__.py,13
+  code2docs/analyzers/__init__.py,23
   code2docs/analyzers/dependency_scanner.py,273
   code2docs/analyzers/docstring_extractor.py,138
   code2docs/analyzers/endpoint_detector.py,112
+  code2docs/analyzers/markdown_validator.py,194
   code2docs/analyzers/project_scanner.py,41
   code2docs/base.py,46
-  code2docs/cli.py,245
+  code2docs/cli.py,275
   code2docs/config.py,155
   code2docs/examples/advanced_usage.py,89
   code2docs/examples/quickstart.py,48
@@ -33,12 +34,12 @@ M[54]:
   code2docs/generators/contributing_gen.py,246
   code2docs/generators/coverage_gen.py,104
   code2docs/generators/depgraph_gen.py,140
-  code2docs/generators/examples_gen.py,492
+  code2docs/generators/examples_gen.py,464
   code2docs/generators/getting_started_gen.py,218
   code2docs/generators/mkdocs_gen.py,110
   code2docs/generators/module_docs_gen.py,246
   code2docs/generators/org_readme_gen.py,252
-  code2docs/generators/readme_gen.py,340
+  code2docs/generators/readme_gen.py,375
   code2docs/llm_helper.py,161
   code2docs/registry.py,35
   code2docs/sync/__init__.py,6
@@ -56,6 +57,7 @@ M[54]:
   examples/07_web_frameworks.py,221
   examples/advanced_usage.py,51
   examples/basic_usage.py,22
+  examples/class_examples.py,40
   examples/entry_points.py,29
   examples/quickstart.py,22
   project.sh,35
@@ -69,19 +71,30 @@ D:
     e: ApiChange,ApiChangelogGenerator
     ApiChange:  # A single API change between two analysis snapshots...
     ApiChangelogGenerator: __init__(2),generate(1),save_snapshot(1),_build_snapshot(0),_load_snapshot(0),_diff(2),_diff_functions(2),_diff_classes(2),_render(2)  # Generate API changelog by diffing current analysis with a sa...
-  code2docs/generators/architecture_gen.py:
-    e: ArchitectureGenerator
-    ArchitectureGenerator: __init__(2),generate(0),_generate_pipeline_overview(1),_generate_layer_diagram(0),_get_public_entry_points(0),_generate_llm_summary(1),_generate_module_graph(0),_generate_class_diagram(0),_detect_layers(0),_generate_metrics_table(0)  # Generate docs/architecture.md — architecture overview with d...
   code2docs/generators/examples_gen.py:
     e: ExamplesGenerator
     ExamplesGenerator: __init__(2),_get_example_value(1),generate_all(0),_generate_quickstart(0),_generate_advanced(0),_render_generator_examples(2),_find_formatter_functions(0),_render_formatter_examples(2),_render_sync_examples(1),_detect_package_name(0),_find_convenience_functions(0),_find_api_classes(0),_find_generator_classes(0),_find_function_by_name(1),_find_class_by_name(1),_build_realistic_args(1),_example_from_type(2),_get_public_methods(1),write_all(2)  # Generate examples/ — usage examples from public API signatur...
+  code2docs/generators/architecture_gen.py:
+    e: ArchitectureGenerator
+    ArchitectureGenerator: __init__(2),generate(0),_generate_pipeline_overview(1),_generate_layer_diagram(0),_get_public_entry_points(0),_generate_llm_summary(1),_generate_module_graph(0),_generate_class_diagram(0),_detect_layers(0),_generate_metrics_table(0)  # Generate docs/architecture.md — architecture overview with d...
   code2docs/generators/readme_gen.py:
     e: ReadmeGenerator,generate_readme
-    ReadmeGenerator: __init__(2),generate(0),_build_context(1),_calc_avg_complexity(0),_build_module_tree(0),_generate_description(2),_extract_project_description(1),_extract_project_metadata(0),_extract_from_pyproject(1),_extract_contributors_from_git(1),_extract_author_from_git(1),_detect_license(1),_extract_extras(0),_build_manual(3),_build_overview_section(1),_build_install_section(1),_build_quickstart_section(1),_build_api_section(1),_build_structure_section(1),_build_endpoints_section(1),write(2)  # Generate README.md from AnalysisResult...
+    ReadmeGenerator: __init__(2),generate(0),_build_context(1),_collect_existing_docs(0),_calc_avg_complexity(0),_build_module_tree(0),_generate_description(2),_extract_project_description(1),_extract_project_metadata(0),_extract_from_pyproject(1),_extract_contributors_from_git(1),_extract_author_from_git(1),_detect_license(1),_extract_extras(0),_build_manual(3),_build_overview_section(1),_build_install_section(1),_build_quickstart_section(1),_build_api_section(1),_build_structure_section(1),_build_endpoints_section(1),write(2)  # Generate README.md from AnalysisResult...
     generate_readme(project_path;output;sections;sync_markers;config)
   code2docs/generators/coverage_gen.py:
     e: CoverageGenerator
     CoverageGenerator: __init__(2),generate(0),_render_summary(0),_render_per_module(0),_collect_module_stats(0),_format_coverage_table(0),_render_undocumented(0)  # Generate docs/coverage.md — docstring coverage report...
+  code2docs/analyzers/markdown_validator.py:
+    e: MarkdownIssue,ValidationReport,validate_markdown_file,validate_markdown_tree,_strip_code_fences,_check_links,_check_tables,_count_cells,_check_headings
+    MarkdownIssue: __str__(0)  # A single validation issue in a markdown file...
+    ValidationReport: by_kind(1),summary(0)  # Aggregate result of markdown validation...
+    validate_markdown_file(md_path;project_root)
+    validate_markdown_tree(root;patterns;ignore)
+    _strip_code_fences(lines)
+    _check_links(md_path;root;lines)
+    _check_tables(md_path;lines)
+    _count_cells(row)
+    _check_headings(md_path;lines)
   code2docs/generators/getting_started_gen.py:
     e: GettingStartedGenerator
     GettingStartedGenerator: __init__(2),generate(0),_render_prerequisites(0),_render_installation(0),_render_first_usage(0),_render_cli_example(1),_render_python_api_example(1),_find_priority_public_function(0),_format_func_args(1),_generate_intro(1),_gather_filtered_functions(2),_get_matching_functions(1),_render_next_steps(0),_get_top_level_modules(0)  # Generate docs/getting-started.md from entry points and depen...
@@ -101,7 +114,7 @@ D:
     LLMConfig: from_env(0)  # Configuration for optional LLM-assisted documentation genera...
     Code2DocsConfig: __post_init__(0),_detect_repo_url(-1),from_yaml(1),to_yaml(1)  # Main configuration for code2docs...
   code2docs/cli.py:
-    e: DefaultGroup,main,generate,sync,watch,init,check,diff,_load_config,_run_generate,_run_sync,_run_watch,_run_check,_run_diff
+    e: DefaultGroup,main,generate,sync,watch,init,check,validate,diff,_load_config,_run_generate,_run_sync,_run_watch,_run_check,_run_diff
     DefaultGroup(click.Group): parse_args(2)  # Click Group that routes unknown subcommands to 'generate'...
     main()
     generate(project_path;config_path;readme_only;sections;output;verbose;dry_run;llm_model;org_name)
@@ -109,6 +122,7 @@ D:
     watch(project_path;config_path;verbose)
     init(project_path;output)
     check(project_path;config_path;target)
+    validate(project_path;pattern;strict)
     diff(project_path;config_path)
     _load_config(project_path;config_path)
     _run_generate(project_path;config;readme_only;dry_run)
@@ -204,12 +218,12 @@ I...
   code2docs/generators/__init__.py:
     e: generate_docs
     generate_docs(project_path;config)
-  code2docs/sync/watcher.py:
-    e: start_watcher
-    start_watcher(project_path;config)
   code2docs/generators/mkdocs_gen.py:
     e: MkDocsGenerator
     MkDocsGenerator: __init__(2),generate(1),_read_pyproject_mkdocs(0),_build_nav(1),write(2)  # Generate mkdocs.yml from the docs/ directory structure...
+  code2docs/sync/watcher.py:
+    e: start_watcher
+    start_watcher(project_path;config)
   examples/03_programmatic_api.py:
     e: generate_readme_simple,generate_full_documentation,custom_documentation_pipeline,inspect_project_structure,generate_docs_if_needed
     generate_readme_simple(project_path)
@@ -221,17 +235,20 @@ I...
     e: Endpoint,EndpointDetector
     Endpoint:  # Represents a detected web endpoint...
     EndpointDetector: detect(2),_parse_decorator(2),_scan_django_urls(1)  # Detects web endpoints from decorator patterns in source code...
-  code2docs/__init__.py:
-    e: __getattr__
-    __getattr__(name)
+  code2docs/formatters/markdown.py:
+    e: MarkdownFormatter
+    MarkdownFormatter: __init__(0),heading(2),paragraph(1),blockquote(1),code_block(2),inline_code(1),bold(1),link(2),list_item(2),table(2),separator(0),blank(0),render(0)  # Helper for constructing Markdown documents...
   code2docs/registry.py:
     e: GeneratorRegistry
     GeneratorRegistry: __init__(0),add(1),run_all(1),run_only(2)  # Registry of documentation generators.
 
 Generators register t...
-  code2docs/formatters/markdown.py:
-    e: MarkdownFormatter
-    MarkdownFormatter: __init__(0),heading(2),paragraph(1),blockquote(1),code_block(2),inline_code(1),bold(1),link(2),list_item(2),table(2),separator(0),blank(0),render(0)  # Helper for constructing Markdown documents...
+  code2docs/__init__.py:
+    e: __getattr__
+    __getattr__(name)
+  code2docs/sync/updater.py:
+    e: Updater
+    Updater: __init__(1),apply(2)  # Apply selective documentation updates based on detected chan...
   examples/04_sync_and_watch.py:
     e: detect_changes_example,update_docs_incrementally,force_full_regeneration,watch_and_auto_regenerate,custom_watcher_with_hooks,sync_with_git_changes
     detect_changes_example(project_path)
@@ -240,9 +257,6 @@ Generators register t...
     watch_and_auto_regenerate(project_path;interval)
     custom_watcher_with_hooks(project_path)
     sync_with_git_changes(project_path)
-  code2docs/sync/updater.py:
-    e: Updater
-    Updater: __init__(1),apply(2)  # Apply selective documentation updates based on detected chan...
   examples/06_formatters.py:
     e: markdown_formatting_examples,generate_complex_document,badge_examples,toc_examples,build_custom_readme
     markdown_formatting_examples()
@@ -254,6 +268,12 @@ Generators register t...
     e: ProjectScanner,analyze_and_document
     ProjectScanner: __init__(1),_build_llm_config(0),analyze(1)  # Wraps code2llm's ProjectAnalyzer with code2docs-specific def...
     analyze_and_document(project_path;config)
+  code2docs/base.py:
+    e: GenerateContext,BaseGenerator
+    GenerateContext:  # Shared context passed to all generators during a run...
+    BaseGenerator(ABC): __init__(2),should_run(0),run(1)  # Abstract base for all documentation generators.
+
+Subclasses ...
   examples/01_cli_usage.py:
     e: run_cli_basic,run_cli_with_config
     run_cli_basic(project_path)
@@ -264,22 +284,17 @@ Generators register t...
     create_advanced_config()
     save_yaml_config_example(path)
     load_config_from_yaml(path)
-  code2docs/base.py:
-    e: GenerateContext,BaseGenerator
-    GenerateContext:  # Shared context passed to all generators during a run...
-    BaseGenerator(ABC): __init__(2),should_run(0),run(1)  # Abstract base for all documentation generators.
-
-Subclasses ...
   project.sh:
-  code2docs/formatters/__init__.py:
   docs/examples/advanced_usage.py:
+  code2docs/formatters/__init__.py:
   docs/examples/quickstart.py:
-  code2docs/sync/__init__.py:
-  code2docs/examples/advanced_usage.py:
-  code2docs/analyzers/__init__.py:
-  examples/quickstart.py:
-  code2docs/examples/quickstart.py:
-  examples/advanced_usage.py:
-  examples/entry_points.py:
-  examples/basic_usage.py:
   code2docs/__main__.py:
+  code2docs/examples/advanced_usage.py:
+  code2docs/examples/quickstart.py:
+  code2docs/analyzers/__init__.py:
+  code2docs/sync/__init__.py:
+  examples/quickstart.py:
+  examples/entry_points.py:
+  examples/advanced_usage.py:
+  examples/class_examples.py:
+  examples/basic_usage.py:

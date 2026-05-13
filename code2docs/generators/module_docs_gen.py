@@ -71,17 +71,13 @@ class ModuleDocsGenerator:
 
     def _count_module_functions(self, mod_name: str) -> int:
         """Count public functions in a module."""
-        return len([
-            f for f in self.result.functions.values()
-            if f.module == mod_name and not f.is_method
-        ])
+        return len(
+            [f for f in self.result.functions.values() if f.module == mod_name and not f.is_method]
+        )
 
     def _count_module_classes(self, mod_name: str) -> int:
         """Count classes in a module."""
-        return len([
-            c for c in self.result.classes.values()
-            if c.module == mod_name
-        ])
+        return len([c for c in self.result.classes.values() if c.module == mod_name])
 
     def _build_detail_sections(self) -> List[str]:
         """Build detailed sections for each module group."""
@@ -94,10 +90,7 @@ class ModuleDocsGenerator:
 
     def _build_group_section(self, group_name: str, modules: List[str]) -> List[str]:
         """Build a single group section."""
-        non_trivial = [
-            (m, self.result.modules[m]) for m in modules
-            if self._has_content(m)
-        ]
+        non_trivial = [(m, self.result.modules[m]) for m in modules if self._has_content(m)]
         if not non_trivial:
             return []
         lines = [f"## {group_name}\n"]
@@ -123,9 +116,7 @@ class ModuleDocsGenerator:
             for f in self.result.functions.values()
             if f.module == mod_name
         ) or any(
-            not c.name.startswith("_")
-            for c in self.result.classes.values()
-            if c.module == mod_name
+            not c.name.startswith("_") for c in self.result.classes.values() if c.module == mod_name
         )
 
     def _render_module_detail(self, mod_name: str, mod_info: ModuleInfo) -> str:
@@ -151,14 +142,16 @@ class ModuleDocsGenerator:
     def _get_module_classes(self, mod_name: str) -> Dict[str, ClassInfo]:
         """Get public classes for a module."""
         return {
-            k: v for k, v in self.result.classes.items()
+            k: v
+            for k, v in self.result.classes.items()
             if v.module == mod_name and not v.name.startswith("_")
         }
 
     def _get_module_functions(self, mod_name: str) -> Dict[str, FunctionInfo]:
         """Get public functions for a module."""
         return {
-            k: v for k, v in self.result.functions.items()
+            k: v
+            for k, v in self.result.functions.items()
             if v.module == mod_name and not v.is_method and not v.name.startswith("_")
         }
 
@@ -179,8 +172,9 @@ class ModuleDocsGenerator:
                 for m in methods:
                     args = ", ".join(a for a in m.args[:4] if a != "self")
                     ret = m.returns or "—"
-                    cc = m.complexity.get("cyclomatic_complexity",
-                                          m.complexity.get("cyclomatic", "—"))
+                    cc = m.complexity.get(
+                        "cyclomatic_complexity", m.complexity.get("cyclomatic", "—")
+                    )
                     lines.append(f"| `{m.name}` | `{args}` | `{ret}` | {cc} |")
                 lines.append("")
         return lines

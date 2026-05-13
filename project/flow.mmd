@@ -11,6 +11,7 @@ flowchart TD
         code2docs__cli__watch["watch"]
         code2docs__cli__init["init"]
         code2docs__cli__check["check"]
+        code2docs__cli__validate["validate"]
         code2docs__cli__diff["diff"]
         code2docs__cli___load_config["_load_config"]
         code2docs__cli___run_generate["_run_generate"]
@@ -21,22 +22,22 @@ flowchart TD
     end
 
     subgraph Core
-        code2docs__registry__GeneratorRegistry__add["add"]
-        code2docs__registry__GeneratorRegistry__run_all["run_all"]
-        code2docs__registry__GeneratorRegistry__run_only["run_only"]
-        code2docs__generators___source_links__SourceLinker__source_link["source_link"]
-        code2docs__generators___source_links__SourceLinker__file_link["file_link"]
-        code2docs__generators___source_links__SourceLinker___relative_path["_relative_path"]
-        code2docs__generators___source_links__SourceLinker___find_git_root["_find_git_root"]
-        code2docs__generators___source_links__SourceLinker___detect_branch["_detect_branch"]
+        code2docs__formatters__markdown__MarkdownFormatter__heading["heading"]
+        code2docs__formatters__markdown__MarkdownFormatter__paragraph["paragraph"]
+        code2docs__formatters__markdown__MarkdownFormatter__blockquote["blockquote"]
+        code2docs__formatters__markdown__MarkdownFormatter__code_block["code_block"]
+        code2docs__formatters__markdown__MarkdownFormatter__inline_code["inline_code"]
+        code2docs__formatters__markdown__MarkdownFormatter__bold["bold"]
+        code2docs__formatters__markdown__MarkdownFormatter__link["link"]
+        code2docs__formatters__markdown__MarkdownFormatter__list_item["list_item"]
+        code2docs__formatters__markdown__MarkdownFormatter__table["table"]
+        code2docs__formatters__markdown__MarkdownFormatter__separator["separator"]
+        code2docs__formatters__markdown__MarkdownFormatter__blank["blank"]
+        code2docs__formatters__markdown__MarkdownFormatter__render["render"]
         code2docs__generators__coverage_gen__CoverageGenerator__generate["generate"]
         code2docs__generators__coverage_gen__CoverageGenerator___render_summary["_render_summary"]
         code2docs__generators__coverage_gen__CoverageGenerator___render_per_module["_render_per_module"]
-        code2docs__generators__coverage_gen__CoverageGenerator___collect_module_stats["_collect_module_stats"]
-        code2docs__generators__coverage_gen__CoverageGenerator___format_coverage_table["_format_coverage_table"]
-        code2docs__generators__coverage_gen__CoverageGenerator___render_undocumented["_render_undocumented"]
-        code2docs__generators__depgraph_gen__DepGraphGenerator__generate["generate"]
-        ...["+248 more"]
+        ...["+252 more"]
     end
 
-    class code2docs__registry__GeneratorRegistry__add,code2docs__registry__GeneratorRegistry__run_all,code2docs__registry__GeneratorRegistry__run_only,code2docs__generators___source_links__SourceLinker__source_link,code2docs__generators___source_links__SourceLinker__file_link,code2docs__generators___source_links__SourceLinker___relative_path,code2docs__generators___source_links__SourceLinker___find_git_root,code2docs__generators___source_links__SourceLinker___detect_branch,code2docs__generators__coverage_gen__CoverageGenerator__generate,code2docs__generators__coverage_gen__CoverageGenerator___render_summary entry
+    class code2docs__formatters__markdown__MarkdownFormatter__heading,code2docs__formatters__markdown__MarkdownFormatter__paragraph,code2docs__formatters__markdown__MarkdownFormatter__blockquote,code2docs__formatters__markdown__MarkdownFormatter__code_block,code2docs__formatters__markdown__MarkdownFormatter__inline_code,code2docs__formatters__markdown__MarkdownFormatter__bold,code2docs__formatters__markdown__MarkdownFormatter__link,code2docs__formatters__markdown__MarkdownFormatter__list_item,code2docs__formatters__markdown__MarkdownFormatter__table,code2docs__formatters__markdown__MarkdownFormatter__separator entry

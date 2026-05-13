@@ -82,11 +82,13 @@ class ContributingGenerator:
             lines.append("go mod download")
             lines.append("go build ./...")
         else:
-            lines.extend([
-                "python -m venv .venv",
-                "source .venv/bin/activate  # or .venv\\Scripts\\activate on Windows",
-                'pip install -e ".[dev]"',
-            ])
+            lines.extend(
+                [
+                    "python -m venv .venv",
+                    "source .venv/bin/activate  # or .venv\\Scripts\\activate on Windows",
+                    'pip install -e ".[dev]"',
+                ]
+            )
 
         lines.append("```")
         return "\n".join(lines)
@@ -112,73 +114,87 @@ class ContributingGenerator:
 
         if lang in ("javascript", "typescript"):
             if tools.get("vitest"):
-                lines.extend([
-                    "```bash",
-                    "# Run all tests",
-                    "npx vitest",
-                    "",
-                    "# Run with coverage",
-                    "npx vitest --coverage",
-                    "",
-                    "# Watch mode",
-                    "npx vitest --watch",
-                    "```",
-                ])
+                lines.extend(
+                    [
+                        "```bash",
+                        "# Run all tests",
+                        "npx vitest",
+                        "",
+                        "# Run with coverage",
+                        "npx vitest --coverage",
+                        "",
+                        "# Watch mode",
+                        "npx vitest --watch",
+                        "```",
+                    ]
+                )
             elif tools.get("jest"):
-                lines.extend([
+                lines.extend(
+                    [
+                        "```bash",
+                        "# Run all tests",
+                        "npx jest",
+                        "",
+                        "# Run with coverage",
+                        "npx jest --coverage",
+                        "```",
+                    ]
+                )
+            else:
+                lines.extend(
+                    [
+                        "```bash",
+                        "npm test",
+                        "```",
+                    ]
+                )
+        elif lang == "rust":
+            lines.extend(
+                [
                     "```bash",
                     "# Run all tests",
-                    "npx jest",
+                    "cargo test",
+                    "",
+                    "# Run a specific test",
+                    "cargo test test_name",
+                    "```",
+                ]
+            )
+        elif lang == "go":
+            lines.extend(
+                [
+                    "```bash",
+                    "# Run all tests",
+                    "go test ./...",
                     "",
                     "# Run with coverage",
-                    "npx jest --coverage",
+                    "go test -cover ./...",
                     "```",
-                ])
-            else:
-                lines.extend([
-                    "```bash",
-                    "npm test",
-                    "```",
-                ])
-        elif lang == "rust":
-            lines.extend([
-                "```bash",
-                "# Run all tests",
-                "cargo test",
-                "",
-                "# Run a specific test",
-                "cargo test test_name",
-                "```",
-            ])
-        elif lang == "go":
-            lines.extend([
-                "```bash",
-                "# Run all tests",
-                "go test ./...",
-                "",
-                "# Run with coverage",
-                "go test -cover ./...",
-                "```",
-            ])
+                ]
+            )
         elif tools.get("pytest"):
-            lines.extend([
-                "```bash",
-                "# Run all tests",
-                "pytest",
-                "",
-                "# Run with coverage",
-                "pytest --cov --cov-report=term-missing",
-                "",
-                "# Run a specific test file",
-                "pytest tests/test_specific.py -v",
-                "```",
-            ])
+            lines.extend(
+                [
+                    "```bash",
+                    "# Run all tests",
+                    "pytest",
+                    "",
+                    "# Run with coverage",
+                    "pytest --cov --cov-report=term-missing",
+                    "",
+                    "# Run a specific test file",
+                    "pytest tests/test_specific.py -v",
+                    "```",
+                ]
+            )
         else:
-            lines.extend([
-                "```bash",
-                "python -m unittest discover tests/",
-                "```",
-            ])
+            lines.extend(
+                [
+                    "```bash",
+                    "python -m unittest discover tests/",
+                    "```",
+                ]
+            )
         return "\n".join(lines)
 
     @staticmethod
@@ -207,7 +223,9 @@ class ContributingGenerator:
         if tools.get("eslint"):
             lines.append("- **Linting:** [ESLint](https://eslint.org/) — `npx eslint .`")
         if tools.get("prettier"):
-            lines.append("- **Formatting:** [Prettier](https://prettier.io/) — `npx prettier --write .`")
+            lines.append(
+                "- **Formatting:** [Prettier](https://prettier.io/) — `npx prettier --write .`"
+            )
         if tools.get("typescript"):
             lines.append("- **Type checking:** TypeScript — `npx tsc --noEmit`")
         if not lines:

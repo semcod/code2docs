@@ -13,6 +13,7 @@ from .config import Code2DocsConfig
 @dataclass
 class GenerateContext:
     """Shared context passed to all generators during a run."""
+
     project: Path
     docs_dir: Path
     dry_run: bool = False

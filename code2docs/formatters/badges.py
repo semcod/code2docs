@@ -4,8 +4,9 @@ from typing import Dict, List, Optional
 from urllib.parse import quote
 
 
-def generate_badges(project_name: str, badge_types: List[str],
-                    stats: Dict = None, deps=None) -> str:
+def generate_badges(
+    project_name: str, badge_types: List[str], stats: Dict = None, deps=None
+) -> str:
     """Generate shields.io badge Markdown strings."""
     stats = stats or {}
     badges: List[str] = []
@@ -18,13 +19,12 @@ def generate_badges(project_name: str, badge_types: List[str],
     return " ".join(badges)
 
 
-def _make_badge(badge_type: str, project_name: str,
-                stats: Dict, deps) -> Optional[str]:
+def _make_badge(badge_type: str, project_name: str, stats: Dict, deps) -> Optional[str]:
     """Create a single badge Markdown string."""
     name = quote(project_name)
 
     if badge_type == "version":
-        return f"![version](https://img.shields.io/badge/version-0.1.0-blue)"
+        return "![version](https://img.shields.io/badge/version-0.1.0-blue)"
 
     elif badge_type == "python":
         lang = getattr(deps, "language", "python") if deps else "python"
@@ -38,7 +38,7 @@ def _make_badge(badge_type: str, project_name: str,
         return f"![python](https://img.shields.io/badge/python-{py_safe}-blue)"
 
     elif badge_type == "coverage":
-        return f"![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey)"
+        return "![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey)"
 
     elif badge_type == "complexity":
         funcs = stats.get("functions_found", 0)
@@ -47,10 +47,10 @@ def _make_badge(badge_type: str, project_name: str,
         return None
 
     elif badge_type == "license":
-        return f"![license](https://img.shields.io/badge/license-Apache%202.0-green)"
+        return "![license](https://img.shields.io/badge/license-Apache%202.0-green)"
 
     elif badge_type == "docs":
-        return f"![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)"
+        return "![docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)"
 
     return None
 
