@@ -12,6 +12,11 @@
 - feat(tests): add tests for code analysis engine
 - feat(docs): code analysis engine
 
+## [3.0.34] - 2026-06-29
+
+### Docs
+- Update README.md
+
 ## [3.0.33] - 2026-04-20
 
 ### Docs
