@@ -1,0 +1,13 @@
+# local.dev.txt — locally developed dependencies of this project (generated 2026-07-04)
+# by ~/github/local.dev.sh — DO NOT EDIT; see ~/github/local.dev.md
+# project: code2docs 3.0.34 (python) at /home/tom/github/semcod/code2docs
+# deps declared: 22 | with local source: 5
+
+## LOCAL DEPS  (dep | required | local source (version) | installed | status)
+code2llm | >=0.5.0 | /home/tom/github/semcod/code2llm (0.5.169) | 0.5.102 non-editable | STALE-INSTALL (local 0.5.169) -> fix: pip install -e /home/tom/github/semcod/code2llm  [pyproject.toml]
+code2llm | >=0.5.0 | /home/tom/github/wronai/teLLMe/code2llm-src (0.5.23) | 0.5.102 non-editable | STALE-INSTALL (local 0.5.23) -> fix: pip install -e /home/tom/github/wronai/teLLMe/code2llm-src  [pyproject.toml]
+costs | >=0.1.20 | /home/tom/github/semcod/costs (0.1.53) | 0.1.48 non-editable | STALE-INSTALL (local 0.1.53) -> fix: pip install -e /home/tom/github/semcod/costs  [pyproject.toml[dev]]
+goal | >=2.1.0 | /home/tom/github/semcod/goal (2.1.266) | 2.1.171 non-editable | STALE-INSTALL (local 2.1.266) -> fix: pip install -e /home/tom/github/semcod/goal  [pyproject.toml[dev]]
+pfix | >=0.1.60 | /home/tom/github/semcod/pfix (0.1.76) | 0.1.73 editable | OK-EDITABLE  [pyproject.toml[dev]]
+
+## EXTERNAL DEPS (no local source, 17): black, build, click, gitpython, jinja2, litellm, mkdocs, mkdocs-material, mypy, pytest, pytest-cov, python-dotenv, pyyaml, rich, ruff, twine, watchdog

@@ -1,14 +1,15 @@
 # System Architecture Analysis
+<!-- generated in 0.00s -->
 
 ## Overview
 
 - **Project**: /home/tom/github/semcod/code2docs
 - **Primary Language**: python
-- **Languages**: python: 55, shell: 1
+- **Languages**: python: 55, md: 22, yaml: 5, txt: 1, toml: 1
 - **Analysis Mode**: static
 - **Total Functions**: 365
 - **Total Classes**: 62
-- **Modules**: 56
+- **Modules**: 86
 - **Entry Points**: 335
 
 ## Architecture by Module
@@ -38,15 +39,15 @@
 - **Classes**: 1
 - **File**: `code2llm_gen.py`
 
-### code2docs.generators.org_readme_gen
-- **Functions**: 15
-- **Classes**: 1
-- **File**: `org_readme_gen.py`
-
 ### code2docs.cli
 - **Functions**: 15
 - **Classes**: 1
 - **File**: `cli.py`
+
+### code2docs.generators.org_readme_gen
+- **Functions**: 15
+- **Classes**: 1
+- **File**: `org_readme_gen.py`
 
 ### code2docs.generators.getting_started_gen
 - **Functions**: 14
@@ -103,10 +104,10 @@
 - **Classes**: 2
 - **File**: `api_changelog_gen.py`
 
-### code2docs.generators.coverage_gen
+### code2docs.llm_helper
 - **Functions**: 7
 - **Classes**: 1
-- **File**: `coverage_gen.py`
+- **File**: `llm_helper.py`
 
 ### code2docs.sync.differ
 - **Functions**: 7
@@ -117,13 +118,13 @@
 
 Main execution flows into the system:
 
-### code2docs.generators.examples_gen.ExamplesGenerator._generate_quickstart
-> Generate quickstart.py — minimal working example.
-- **Calls**: self._find_convenience_functions, self._find_api_classes, set, lines.extend, lines.append, self._find_class_by_name, lines.append, lines.append
-
 ### code2docs.config.Code2DocsConfig.from_yaml
 > Load configuration from code2docs.yaml.
 - **Calls**: Path, cls, data.get, project.get, project.get, project.get, project.get, project.get
+
+### code2docs.generators.examples_gen.ExamplesGenerator._generate_quickstart
+> Generate quickstart.py — minimal working example.
+- **Calls**: self._find_convenience_functions, self._find_api_classes, set, lines.extend, lines.append, self._find_class_by_name, lines.append, lines.append
 
 ### code2docs.generators.architecture_gen.ArchitectureGenerator.generate
 > Generate architecture documentation.
@@ -177,13 +178,13 @@ Main execution flows into the system:
 > Set up a custom watcher with pre/post generation hooks.
 - **Calls**: Code2DocsConfig, signal.signal, Differ, Updater, print, print, print, print
 
-### code2docs.generators.architecture_gen.ArchitectureGenerator._generate_metrics_table
-> Generate metrics summary table.
-- **Calls**: stats.get, lines.append, None.join, f.complexity.get, round, lines.append, lines.append, f.complexity.get
-
 ### code2docs.sync.updater.Updater.apply
 > Regenerate documentation for changed modules.
 - **Calls**: None.resolve, ProjectScanner, scanner.analyze, ReadmeGenerator, readme_gen.generate, readme_gen.write, docs_dir.mkdir, Differ
+
+### code2docs.generators.architecture_gen.ArchitectureGenerator._generate_metrics_table
+> Generate metrics summary table.
+- **Calls**: stats.get, lines.append, None.join, f.complexity.get, round, lines.append, lines.append, f.complexity.get
 
 ### code2docs.analyzers.dependency_scanner.DependencyScanner._parse_pyproject
 > Parse pyproject.toml for dependencies.
@@ -201,6 +202,14 @@ Main execution flows into the system:
 > Scan project for dependency information.
 - **Calls**: Path, ProjectDependencies, package_json.exists, composer_json.exists, cargo_toml.exists, go_mod.exists, pyproject.exists, setup_py.exists
 
+### code2docs.sync.differ.Differ.detect_changes
+> Compare current file hashes with saved state. Return list of changes.
+- **Calls**: None.resolve, self._load_state, self._compute_state, new_state.items, old_state.items, old_state.get, Path, changes.append
+
+### code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject
+> Extract metadata from pyproject.toml files.
+- **Calls**: pyproject_path.exists, Path, data.get, project.get, project.get, project.get, isinstance, Path
+
 ### code2docs.generators.config_docs_gen.ConfigDocsGenerator._render_section
 > Render a dataclass as a Markdown table.
 - **Calls**: fields, None.join, getattr, type_str.replace, isinstance, self._FIELD_DOCS.get, lines.append, str
@@ -217,21 +226,13 @@ Main execution flows into the system:
 > Inspect project structure from analysis.
 - **Calls**: code2docs.analyzers.project_scanner.ProjectScanner.analyze, print, print, print, print, print, print, result.functions.items
 
-### code2docs.sync.differ.Differ.detect_changes
-> Compare current file hashes with saved state. Return list of changes.
-- **Calls**: None.resolve, self._load_state, self._compute_state, new_state.items, old_state.items, old_state.get, Path, changes.append
-
-### code2docs.generators.readme_gen.ReadmeGenerator._extract_from_pyproject
-> Extract metadata from pyproject.toml files.
-- **Calls**: pyproject_path.exists, Path, data.get, project.get, project.get, project.get, isinstance, Path
+### code2docs.cli.generate
+> Generate documentation (default command).
+- **Calls**: main.command, click.argument, click.option, click.option, click.option, click.option, click.option, click.option
 
 ### code2docs.generators.generate_docs
 > High-level function to generate all documentation.
 - **Calls**: ProjectScanner, scanner.analyze, None.generate, None.generate, None.generate, Code2DocsConfig, None.generate, None.generate
-
-### code2docs.cli.generate
-> Generate documentation (default command).
-- **Calls**: main.command, click.argument, click.option, click.option, click.option, click.option, click.option, click.option
 
 ### code2docs.generators.getting_started_gen.GettingStartedGenerator._render_prerequisites
 > Render prerequisites section.
@@ -241,14 +242,14 @@ Main execution flows into the system:
 
 Key execution flows identified:
 
-### Flow 1: _generate_quickstart
-```
-_generate_quickstart [code2docs.generators.examples_gen.ExamplesGenerator]
-```
-
-### Flow 2: from_yaml
+### Flow 1: from_yaml
 ```
 from_yaml [code2docs.config.Code2DocsConfig]
+```
+
+### Flow 2: _generate_quickstart
+```
+_generate_quickstart [code2docs.generators.examples_gen.ExamplesGenerator]
 ```
 
 ### Flow 3: generate
@@ -365,6 +366,13 @@ This generator wraps the code2llm CLI to pr
 - **Methods**: 9
 - **Key Methods**: code2docs.generators.api_changelog_gen.ApiChangelogGenerator.__init__, code2docs.generators.api_changelog_gen.ApiChangelogGenerator.generate, code2docs.generators.api_changelog_gen.ApiChangelogGenerator.save_snapshot, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._build_snapshot, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._load_snapshot, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes, code2docs.generators.api_changelog_gen.ApiChangelogGenerator._render
 
+### code2docs.llm_helper.LLMHelper
+> Thin wrapper around litellm for documentation generation.
+
+If LLM is unavailable or disabled, every 
+- **Methods**: 7
+- **Key Methods**: code2docs.llm_helper.LLMHelper.__init__, code2docs.llm_helper.LLMHelper.available, code2docs.llm_helper.LLMHelper.complete, code2docs.llm_helper.LLMHelper.generate_project_description, code2docs.llm_helper.LLMHelper.generate_architecture_summary, code2docs.llm_helper.LLMHelper.generate_getting_started_summary, code2docs.llm_helper.LLMHelper.enhance_module_docstring
+
 ### code2docs.generators.coverage_gen.CoverageGenerator
 > Generate docs/coverage.md — docstring coverage report.
 - **Methods**: 7
@@ -376,12 +384,10 @@ This generator wraps the code2llm CLI to pr
 - **Key Methods**: code2docs.generators._registry_adapters.IndexHtmlAdapter.should_run, code2docs.generators._registry_adapters.IndexHtmlAdapter.run, code2docs.generators._registry_adapters.IndexHtmlAdapter._generate_html, code2docs.generators._registry_adapters.IndexHtmlAdapter._collect_doc_files, code2docs.generators._registry_adapters.IndexHtmlAdapter._build_github_link, code2docs.generators._registry_adapters.IndexHtmlAdapter._build_files_html, code2docs.generators._registry_adapters.IndexHtmlAdapter._build_html_template
 - **Inherits**: BaseGenerator
 
-### code2docs.llm_helper.LLMHelper
-> Thin wrapper around litellm for documentation generation.
-
-If LLM is unavailable or disabled, every 
-- **Methods**: 7
-- **Key Methods**: code2docs.llm_helper.LLMHelper.__init__, code2docs.llm_helper.LLMHelper.available, code2docs.llm_helper.LLMHelper.complete, code2docs.llm_helper.LLMHelper.generate_project_description, code2docs.llm_helper.LLMHelper.generate_architecture_summary, code2docs.llm_helper.LLMHelper.generate_getting_started_summary, code2docs.llm_helper.LLMHelper.enhance_module_docstring
+### code2docs.sync.differ.Differ
+> Detect changes between current source and previous state.
+- **Methods**: 6
+- **Key Methods**: code2docs.sync.differ.Differ.__init__, code2docs.sync.differ.Differ.detect_changes, code2docs.sync.differ.Differ.save_state, code2docs.sync.differ.Differ._load_state, code2docs.sync.differ.Differ._compute_state, code2docs.sync.differ.Differ._file_to_module
 
 ### code2docs.generators._source_links.SourceLinker
 > Build source-code links (relative paths + optional GitHub/GitLab URLs).
@@ -393,14 +399,16 @@ If LLM is unavailable or disabled, every
 - **Methods**: 6
 - **Key Methods**: code2docs.generators.changelog_gen.ChangelogGenerator.__init__, code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log, code2docs.generators.changelog_gen.ChangelogGenerator._classify_message, code2docs.generators.changelog_gen.ChangelogGenerator._group_by_type, code2docs.generators.changelog_gen.ChangelogGenerator._render
 
-### examples.05_custom_generators.MetricsReportGenerator
-> Generate a metrics report from code analysis.
-- **Methods**: 6
-- **Key Methods**: examples.05_custom_generators.MetricsReportGenerator.__init__, examples.05_custom_generators.MetricsReportGenerator.generate, examples.05_custom_generators.MetricsReportGenerator._calculate_stats, examples.05_custom_generators.MetricsReportGenerator._format_stats_table, examples.05_custom_generators.MetricsReportGenerator._list_largest_files, examples.05_custom_generators.MetricsReportGenerator._analyze_functions
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
+
+### code2docs.cli.DefaultGroup.parse_args
+- **Output to**: None.parse_args, super
+
+### code2docs.cli.validate
+> Validate generated markdown: broken links, table shape, duplicate headings.
+- **Output to**: main.command, click.argument, click.option, click.option, None.resolve
 
 ### code2docs.generators.coverage_gen.CoverageGenerator._format_coverage_table
 > Format coverage stats as a Markdown table.
@@ -433,14 +441,6 @@ Filters out:
 ### code2docs.generators.examples_gen.ExamplesGenerator._render_formatter_examples
 > Render formatter usage examples.
 - **Output to**: lines.append, lines.append, lines.append, lines.append, lines.append
-
-### examples.05_custom_generators.MetricsReportGenerator._format_stats_table
-> Format statistics as markdown table.
-- **Output to**: stats.items, None.join, lines.append
-
-### examples.06_formatters.markdown_formatting_examples
-> Demonstrate markdown formatting utilities.
-- **Output to**: MarkdownFormatter, print, print, print, print
 
 ### code2docs.analyzers.markdown_validator.validate_markdown_file
 > Validate a single markdown file.
@@ -529,41 +529,41 @@ Functions exposed as public API (no underscore prefix):
 - `examples.06_formatters.generate_complex_document` - 32 calls
 - `code2docs.sync.watcher.start_watcher` - 29 calls
 - `examples.06_formatters.markdown_formatting_examples` - 29 calls
-- `examples.07_web_frameworks.generate_api_docs_from_endpoints` - 27 calls
 - `examples.06_formatters.build_custom_readme` - 27 calls
+- `examples.07_web_frameworks.generate_api_docs_from_endpoints` - 27 calls
 - `code2docs.cli.validate` - 26 calls
 - `examples.05_custom_generators.MetricsReportGenerator.generate` - 24 calls
 - `code2docs.generators.api_reference_gen.ApiReferenceGenerator.generate` - 20 calls
 - `examples.04_sync_and_watch.custom_watcher_with_hooks` - 20 calls
 - `code2docs.sync.updater.Updater.apply` - 19 calls
 - `code2docs.analyzers.dependency_scanner.DependencyScanner.scan` - 17 calls
-- `examples.03_programmatic_api.inspect_project_structure` - 16 calls
 - `code2docs.sync.differ.Differ.detect_changes` - 16 calls
 - `code2docs.analyzers.markdown_validator.validate_markdown_file` - 16 calls
-- `code2docs.generators.generate_docs` - 15 calls
+- `examples.03_programmatic_api.inspect_project_structure` - 16 calls
 - `code2docs.cli.generate` - 15 calls
+- `code2docs.generators.generate_docs` - 15 calls
 - `examples.05_custom_generators.APIChangelogGenerator.generate` - 14 calls
 - `code2docs.generators.config_docs_gen.ConfigDocsGenerator.generate` - 12 calls
 - `examples.03_programmatic_api.generate_full_documentation` - 12 calls
-- `examples.04_sync_and_watch.sync_with_git_changes` - 11 calls
 - `code2docs.generators._registry_adapters.ReadmeGeneratorAdapter.run` - 11 calls
 - `code2docs.generators._registry_adapters.OrgReadmeAdapter.run` - 11 calls
+- `examples.04_sync_and_watch.sync_with_git_changes` - 11 calls
+- `code2docs.cli.init` - 10 calls
 - `code2docs.formatters.toc.extract_headings` - 10 calls
 - `examples.03_programmatic_api.generate_docs_if_needed` - 10 calls
-- `code2docs.cli.init` - 10 calls
-- `examples.07_web_frameworks.document_web_project` - 9 calls
-- `examples.05_custom_generators.generate_custom_report` - 9 calls
+- `code2docs.config.LLMConfig.from_env` - 9 calls
 - `code2docs.generators.readme_gen.ReadmeGenerator.write` - 9 calls
 - `code2docs.analyzers.markdown_validator.validate_markdown_tree` - 9 calls
-- `code2docs.config.LLMConfig.from_env` - 9 calls
+- `examples.05_custom_generators.generate_custom_report` - 9 calls
+- `examples.07_web_frameworks.document_web_project` - 9 calls
+- `code2docs.cli.sync` - 8 calls
 - `code2docs.formatters.markdown.MarkdownFormatter.table` - 8 calls
 - `code2docs.generators.depgraph_gen.DepGraphGenerator.generate` - 8 calls
 - `code2docs.generators.getting_started_gen.GettingStartedGenerator.generate` - 8 calls
 - `code2docs.generators.code2llm_gen.Code2LlmGenerator.generate_all` - 8 calls
 - `code2docs.generators.org_readme_gen.OrgReadmeGenerator.generate` - 8 calls
 - `examples.03_programmatic_api.custom_documentation_pipeline` - 8 calls
-- `code2docs.cli.sync` - 8 calls
-- `code2docs.generators.contributing_gen.ContributingGenerator.generate` - 7 calls
+- `code2docs.cli.watch` - 7 calls
 
 ## System Interactions
 
@@ -571,14 +571,14 @@ How components interact:
 
 ```mermaid
 graph TD
+    from_yaml --> Path
+    from_yaml --> cls
+    from_yaml --> get
     _generate_quickstart --> _find_convenience_fu
     _generate_quickstart --> _find_api_classes
     _generate_quickstart --> set
     _generate_quickstart --> extend
     _generate_quickstart --> append
-    from_yaml --> Path
-    from_yaml --> cls
-    from_yaml --> get
     generate --> append
     generate --> _generate_llm_summar
     generate --> _detect_layers

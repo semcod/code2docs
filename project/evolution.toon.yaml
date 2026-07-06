@@ -1,13 +1,29 @@
-# code2llm/evolution | 325 func | 35f | 2026-04-20
+# code2llm/evolution | 325 func | 35f | 2026-07-06
+# generated in 0.00s
 
-NEXT[0]: no refactoring needed
+NEXT[3] (ranked by impact):
+  [1] !! SPLIT           docs/README.md
+      WHY: 2388L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
 
-RISKS[0]: none
+  [2] !! SPLIT           planfile.yaml
+      WHY: 1722L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+  [3] !! SPLIT           CHANGELOG.md
+      WHY: 924L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+
+RISKS[3]:
+  ⚠ Splitting docs/README.md may break 0 import paths
+  ⚠ Splitting planfile.yaml may break 0 import paths
+  ⚠ Splitting CHANGELOG.md may break 0 import paths
 
 METRICS-TARGET:
   CC̄:          3.9 → ≤2.7
   max-CC:      14 → ≤7
-  god-modules: 0 → 0
+  god-modules: 7 → 0
   high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
 
@@ -36,4 +52,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.8 → now CC̄=3.9
+  prev CC̄=3.9 → now CC̄=3.9

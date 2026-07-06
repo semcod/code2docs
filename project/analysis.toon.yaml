@@ -1,73 +1,172 @@
-# code2llm | 56f 7082L | python:55,shell:1 | 2026-04-20
-# CC̄=3.7 | critical:0/365 | dups:0 | cycles:0
+# code2llm | 86f 18058L | python:55,md:22,yaml:5,txt:1,toml:1,yml:1,shell:1 | 2026-07-06
+# generated in 0.02s
+# CC̅=3.7 | critical:0/365 | dups:0 | cycles:0
 
 HEALTH[0]: ok
 
 REFACTOR[0]: none needed
 
 PIPELINES[295]:
-  [1] Src [heading]: heading
+  [1] Src [from_env]: from_env
       PURITY: 100% pure
-  [2] Src [paragraph]: paragraph
+  [2] Src [__post_init__]: __post_init__
       PURITY: 100% pure
-  [3] Src [blockquote]: blockquote
+  [3] Src [_detect_repo_url]: _detect_repo_url
       PURITY: 100% pure
-  [4] Src [code_block]: code_block
+  [4] Src [from_yaml]: from_yaml
       PURITY: 100% pure
-  [5] Src [list_item]: list_item
+  [5] Src [to_yaml]: to_yaml
+      PURITY: 100% pure
+  [6] Src [parse_args]: parse_args
+      PURITY: 100% pure
+  [7] Src [main]: main
+      PURITY: 100% pure
+  [8] Src [generate]: generate → _load_config
+      PURITY: 100% pure
+  [9] Src [sync]: sync → _load_config
+      PURITY: 100% pure
+  [10] Src [watch]: watch → _load_config
+      PURITY: 100% pure
+  [11] Src [init]: init
+      PURITY: 100% pure
+  [12] Src [check]: check → _load_config
+      PURITY: 100% pure
+  [13] Src [validate]: validate → validate_markdown_tree → validate_markdown_file → _check_links → ...(1 more)
+      PURITY: 100% pure
+  [14] Src [diff]: diff → _load_config
+      PURITY: 100% pure
+  [15] Src [add]: add
+      PURITY: 100% pure
+  [16] Src [run_all]: run_all
+      PURITY: 100% pure
+  [17] Src [run_only]: run_only
+      PURITY: 100% pure
+  [18] Src [complete]: complete → _get_litellm
+      PURITY: 100% pure
+  [19] Src [generate_project_description]: generate_project_description
+      PURITY: 100% pure
+  [20] Src [generate_architecture_summary]: generate_architecture_summary
+      PURITY: 100% pure
+  [21] Src [generate_getting_started_summary]: generate_getting_started_summary
+      PURITY: 100% pure
+  [22] Src [enhance_module_docstring]: enhance_module_docstring
+      PURITY: 100% pure
+  [23] Src [__getattr__]: __getattr__
+      PURITY: 100% pure
+  [24] Src [__init__]: __init__
+      PURITY: 100% pure
+  [25] Src [apply]: apply
+      PURITY: 100% pure
+  [26] Src [__init__]: __init__
+      PURITY: 100% pure
+  [27] Src [detect_changes]: detect_changes
+      PURITY: 100% pure
+  [28] Src [save_state]: save_state
+      PURITY: 100% pure
+  [29] Src [_load_state]: _load_state
+      PURITY: 100% pure
+  [30] Src [_compute_state]: _compute_state
+      PURITY: 100% pure
+  [31] Src [_file_to_module]: _file_to_module
+      PURITY: 100% pure
+  [32] Src [heading]: heading
+      PURITY: 100% pure
+  [33] Src [paragraph]: paragraph
+      PURITY: 100% pure
+  [34] Src [blockquote]: blockquote
+      PURITY: 100% pure
+  [35] Src [code_block]: code_block
+      PURITY: 100% pure
+  [36] Src [list_item]: list_item
+      PURITY: 100% pure
+  [37] Src [table]: table
+      PURITY: 100% pure
+  [38] Src [separator]: separator
+      PURITY: 100% pure
+  [39] Src [blank]: blank
+      PURITY: 100% pure
+  [40] Src [render]: render
+      PURITY: 100% pure
+  [41] Src [__init__]: __init__
+      PURITY: 100% pure
+  [42] Src [generate]: generate
+      PURITY: 100% pure
+  [43] Src [_build_context]: _build_context → generate_badges → _make_badge → _runtime_badge
+      PURITY: 100% pure
+  [44] Src [_collect_existing_docs]: _collect_existing_docs
+      PURITY: 100% pure
+  [45] Src [_calc_avg_complexity]: _calc_avg_complexity
+      PURITY: 100% pure
+  [46] Src [_build_module_tree]: _build_module_tree
+      PURITY: 100% pure
+  [47] Src [_generate_description]: _generate_description
+      PURITY: 100% pure
+  [48] Src [_extract_project_description]: _extract_project_description
+      PURITY: 100% pure
+  [49] Src [_extract_project_metadata]: _extract_project_metadata
+      PURITY: 100% pure
+  [50] Src [_extract_from_pyproject]: _extract_from_pyproject
       PURITY: 100% pure
 
 LAYERS:
-  code2docs/                      CC̄=3.9    ←in:1  →out:2
-  │ examples_gen               464L  1C   19m  CC=13     ←0
-  │ readme_gen                 375L  1C   23m  CC=13     ←1
-  │ _registry_adapters         302L  15C   35m  CC=7      ←0
-  │ architecture_gen           294L  1C   10m  CC=13     ←0
-  │ cli                        275L  1C   15m  CC=10     ←0
-  │ dependency_scanner         273L  3C   11m  CC=9      ←0
-  │ org_readme_gen             252L  1C   15m  CC=8      ←0
-  │ code2llm_gen               248L  1C   17m  CC=7      ←0
-  │ module_docs_gen            246L  1C   20m  CC=9      ←0
-  │ contributing_gen           246L  1C   11m  CC=7      ←0
-  │ getting_started_gen        218L  1C   14m  CC=11     ←0
-  │ api_changelog_gen          196L  2C    9m  CC=14     ←0
-  │ markdown_validator         194L  2C   10m  CC=12     ←1
-  │ api_reference_gen          181L  1C   12m  CC=11     ←0
-  │ llm_helper                 161L  1C    7m  CC=7      ←0
-  │ config                     155L  7C    5m  CC=10     ←2
-  │ depgraph_gen               140L  1C    9m  CC=9      ←0
-  │ docstring_extractor        138L  2C   10m  CC=8      ←0
-  │ differ                     125L  2C    7m  CC=6      ←0
+  code2docs/                      CC̄=3.9    ←in:0  →out:2
+  │ !! api.md                     559L  0C    0m  CC=0.0    ←0
+  │ !! modules.md                 503L  0C    0m  CC=0.0    ←0
+  │ README.md                  493L  0C    0m  CC=0.0    ←0
+  │ readme_gen                 492L  1C   23m  CC=13     ←1
+  │ examples_gen               473L  1C   19m  CC=13     ←0
+  │ _registry_adapters         353L  15C   35m  CC=7      ←0
+  │ config                     331L  7C    5m  CC=10     ←0
+  │ cli                        315L  1C   15m  CC=10     ←0
+  │ architecture.md            299L  0C    0m  CC=0.0    ←0
+  │ architecture_gen           295L  1C   10m  CC=13     ←0
+  │ dependency_scanner         295L  3C   11m  CC=9      ←0
+  │ contributing_gen           264L  1C   11m  CC=7      ←0
+  │ org_readme_gen             258L  1C   15m  CC=8      ←0
+  │ code2llm_gen               257L  1C   17m  CC=7      ←0
+  │ module_docs_gen            240L  1C   20m  CC=9      ←0
+  │ api_changelog_gen          225L  2C    9m  CC=14     ←0
+  │ markdown_validator         218L  2C   10m  CC=12     ←1
+  │ getting_started_gen        217L  1C   14m  CC=11     ←0
+  │ api_reference_gen          187L  1C   12m  CC=11     ←0
+  │ llm_helper                 162L  1C    7m  CC=7      ←0
+  │ depgraph_gen               139L  1C    9m  CC=9      ←0
+  │ docstring_extractor        139L  2C   10m  CC=8      ←0
+  │ differ                     132L  2C    7m  CC=6      ←0
+  │ changelog_gen              127L  2C    6m  CC=6      ←0
   │ config_docs_gen            124L  1C    4m  CC=10     ←0
-  │ changelog_gen              121L  2C    6m  CC=6      ←0
-  │ endpoint_detector          112L  2C    3m  CC=5      ←0
-  │ mkdocs_gen                 110L  1C    5m  CC=5      ←0
-  │ coverage_gen               104L  1C    7m  CC=12     ←0
+  │ mkdocs_gen                 118L  1C    5m  CC=5      ←0
+  │ endpoint_detector          111L  2C    3m  CC=5      ←0
+  │ coverage_gen               110L  1C    7m  CC=12     ←0
+  │ configuration.md            91L  0C    0m  CC=0.0    ←0
   │ advanced_usage              89L  0C    0m  CC=0.0    ←0
-  │ _source_links               76L  1C    6m  CC=5      ←0
-  │ watcher                     75L  0C    1m  CC=5      ←2
+  │ _source_links               78L  1C    6m  CC=5      ←0
+  │ watcher                     74L  0C    1m  CC=5      ←2
   │ markdown                    73L  1C   13m  CC=4      ←0
   │ badges                      72L  0C    3m  CC=14     ←2
   │ toc                         63L  0C    3m  CC=6      ←1
   │ __init__                    59L  0C    1m  CC=5      ←0
   │ updater                     51L  1C    2m  CC=4      ←0
-  │ quickstart                  48L  0C    0m  CC=0.0    ←0
-  │ base                        46L  2C    3m  CC=1      ←0
-  │ project_scanner             41L  1C    4m  CC=2      ←3
-  │ registry                    35L  1C    4m  CC=4      ←0
-  │ __init__                    24L  0C    1m  CC=4      ←0
+  │ base                        47L  2C    3m  CC=1      ←0
+  │ quickstart                  47L  0C    0m  CC=0.0    ←0
+  │ getting-started.md          44L  0C    0m  CC=0.0    ←0
+  │ project_scanner             43L  1C    4m  CC=2      ←3
+  │ registry                    37L  1C    4m  CC=4      ←0
+  │ CONTRIBUTING.md             28L  0C    0m  CC=0.0    ←0
+  │ __init__                    27L  0C    1m  CC=4      ←0
   │ __init__                    23L  0C    0m  CC=0.0    ←0
   │ __init__                     7L  0C    0m  CC=0.0    ←0
   │ __main__                     6L  0C    0m  CC=0.0    ←0
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │
-  examples/                       CC̄=2.2    ←in:0  →out:18  !! split
+  examples/                       CC̄=2.2    ←in:0  →out:17  !! split
   │ 07_web_frameworks          221L  0C    5m  CC=9      ←0
   │ 02_configuration           161L  0C    4m  CC=1      ←0
   │ 05_custom_generators       144L  3C   13m  CC=8      ←0
   │ 04_sync_and_watch          120L  0C    6m  CC=4      ←0
   │ 06_formatters               96L  0C    5m  CC=2      ←0
   │ 03_programmatic_api         85L  0C    5m  CC=5      ←0
+  │ README.md                   85L  0C    0m  CC=0.0    ←0
   │ 01_cli_usage                70L  0C    2m  CC=1      ←0
   │ advanced_usage              51L  0C    0m  CC=0.0    ←0
   │ class_examples              40L  0C    0m  CC=0.0    ←0
@@ -76,25 +175,47 @@ LAYERS:
   │ basic_usage                 22L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
+  │ !! planfile.yaml             1722L  0C    0m  CC=0.0    ←0
+  │ !! CHANGELOG.md               924L  0C    0m  CC=0.0    ←0
+  │ !! README.md                  542L  0C    0m  CC=0.0    ←0
+  │ goal.yaml                  428L  0C    0m  CC=0.0    ←0
+  │ TODO.md                    244L  0C    0m  CC=0.0    ←0
+  │ Taskfile.yml               186L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml             120L  0C    0m  CC=0.0    ←0
+  │ prefact.yaml                82L  0C    0m  CC=0.0    ←0
+  │ redsl_refactor_report.md    41L  0C    0m  CC=0.0    ←0
+  │ CONTRIBUTING.md             38L  0C    0m  CC=0.0    ←0
   │ project.sh                  35L  0C    0m  CC=0.0    ←0
+  │ redsl_refactor_report.toon.yaml    29L  0C    0m  CC=0.0    ←0
+  │ local.dev.txt               13L  0C    0m  CC=0.0    ←0
+  │ pyqual.yaml                 10L  0C    0m  CC=0.0    ←0
   │
   docs/                           CC̄=0.0    ←in:0  →out:0
+  │ !! README.md                 2388L  0C    0m  CC=0.0    ←0
+  │ !! api.md                     688L  0C    0m  CC=0.0    ←0
+  │ architecture.md            288L  0C    0m  CC=0.0    ←0
+  │ dependency-graph.md        236L  0C    0m  CC=0.0    ←0
+  │ modules.md                 192L  0C    0m  CC=0.0    ←0
   │ advanced_usage              90L  0C    0m  CC=0.0    ←0
+  │ coverage.md                 60L  0C    0m  CC=0.0    ←0
   │ quickstart                  48L  0C    0m  CC=0.0    ←0
+  │ getting-started.md          39L  0C    0m  CC=0.0    ←0
+  │ configuration.md            37L  0C    0m  CC=0.0    ←0
+  │ CONTRIBUTING.md             31L  0C    0m  CC=0.0    ←0
   │
 
 COUPLING:
                                     examples   code2docs.analyzers  code2docs.formatters             code2docs  code2docs.generators        code2docs.sync
-              examples                    ──                    10                     5                     1                     1                     1  !! fan-out
+              examples                    ──                    10                     5                                           1                     1  !! fan-out
    code2docs.analyzers                   ←10                    ──                                          ←1                                              hub
   code2docs.formatters                    ←5                                          ──                                          ←1                        hub
-             code2docs                    ←1                     1                                          ──                                           1
+             code2docs                                           1                                          ──                                           1
   code2docs.generators                    ←1                                           1                                          ──                      
         code2docs.sync                    ←1                                                                ←1                                          ──
   CYCLES: none
-  HUB: code2docs.analyzers/ (fan-in=11)
   HUB: code2docs.formatters/ (fan-in=6)
-  SMELL: examples/ fan-out=18 → split needed
+  HUB: code2docs.analyzers/ (fan-in=11)
+  SMELL: examples/ fan-out=17 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

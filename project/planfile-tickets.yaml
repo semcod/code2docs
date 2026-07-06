@@ -1,0 +1,1191 @@
+source: code2llm
+schema: code2llm.planfile_tickets.v1
+project_root: /home/tom/github/semcod/code2docs
+tickets:
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _run_check'
+  description: 'code2llm reports `God Function: _run_check` in `code2docs/cli.py:245`.
+
+
+    Function ''_run_check'' is oversized: CC=10, fan-out=24, mutations=35.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/cli.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/cli.py:245:God Function: _run_check'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: changes'
+  description: 'code2llm reports `Shotgun Surgery: changes` in `examples/04_sync_and_watch.py:45`.
+
+
+    Mutation of variable ''changes'' spans 5 functions in /home/tom/github/semcod/code2docs/examples/04_sync_and_watch.py.
+    Changing this logic requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - examples/04_sync_and_watch.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/04_sync_and_watch.py:45:Shotgun
+    Surgery: changes'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: config'
+  description: 'code2llm reports `Shotgun Surgery: config` in `code2docs/cli.py:69`.
+
+
+    Mutation of variable ''config'' spans 7 functions in /home/tom/github/semcod/code2docs/code2docs/cli.py.
+    Changing this logic requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - code2docs/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:code2docs/cli.py:69:Shotgun Surgery:
+    config'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: config'
+  description: 'code2llm reports `Shotgun Surgery: config` in `examples/04_sync_and_watch.py:45`.
+
+
+    Mutation of variable ''config'' spans 5 functions in /home/tom/github/semcod/code2docs/examples/04_sync_and_watch.py.
+    Changing this logic requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - examples/04_sync_and_watch.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/04_sync_and_watch.py:45:Shotgun
+    Surgery: config'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: project'
+  description: 'code2llm reports `Shotgun Surgery: project` in `code2docs/cli.py:170`.
+
+
+    Mutation of variable ''project'' spans 7 functions in /home/tom/github/semcod/code2docs/code2docs/cli.py.
+    Changing this logic requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - code2docs/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:code2docs/cli.py:170:Shotgun Surgery:
+    project'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: result'
+  description: 'code2llm reports `Shotgun Surgery: result` in `examples/03_programmatic_api.py:68`.
+
+
+    Mutation of variable ''result'' spans 5 functions in /home/tom/github/semcod/code2docs/examples/03_programmatic_api.py.
+    Changing this logic requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - examples/03_programmatic_api.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/03_programmatic_api.py:68:Shotgun
+    Surgery: result'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: config, result, self'
+  description: 'code2llm reports `Data Clump: config, result, self` in `examples/05_custom_generators.py:14`.
+
+
+    Arguments (config, result, self) are used together in multiple functions: examples.05_custom_generators.MetricsReportGenerator.__init__,
+    examples.05_custom_generators.APIChangelogGenerator.__init__.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - examples/05_custom_generators.py
+  dedupe_key: 'code2llm:smell:data_clump:examples/05_custom_generators.py:14:Data
+    Clump: config, result, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: config, result, self'
+  description: 'code2llm reports `Data Clump: config, result, self` in `examples/05_custom_generators.py:72`.
+
+
+    Arguments (config, result, self) are used together in multiple functions: examples.05_custom_generators.MetricsReportGenerator.__init__,
+    examples.05_custom_generators.APIChangelogGenerator.__init__.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - examples/05_custom_generators.py
+  dedupe_key: 'code2llm:smell:data_clump:examples/05_custom_generators.py:72:Data
+    Clump: config, result, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: max_entries, project_path, self'
+  description: 'code2llm reports `Data Clump: max_entries, project_path, self` in
+    `code2docs/generators/changelog_gen.py:44`.
+
+
+    Arguments (max_entries, project_path, self) are used together in multiple functions:
+    code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/changelog_gen.py:44:Data
+    Clump: max_entries, project_path, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: max_entries, project_path, self'
+  description: 'code2llm reports `Data Clump: max_entries, project_path, self` in
+    `code2docs/generators/changelog_gen.py:55`.
+
+
+    Arguments (max_entries, project_path, self) are used together in multiple functions:
+    code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/changelog_gen.py:55:Data
+    Clump: max_entries, project_path, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: mod_info, mod_name, self'
+  description: 'code2llm reports `Data Clump: mod_info, mod_name, self` in `code2docs/generators/module_docs_gen.py:53`.
+
+
+    Arguments (mod_info, mod_name, self) are used together in multiple functions:
+    code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_module_row, code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/module_docs_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/module_docs_gen.py:53:Data
+    Clump: mod_info, mod_name, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: mod_info, mod_name, self'
+  description: 'code2llm reports `Data Clump: mod_info, mod_name, self` in `code2docs/generators/module_docs_gen.py:122`.
+
+
+    Arguments (mod_info, mod_name, self) are used together in multiple functions:
+    code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_module_row, code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/module_docs_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/module_docs_gen.py:122:Data
+    Clump: mod_info, mod_name, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: new, old, changes'
+  description: 'code2llm reports `Data Clump: new, old, changes` in `code2docs/generators/api_changelog_gen.py:104`.
+
+
+    Arguments (new, old, changes) are used together in multiple functions: code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions,
+    code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/api_changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/api_changelog_gen.py:104:Data
+    Clump: new, old, changes'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: new, old, changes'
+  description: 'code2llm reports `Data Clump: new, old, changes` in `code2docs/generators/api_changelog_gen.py:143`.
+
+
+    Arguments (new, old, changes) are used together in multiple functions: code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions,
+    code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/api_changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/api_changelog_gen.py:143:Data
+    Clump: new, old, changes'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_context'
+  description: 'code2llm reports `God Function: _build_context` in `code2docs/generators/readme_gen.py:49`.
+
+
+    Function ''_build_context'' is oversized: CC=13, fan-out=21, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/readme_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/readme_gen.py:49:God
+    Function: _build_context'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _check_headings'
+  description: 'code2llm reports `God Function: _check_headings` in `code2docs/analyzers/markdown_validator.py:194`.
+
+
+    Function ''_check_headings'' is oversized: CC=5, fan-out=10, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/analyzers/markdown_validator.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/analyzers/markdown_validator.py:194:God
+    Function: _check_headings'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _check_links'
+  description: 'code2llm reports `God Function: _check_links` in `code2docs/analyzers/markdown_validator.py:114`.
+
+
+    Function ''_check_links'' is oversized: CC=12, fan-out=14, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/analyzers/markdown_validator.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/analyzers/markdown_validator.py:114:God
+    Function: _check_links'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _check_tables'
+  description: 'code2llm reports `God Function: _check_tables` in `code2docs/analyzers/markdown_validator.py:145`.
+
+
+    Function ''_check_tables'' is oversized: CC=12, fan-out=8, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/analyzers/markdown_validator.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/analyzers/markdown_validator.py:145:God
+    Function: _check_tables'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _diff_classes'
+  description: 'code2llm reports `God Function: _diff_classes` in `code2docs/generators/api_changelog_gen.py:143`.
+
+
+    Function ''_diff_classes'' is oversized: CC=10, fan-out=12, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/api_changelog_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/api_changelog_gen.py:143:God
+    Function: _diff_classes'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _extract_from_pyproject'
+  description: 'code2llm reports `God Function: _extract_from_pyproject` in `code2docs/generators/readme_gen.py:205`.
+
+
+    Function ''_extract_from_pyproject'' is oversized: CC=9, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/readme_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/readme_gen.py:205:God
+    Function: _extract_from_pyproject'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _generate_quickstart'
+  description: 'code2llm reports `God Function: _generate_quickstart` in `code2docs/generators/examples_gen.py:115`.
+
+
+    Function ''_generate_quickstart'' is oversized: CC=13, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/examples_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/examples_gen.py:115:God
+    Function: _generate_quickstart'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _get_repo_url'
+  description: 'code2llm reports `God Function: _get_repo_url` in `code2docs/generators/org_readme_gen.py:196`.
+
+
+    Function ''_get_repo_url'' is oversized: CC=7, fan-out=13, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/org_readme_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/org_readme_gen.py:196:God
+    Function: _get_repo_url'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _make_badge'
+  description: 'code2llm reports `God Function: _make_badge` in `code2docs/formatters/badges.py:22`.
+
+
+    Function ''_make_badge'' is oversized: CC=14, fan-out=5, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/formatters/badges.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/formatters/badges.py:22:God Function:
+    _make_badge'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _parse_cargo_toml'
+  description: 'code2llm reports `God Function: _parse_cargo_toml` in `code2docs/analyzers/dependency_scanner.py:212`.
+
+
+    Function ''_parse_cargo_toml'' is oversized: CC=9, fan-out=12, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/analyzers/dependency_scanner.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/analyzers/dependency_scanner.py:212:God
+    Function: _parse_cargo_toml'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _parse_go_mod'
+  description: 'code2llm reports `God Function: _parse_go_mod` in `code2docs/analyzers/dependency_scanner.py:243`.
+
+
+    Function ''_parse_go_mod'' is oversized: CC=8, fan-out=14, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/analyzers/dependency_scanner.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/analyzers/dependency_scanner.py:243:God
+    Function: _parse_go_mod'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _parse_package_json'
+  description: 'code2llm reports `God Function: _parse_package_json` in `code2docs/analyzers/dependency_scanner.py:158`.
+
+
+    Function ''_parse_package_json'' is oversized: CC=7, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/analyzers/dependency_scanner.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/analyzers/dependency_scanner.py:158:God
+    Function: _parse_package_json'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render'
+  description: 'code2llm reports `God Function: _render` in `code2docs/generators/api_changelog_gen.py:189`.
+
+
+    Function ''_render'' is oversized: CC=14, fan-out=3, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/api_changelog_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/api_changelog_gen.py:189:God
+    Function: _render'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render_section'
+  description: 'code2llm reports `God Function: _render_section` in `code2docs/generators/config_docs_gen.py:64`.
+
+
+    Function ''_render_section'' is oversized: CC=10, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/config_docs_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/config_docs_gen.py:64:God
+    Function: _render_section'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _run_diff'
+  description: 'code2llm reports `God Function: _run_diff` in `code2docs/cli.py:299`.
+
+
+    Function ''_run_diff'' is oversized: CC=2, fan-out=11, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/cli.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/cli.py:299:God Function: _run_diff'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _run_generate'
+  description: 'code2llm reports `God Function: _run_generate` in `code2docs/cli.py:170`.
+
+
+    Function ''_run_generate'' is oversized: CC=7, fan-out=16, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/cli.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/cli.py:170:God Function: _run_generate'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: apply'
+  description: 'code2llm reports `God Function: apply` in `code2docs/sync/updater.py:16`.
+
+
+    Function ''apply'' is oversized: CC=4, fan-out=16, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/sync/updater.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/sync/updater.py:16:God Function:
+    apply'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: build_custom_readme'
+  description: 'code2llm reports `God Function: build_custom_readme` in `examples/06_formatters.py:71`.
+
+
+    Function ''build_custom_readme'' is oversized: CC=2, fan-out=9, mutations=20.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/06_formatters.py
+  dedupe_key: 'code2llm:smell:god_function:examples/06_formatters.py:71:God Function:
+    build_custom_readme'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: custom_documentation_pipeline'
+  description: 'code2llm reports `God Function: custom_documentation_pipeline` in
+    `examples/03_programmatic_api.py:34`.
+
+
+    Function ''custom_documentation_pipeline'' is oversized: CC=1, fan-out=8, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/03_programmatic_api.py
+  dedupe_key: 'code2llm:smell:god_function:examples/03_programmatic_api.py:34:God
+    Function: custom_documentation_pipeline'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: custom_watcher_with_hooks'
+  description: 'code2llm reports `God Function: custom_watcher_with_hooks` in `examples/04_sync_and_watch.py:69`.
+
+
+    Function ''custom_watcher_with_hooks'' is oversized: CC=3, fan-out=13, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/04_sync_and_watch.py
+  dedupe_key: 'code2llm:smell:god_function:examples/04_sync_and_watch.py:69:God Function:
+    custom_watcher_with_hooks'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: document_web_project'
+  description: 'code2llm reports `God Function: document_web_project` in `examples/07_web_frameworks.py:177`.
+
+
+    Function ''document_web_project'' is oversized: CC=3, fan-out=8, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/07_web_frameworks.py
+  dedupe_key: 'code2llm:smell:god_function:examples/07_web_frameworks.py:177:God Function:
+    document_web_project'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: extract_headings'
+  description: 'code2llm reports `God Function: extract_headings` in `code2docs/formatters/toc.py:30`.
+
+
+    Function ''extract_headings'' is oversized: CC=6, fan-out=9, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/formatters/toc.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/formatters/toc.py:30:God Function:
+    extract_headings'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: from_yaml'
+  description: 'code2llm reports `God Function: from_yaml` in `code2docs/config.py:180`.
+
+
+    Function ''from_yaml'' is oversized: CC=10, fan-out=19, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/config.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/config.py:180:God Function: from_yaml'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate'
+  description: 'code2llm reports `God Function: generate` in `code2docs/cli.py:45`.
+
+
+    Function ''generate'' is oversized: CC=7, fan-out=8, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/cli.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/cli.py:45:God Function: generate'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate'
+  description: 'code2llm reports `God Function: generate` in `code2docs/generators/api_reference_gen.py:21`.
+
+
+    Function ''generate'' is oversized: CC=11, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/api_reference_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/api_reference_gen.py:21:God
+    Function: generate'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate'
+  description: 'code2llm reports `God Function: generate` in `code2docs/generators/architecture_gen.py:20`.
+
+
+    Function ''generate'' is oversized: CC=13, fan-out=16, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/architecture_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/architecture_gen.py:20:God
+    Function: generate'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_api_docs_from_endpoints'
+  description: 'code2llm reports `God Function: generate_api_docs_from_endpoints`
+    in `examples/07_web_frameworks.py:55`.
+
+
+    Function ''generate_api_docs_from_endpoints'' is oversized: CC=9, fan-out=12,
+    mutations=20.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/07_web_frameworks.py
+  dedupe_key: 'code2llm:smell:god_function:examples/07_web_frameworks.py:55:God Function:
+    generate_api_docs_from_endpoints'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_complex_document'
+  description: 'code2llm reports `God Function: generate_complex_document` in `examples/06_formatters.py:30`.
+
+
+    Function ''generate_complex_document'' is oversized: CC=1, fan-out=8, mutations=19.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/06_formatters.py
+  dedupe_key: 'code2llm:smell:god_function:examples/06_formatters.py:30:God Function:
+    generate_complex_document'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_docs'
+  description: 'code2llm reports `God Function: generate_docs` in `code2docs/generators/__init__.py:35`.
+
+
+    Function ''generate_docs'' is oversized: CC=5, fan-out=10, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/__init__.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/__init__.py:35:God
+    Function: generate_docs'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_full_documentation'
+  description: 'code2llm reports `God Function: generate_full_documentation` in `examples/03_programmatic_api.py:19`.
+
+
+    Function ''generate_full_documentation'' is oversized: CC=2, fan-out=12, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/03_programmatic_api.py
+  dedupe_key: 'code2llm:smell:god_function:examples/03_programmatic_api.py:19:God
+    Function: generate_full_documentation'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_readme'
+  description: 'code2llm reports `God Function: generate_readme` in `code2docs/generators/readme_gen.py:473`.
+
+
+    Function ''generate_readme'' is oversized: CC=3, fan-out=6, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/readme_gen.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/readme_gen.py:473:God
+    Function: generate_readme'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: markdown_formatting_examples'
+  description: 'code2llm reports `God Function: markdown_formatting_examples` in `examples/06_formatters.py:10`.
+
+
+    Function ''markdown_formatting_examples'' is oversized: CC=1, fan-out=12, mutations=3.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/06_formatters.py
+  dedupe_key: 'code2llm:smell:god_function:examples/06_formatters.py:10:God Function:
+    markdown_formatting_examples'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: scan'
+  description: 'code2llm reports `God Function: scan` in `code2docs/analyzers/dependency_scanner.py:48`.
+
+
+    Function ''scan'' is oversized: CC=9, fan-out=17, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/analyzers/dependency_scanner.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/analyzers/dependency_scanner.py:48:God
+    Function: scan'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: start_watcher'
+  description: 'code2llm reports `God Function: start_watcher` in `code2docs/sync/watcher.py:10`.
+
+
+    Function ''start_watcher'' is oversized: CC=5, fan-out=22, mutations=4.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/sync/watcher.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/sync/watcher.py:10:God Function:
+    start_watcher'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: validate'
+  description: 'code2llm reports `God Function: validate` in `code2docs/cli.py:121`.
+
+
+    Function ''validate'' is oversized: CC=5, fan-out=15, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/cli.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/cli.py:121:God Function: validate'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Module: code2docs.generators._registry_adapters'
+  description: 'code2llm reports `God Module: code2docs.generators._registry_adapters`
+    in `code2docs/generators/_registry_adapters.py:1`.
+
+
+    Module ''code2docs.generators._registry_adapters'' is too large (35 functions,
+    15 classes). Consider splitting into sub-modules.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - code2docs/generators/_registry_adapters.py
+  dedupe_key: 'code2llm:smell:god_function:code2docs/generators/_registry_adapters.py:1:God
+    Module: code2docs.generators._registry_adapters'
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files`
+    took 5.86s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_creates_files
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_verbose'
+  description: 'Test `tests.test_cli.TestCLI.test_verbose` took 5.56s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_verbose
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_generate_dry_run'
+  description: 'Test `tests.test_cli.TestCLI.test_generate_dry_run` took 5.50s to
+    run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_generate_dry_run
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_default_group_routes_path'
+  description: 'Test `tests.test_cli.TestCLI.test_default_group_routes_path` took
+    5.43s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_default_group_routes_path
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_diff_runs'
+  description: 'Test `tests.test_cli.TestCLI.test_diff_runs` took 5.38s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_diff_runs
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_readme_only_dry_run'
+  description: 'Test `tests.test_cli.TestCLI.test_readme_only_dry_run` took 4.79s
+    to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_readme_only_dry_run
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_check_runs'
+  description: 'Test `tests.test_cli.TestCLI.test_check_runs` took 4.42s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_check_runs
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run'
+  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run`
+    took 4.34s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode_dry_run
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode'
+  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode` took
+    3.38s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_check'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_check` took 3.37s
+    to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_check
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate` took 3.05s
+    to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_diff'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_diff` took 3.05s to
+    run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_diff
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections`
+    took 3.03s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_with_sections
+- signal: slow_test_warning
+  title: 'Address slow test: tests.generators.test_readme.TestReadmeGenerator.test_manual_fallback_contains_sections'
+  description: 'Test `tests.generators.test_readme.TestReadmeGenerator.test_manual_fallback_contains_sections`
+    took 1.81s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/generators/test_readme.py
+  dedupe_key: test-optimization:tests.generators.test_readme.TestReadmeGenerator:test_manual_fallback_contains_sections
+applied: []
+skipped: []
