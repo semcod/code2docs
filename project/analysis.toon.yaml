@@ -1,5 +1,5 @@
-# code2llm | 86f 18058L | python:55,md:22,yaml:5,txt:1,toml:1,yml:1,shell:1 | 2026-07-06
-# generated in 0.03s
+# code2llm | 86f 18058L | python:55,md:22,yaml:5,txt:1,toml:1,yml:1,shell:1 | 2026-07-07
+# generated in 0.02s
 # CC̅=3.7 | critical:0/365 | dups:0 | cycles:0
 
 HEALTH[0]: ok
@@ -213,8 +213,8 @@ COUPLING:
   code2docs.generators                    ←1                                           1                                          ──                      
         code2docs.sync                    ←1                                                                ←1                                          ──
   CYCLES: none
-  HUB: code2docs.formatters/ (fan-in=6)
   HUB: code2docs.analyzers/ (fan-in=11)
+  HUB: code2docs.formatters/ (fan-in=6)
   SMELL: examples/ fan-out=17 → split needed
 
 EXTERNAL:
