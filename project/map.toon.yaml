@@ -1,5 +1,5 @@
 # code2docs | 86f 18058L | yaml:5,md:22,txt:1,toml:1,yml:1,shell:1,python:55 | 2026-07-07
-# generated in 0.01s
+# generated in 0.02s
 # stats: 365 func | 0 cls | 86 mod | CC̄=3.7 | critical:0 | cycles:0
 # alerts[5]: fan-out _run_check=24; fan-out start_watcher=22; fan-out ReadmeGenerator._build_context=21; fan-out Code2DocsConfig.from_yaml=19; fan-out DependencyScanner.scan=17
 # hotspots[5]: _run_check fan=24; start_watcher fan=22; ReadmeGenerator._build_context fan=21; Code2DocsConfig.from_yaml fan=19; DependencyScanner.scan fan=17

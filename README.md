@@ -1,10 +1,10 @@
 ## AI Cost Tracking
 
 ![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-3.0.34-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$34.70-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-33.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$33.74-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-35.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $34.6997 (83 commits)
-- 👤 **Human dev:** ~$3368 (33.7h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $33.7416 (84 commits)
+- 👤 **Human dev:** ~$3565 (35.7h @ $100/h, 30min dedup)
 
 Generated on 2026-07-07 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
