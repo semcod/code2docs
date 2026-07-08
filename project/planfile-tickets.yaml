@@ -21,28 +21,8 @@ tickets:
   - code2docs/cli.py
   dedupe_key: 'code2llm:smell:god_function:code2docs/cli.py:245:God Function: _run_check'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: changes'
-  description: 'code2llm reports `Shotgun Surgery: changes` in `examples/04_sync_and_watch.py:33`.
-
-
-    Mutation of variable ''changes'' spans 5 functions in /home/tom/github/semcod/code2docs/examples/04_sync_and_watch.py.
-    Changing this logic requires work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - examples/04_sync_and_watch.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/04_sync_and_watch.py:33:Shotgun
-    Surgery: changes'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: config'
-  description: 'code2llm reports `Shotgun Surgery: config` in `code2docs/cli.py:69`.
+  description: 'code2llm reports `Shotgun Surgery: config` in `code2docs/cli.py:105`.
 
 
     Mutation of variable ''config'' spans 7 functions in /home/tom/github/semcod/code2docs/code2docs/cli.py.
@@ -58,11 +38,11 @@ tickets:
   - shotgun-surgery
   files:
   - code2docs/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:code2docs/cli.py:69:Shotgun Surgery:
+  dedupe_key: 'code2llm:smell:shotgun_surgery:code2docs/cli.py:105:Shotgun Surgery:
     config'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: config'
-  description: 'code2llm reports `Shotgun Surgery: config` in `examples/04_sync_and_watch.py:54`.
+  description: 'code2llm reports `Shotgun Surgery: config` in `examples/04_sync_and_watch.py:69`.
 
 
     Mutation of variable ''config'' spans 5 functions in /home/tom/github/semcod/code2docs/examples/04_sync_and_watch.py.
@@ -78,11 +58,11 @@ tickets:
   - shotgun-surgery
   files:
   - examples/04_sync_and_watch.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/04_sync_and_watch.py:54:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/04_sync_and_watch.py:69:Shotgun
     Surgery: config'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: project'
-  description: 'code2llm reports `Shotgun Surgery: project` in `code2docs/cli.py:170`.
+  description: 'code2llm reports `Shotgun Surgery: project` in `code2docs/cli.py:157`.
 
 
     Mutation of variable ''project'' spans 7 functions in /home/tom/github/semcod/code2docs/code2docs/cli.py.
@@ -98,11 +78,11 @@ tickets:
   - shotgun-surgery
   files:
   - code2docs/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:code2docs/cli.py:170:Shotgun Surgery:
+  dedupe_key: 'code2llm:smell:shotgun_surgery:code2docs/cli.py:157:Shotgun Surgery:
     project'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: result'
-  description: 'code2llm reports `Shotgun Surgery: result` in `examples/03_programmatic_api.py:50`.
+  description: 'code2llm reports `Shotgun Surgery: result` in `examples/03_programmatic_api.py:34`.
 
 
     Mutation of variable ''result'' spans 5 functions in /home/tom/github/semcod/code2docs/examples/03_programmatic_api.py.
@@ -118,136 +98,14 @@ tickets:
   - shotgun-surgery
   files:
   - examples/03_programmatic_api.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/03_programmatic_api.py:50:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/03_programmatic_api.py:34:Shotgun
     Surgery: result'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: changes, old, new'
-  description: 'code2llm reports `Data Clump: changes, old, new` in `code2docs/generators/api_changelog_gen.py:104`.
+  title: 'Address code smell: Data Clump: config, result, self'
+  description: 'code2llm reports `Data Clump: config, result, self` in `examples/05_custom_generators.py:14`.
 
 
-    Arguments (changes, old, new) are used together in multiple functions: code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions,
-    code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - code2docs/generators/api_changelog_gen.py
-  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/api_changelog_gen.py:104:Data
-    Clump: changes, old, new'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: changes, old, new'
-  description: 'code2llm reports `Data Clump: changes, old, new` in `code2docs/generators/api_changelog_gen.py:143`.
-
-
-    Arguments (changes, old, new) are used together in multiple functions: code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions,
-    code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - code2docs/generators/api_changelog_gen.py
-  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/api_changelog_gen.py:143:Data
-    Clump: changes, old, new'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, mod_info, mod_name'
-  description: 'code2llm reports `Data Clump: self, mod_info, mod_name` in `code2docs/generators/module_docs_gen.py:53`.
-
-
-    Arguments (self, mod_info, mod_name) are used together in multiple functions:
-    code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_module_row, code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - code2docs/generators/module_docs_gen.py
-  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/module_docs_gen.py:53:Data
-    Clump: self, mod_info, mod_name'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, mod_info, mod_name'
-  description: 'code2llm reports `Data Clump: self, mod_info, mod_name` in `code2docs/generators/module_docs_gen.py:122`.
-
-
-    Arguments (self, mod_info, mod_name) are used together in multiple functions:
-    code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_module_row, code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - code2docs/generators/module_docs_gen.py
-  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/module_docs_gen.py:122:Data
-    Clump: self, mod_info, mod_name'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, project_path, max_entries'
-  description: 'code2llm reports `Data Clump: self, project_path, max_entries` in
-    `code2docs/generators/changelog_gen.py:44`.
-
-
-    Arguments (self, project_path, max_entries) are used together in multiple functions:
-    code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - code2docs/generators/changelog_gen.py
-  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/changelog_gen.py:44:Data
-    Clump: self, project_path, max_entries'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, project_path, max_entries'
-  description: 'code2llm reports `Data Clump: self, project_path, max_entries` in
-    `code2docs/generators/changelog_gen.py:55`.
-
-
-    Arguments (self, project_path, max_entries) are used together in multiple functions:
-    code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - code2docs/generators/changelog_gen.py
-  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/changelog_gen.py:55:Data
-    Clump: self, project_path, max_entries'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, result, config'
-  description: 'code2llm reports `Data Clump: self, result, config` in `examples/05_custom_generators.py:14`.
-
-
-    Arguments (self, result, config) are used together in multiple functions: examples.05_custom_generators.MetricsReportGenerator.__init__,
+    Arguments (config, result, self) are used together in multiple functions: examples.05_custom_generators.MetricsReportGenerator.__init__,
     examples.05_custom_generators.APIChangelogGenerator.__init__.
 
 
@@ -261,13 +119,13 @@ tickets:
   files:
   - examples/05_custom_generators.py
   dedupe_key: 'code2llm:smell:data_clump:examples/05_custom_generators.py:14:Data
-    Clump: self, result, config'
+    Clump: config, result, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, result, config'
-  description: 'code2llm reports `Data Clump: self, result, config` in `examples/05_custom_generators.py:72`.
+  title: 'Address code smell: Data Clump: config, result, self'
+  description: 'code2llm reports `Data Clump: config, result, self` in `examples/05_custom_generators.py:72`.
 
 
-    Arguments (self, result, config) are used together in multiple functions: examples.05_custom_generators.MetricsReportGenerator.__init__,
+    Arguments (config, result, self) are used together in multiple functions: examples.05_custom_generators.MetricsReportGenerator.__init__,
     examples.05_custom_generators.APIChangelogGenerator.__init__.
 
 
@@ -281,7 +139,129 @@ tickets:
   files:
   - examples/05_custom_generators.py
   dedupe_key: 'code2llm:smell:data_clump:examples/05_custom_generators.py:72:Data
-    Clump: self, result, config'
+    Clump: config, result, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: mod_info, self, mod_name'
+  description: 'code2llm reports `Data Clump: mod_info, self, mod_name` in `code2docs/generators/module_docs_gen.py:53`.
+
+
+    Arguments (mod_info, self, mod_name) are used together in multiple functions:
+    code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_module_row, code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/module_docs_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/module_docs_gen.py:53:Data
+    Clump: mod_info, self, mod_name'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: mod_info, self, mod_name'
+  description: 'code2llm reports `Data Clump: mod_info, self, mod_name` in `code2docs/generators/module_docs_gen.py:122`.
+
+
+    Arguments (mod_info, self, mod_name) are used together in multiple functions:
+    code2docs.generators.module_docs_gen.ModuleDocsGenerator._build_module_row, code2docs.generators.module_docs_gen.ModuleDocsGenerator._render_module_detail.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/module_docs_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/module_docs_gen.py:122:Data
+    Clump: mod_info, self, mod_name'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: old, changes, new'
+  description: 'code2llm reports `Data Clump: old, changes, new` in `code2docs/generators/api_changelog_gen.py:104`.
+
+
+    Arguments (old, changes, new) are used together in multiple functions: code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions,
+    code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/api_changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/api_changelog_gen.py:104:Data
+    Clump: old, changes, new'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: old, changes, new'
+  description: 'code2llm reports `Data Clump: old, changes, new` in `code2docs/generators/api_changelog_gen.py:143`.
+
+
+    Arguments (old, changes, new) are used together in multiple functions: code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_functions,
+    code2docs.generators.api_changelog_gen.ApiChangelogGenerator._diff_classes.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/api_changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/api_changelog_gen.py:143:Data
+    Clump: old, changes, new'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: project_path, max_entries, self'
+  description: 'code2llm reports `Data Clump: project_path, max_entries, self` in
+    `code2docs/generators/changelog_gen.py:44`.
+
+
+    Arguments (project_path, max_entries, self) are used together in multiple functions:
+    code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/changelog_gen.py:44:Data
+    Clump: project_path, max_entries, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: project_path, max_entries, self'
+  description: 'code2llm reports `Data Clump: project_path, max_entries, self` in
+    `code2docs/generators/changelog_gen.py:55`.
+
+
+    Arguments (project_path, max_entries, self) are used together in multiple functions:
+    code2docs.generators.changelog_gen.ChangelogGenerator.generate, code2docs.generators.changelog_gen.ChangelogGenerator._get_git_log.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - code2docs/generators/changelog_gen.py
+  dedupe_key: 'code2llm:smell:data_clump:code2docs/generators/changelog_gen.py:55:Data
+    Clump: project_path, max_entries, self'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _build_context'
   description: 'code2llm reports `God Function: _build_context` in `code2docs/generators/readme_gen.py:49`.
@@ -967,8 +947,23 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:code2docs/generators/_registry_adapters.py:1:God
     Module: code2docs.generators._registry_adapters'
 - signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_verbose'
+  description: 'Test `tests.test_cli.TestCLI.test_verbose` took 5.18s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_verbose
+- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_generate_dry_run'
-  description: 'Test `tests.test_cli.TestCLI.test_generate_dry_run` took 7.37s to
+  description: 'Test `tests.test_cli.TestCLI.test_generate_dry_run` took 5.12s to
     run.
 
 
@@ -983,40 +978,9 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_generate_dry_run
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLI.test_readme_only_dry_run'
-  description: 'Test `tests.test_cli.TestCLI.test_readme_only_dry_run` took 5.90s
-    to run.
-
-
-    Optimize its setup, mock slow external dependencies, or refactor its logic to
-    reduce overall test suite execution time.'
-  priority: medium
-  labels:
-  - llm-ready
-  - test-optimization
-  - slow-test
-  files:
-  - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_readme_only_dry_run
-- signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLI.test_verbose'
-  description: 'Test `tests.test_cli.TestCLI.test_verbose` took 5.34s to run.
-
-
-    Optimize its setup, mock slow external dependencies, or refactor its logic to
-    reduce overall test suite execution time.'
-  priority: medium
-  labels:
-  - llm-ready
-  - test-optimization
-  - slow-test
-  files:
-  - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_verbose
-- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_default_group_routes_path'
   description: 'Test `tests.test_cli.TestCLI.test_default_group_routes_path` took
-    5.26s to run.
+    4.92s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1031,7 +995,7 @@ tickets:
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_default_group_routes_path
 - signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_diff_runs'
-  description: 'Test `tests.test_cli.TestCLI.test_diff_runs` took 5.09s to run.
+  description: 'Test `tests.test_cli.TestCLI.test_diff_runs` took 4.91s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1045,8 +1009,24 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_diff_runs
 - signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_readme_only_dry_run'
+  description: 'Test `tests.test_cli.TestCLI.test_readme_only_dry_run` took 4.46s
+    to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_readme_only_dry_run
+- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_check_runs'
-  description: 'Test `tests.test_cli.TestCLI.test_check_runs` took 4.36s to run.
+  description: 'Test `tests.test_cli.TestCLI.test_check_runs` took 4.24s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1061,7 +1041,7 @@ tickets:
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_check_runs
 - signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_check'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_check` took 3.18s
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_check` took 3.13s
     to run.
 
 
@@ -1077,7 +1057,7 @@ tickets:
   dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_check
 - signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate` took 2.99s
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate` took 3.11s
     to run.
 
 
@@ -1092,25 +1072,9 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files`
-    took 2.90s to run.
-
-
-    Optimize its setup, mock slow external dependencies, or refactor its logic to
-    reduce overall test suite execution time.'
-  priority: medium
-  labels:
-  - llm-ready
-  - test-optimization
-  - slow-test
-  files:
-  - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_creates_files
-- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run'
   description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run`
-    took 2.90s to run.
+    took 2.88s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1124,9 +1088,9 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode_dry_run
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode'
-  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode` took
-    2.89s to run.
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files`
+    took 2.87s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1138,10 +1102,26 @@ tickets:
   - slow-test
   files:
   - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_creates_files
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections`
+    took 2.86s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_with_sections
 - signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_diff'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_diff` took 2.88s to
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_diff` took 2.84s to
     run.
 
 
@@ -1156,9 +1136,9 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_diff
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections`
-    took 2.87s to run.
+  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode'
+  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode` took
+    2.83s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1170,11 +1150,11 @@ tickets:
   - slow-test
   files:
   - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_with_sections
+  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode
 - signal: slow_test_warning
   title: 'Address slow test: tests.generators.test_readme.TestReadmeGenerator.test_manual_fallback_contains_sections'
   description: 'Test `tests.generators.test_readme.TestReadmeGenerator.test_manual_fallback_contains_sections`
-    took 2.08s to run.
+    took 1.79s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
