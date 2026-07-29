@@ -967,8 +967,9 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:code2docs/generators/_registry_adapters.py:1:God
     Module: code2docs.generators._registry_adapters'
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLI.test_verbose'
-  description: 'Test `tests.test_cli.TestCLI.test_verbose` took 6.08s to run.
+  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode'
+  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode` took
+    6.42s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -980,10 +981,26 @@ tickets:
   - slow-test
   files:
   - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_verbose
+  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_default_group_routes_path'
+  description: 'Test `tests.test_cli.TestCLI.test_default_group_routes_path` took
+    6.27s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_default_group_routes_path
 - signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_generate_dry_run'
-  description: 'Test `tests.test_cli.TestCLI.test_generate_dry_run` took 5.92s to
+  description: 'Test `tests.test_cli.TestCLI.test_generate_dry_run` took 5.71s to
     run.
 
 
@@ -998,8 +1015,23 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_generate_dry_run
 - signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLI.test_verbose'
+  description: 'Test `tests.test_cli.TestCLI.test_verbose` took 5.53s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_verbose
+- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_diff_runs'
-  description: 'Test `tests.test_cli.TestCLI.test_diff_runs` took 5.71s to run.
+  description: 'Test `tests.test_cli.TestCLI.test_diff_runs` took 5.36s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1013,24 +1045,8 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_diff_runs
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLI.test_default_group_routes_path'
-  description: 'Test `tests.test_cli.TestCLI.test_default_group_routes_path` took
-    5.64s to run.
-
-
-    Optimize its setup, mock slow external dependencies, or refactor its logic to
-    reduce overall test suite execution time.'
-  priority: medium
-  labels:
-  - llm-ready
-  - test-optimization
-  - slow-test
-  files:
-  - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLI:test_default_group_routes_path
-- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_readme_only_dry_run'
-  description: 'Test `tests.test_cli.TestCLI.test_readme_only_dry_run` took 5.15s
+  description: 'Test `tests.test_cli.TestCLI.test_readme_only_dry_run` took 4.78s
     to run.
 
 
@@ -1046,7 +1062,7 @@ tickets:
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_readme_only_dry_run
 - signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLI.test_check_runs'
-  description: 'Test `tests.test_cli.TestCLI.test_check_runs` took 4.90s to run.
+  description: 'Test `tests.test_cli.TestCLI.test_check_runs` took 4.66s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1060,8 +1076,40 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLI:test_check_runs
 - signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run'
+  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run`
+    took 4.17s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode_dry_run
+- signal: slow_test_warning
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections`
+    took 3.72s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/test_cli.py
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_with_sections
+- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_check'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_check` took 3.53s
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_check` took 3.39s
     to run.
 
 
@@ -1076,24 +1124,8 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_check
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files`
-    took 3.35s to run.
-
-
-    Optimize its setup, mock slow external dependencies, or refactor its logic to
-    reduce overall test suite execution time.'
-  priority: medium
-  labels:
-  - llm-ready
-  - test-optimization
-  - slow-test
-  files:
-  - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_creates_files
-- signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_diff'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_diff` took 3.31s to
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_diff` took 3.38s to
     run.
 
 
@@ -1108,9 +1140,9 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_diff
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_with_sections`
-    took 3.31s to run.
+  title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files'
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate_creates_files`
+    took 3.26s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
@@ -1122,10 +1154,10 @@ tickets:
   - slow-test
   files:
   - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_with_sections
+  dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate_creates_files
 - signal: slow_test_warning
   title: 'Address slow test: tests.test_cli.TestCLIShellE2E.test_shell_generate'
-  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate` took 3.29s
+  description: 'Test `tests.test_cli.TestCLIShellE2E.test_shell_generate` took 3.19s
     to run.
 
 
@@ -1140,41 +1172,9 @@ tickets:
   - tests/test_cli.py
   dedupe_key: test-optimization:tests.test_cli.TestCLIShellE2E:test_shell_generate
 - signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run'
-  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode_dry_run`
-    took 3.21s to run.
-
-
-    Optimize its setup, mock slow external dependencies, or refactor its logic to
-    reduce overall test suite execution time.'
-  priority: medium
-  labels:
-  - llm-ready
-  - test-optimization
-  - slow-test
-  files:
-  - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode_dry_run
-- signal: slow_test_warning
-  title: 'Address slow test: tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode'
-  description: 'Test `tests.test_cli.TestCLINewFeaturesE2E.test_shell_org_mode` took
-    3.20s to run.
-
-
-    Optimize its setup, mock slow external dependencies, or refactor its logic to
-    reduce overall test suite execution time.'
-  priority: medium
-  labels:
-  - llm-ready
-  - test-optimization
-  - slow-test
-  files:
-  - tests/test_cli.py
-  dedupe_key: test-optimization:tests.test_cli.TestCLINewFeaturesE2E:test_shell_org_mode
-- signal: slow_test_warning
   title: 'Address slow test: tests.generators.test_readme.TestReadmeGenerator.test_manual_fallback_contains_sections'
   description: 'Test `tests.generators.test_readme.TestReadmeGenerator.test_manual_fallback_contains_sections`
-    took 1.93s to run.
+    took 1.98s to run.
 
 
     Optimize its setup, mock slow external dependencies, or refactor its logic to
