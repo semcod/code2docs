@@ -680,7 +680,7 @@ wheels = [
 
 [[package]]
 name = "code2docs"
-version = "3.0.34"
+version = "3.0.35"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
