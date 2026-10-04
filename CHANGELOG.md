@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [3.0.35] - 2026-10-04
+
+- perf: prune vendored/hidden dirs in Django urls scan (EndpointDetector) and avoid importing litellm for LLM availability check; README generation ~2x faster on large workspaces
 
 - docs(docs): add markdown output
 - docs(docs): update README
