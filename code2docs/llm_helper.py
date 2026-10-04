@@ -4,6 +4,7 @@ If litellm is not installed or LLM is not configured, all methods return None
 and generators fall back to algorithm-based template output.
 """
 
+import importlib.util
 import logging
 from typing import Optional
 
@@ -29,6 +30,18 @@ def _get_litellm():
     return _litellm if _litellm is not False else None
 
 
+def _litellm_installed() -> bool:
+    """Cheap availability check: locate litellm without importing it.
+
+    Importing litellm costs ~10s, so it must only happen when a completion is
+    actually requested (see ``_get_litellm`` in ``LLMHelper.complete``).
+    """
+    try:
+        return importlib.util.find_spec("litellm") is not None
+    except (ImportError, ValueError):
+        return False
+
+
 class LLMHelper:
     """Thin wrapper around litellm for documentation generation.
 
@@ -45,7 +58,7 @@ class LLMHelper:
         """Check if LLM is configured and litellm is installed."""
         if self._available is None:
             self._available = (
-                self.config.enabled and bool(self.config.model) and _get_litellm() is not None
+                self.config.enabled and bool(self.config.model) and _litellm_installed()
             )
             if self._available:
                 logger.info("LLM enabled: model=%s", self.config.model)
@@ -54,7 +67,7 @@ class LLMHelper:
                     "LLM disabled (enabled=%s, model=%s, litellm=%s)",
                     self.config.enabled,
                     bool(self.config.model),
-                    _get_litellm() is not None,
+                    _litellm_installed(),
                 )
         return self._available
 

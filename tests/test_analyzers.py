@@ -136,3 +136,17 @@ class TestEndpointDetector:
         )
         ep = detector._parse_decorator(func.decorators[0], func)
         assert ep is None
+
+
+def test_endpoint_detector_skips_vendored_and_hidden_dirs(tmp_path):
+    from code2docs.analyzers.endpoint_detector import EndpointDetector
+
+    (tmp_path / "app").mkdir()
+    (tmp_path / "app" / "urls.py").write_text("urlpatterns = [path('real/', v)]\n")
+    for skipped in (".subactor/lib/site-packages/x", "venv/lib", "node_modules/y", ".worktrees/t1"):
+        d = tmp_path / skipped
+        d.mkdir(parents=True)
+        (d / "urls.py").write_text("urlpatterns = [path('vendored/', v)]\n")
+
+    paths = [e.path for e in EndpointDetector()._scan_django_urls(str(tmp_path))]
+    assert paths == ["real/"]
