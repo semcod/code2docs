@@ -1,5 +1,6 @@
 """Detect web framework endpoints (Flask, FastAPI, Django) from AST analysis."""
 
+import os
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -21,6 +22,36 @@ class Endpoint:
     docstring: Optional[str] = None
     params: List[str] = field(default_factory=list)
     return_type: Optional[str] = None
+
+
+# Directories never searched for Django urls.py: virtualenvs, vendored packages,
+# VCS/worktree copies and build output. Walking them dominated runtime (~40s on
+# a workspace with vendored site-packages). Any dot-directory is skipped too.
+_SKIP_DIRS = frozenset(
+    {
+        "venv",
+        "env",
+        "node_modules",
+        "site-packages",
+        "__pycache__",
+        "dist",
+        "build",
+        "target",
+        "bower_components",
+    }
+)
+
+
+def _iter_urls_files(root: Path):
+    """Yield ``urls.py`` files under *root*, pruning irrelevant directories."""
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = [
+            d
+            for d in dirnames
+            if d not in _SKIP_DIRS and not d.startswith(".") and not d.endswith(".egg-info")
+        ]
+        if "urls.py" in filenames:
+            yield Path(dirpath) / "urls.py"
 
 
 class EndpointDetector:
@@ -91,7 +122,7 @@ class EndpointDetector:
         endpoints: List[Endpoint] = []
         project = Path(project_path)
 
-        for urls_file in project.rglob("urls.py"):
+        for urls_file in _iter_urls_files(project):
             try:
                 source = urls_file.read_text(encoding="utf-8")
                 for match in self.DJANGO_URL_PATTERN.finditer(source):

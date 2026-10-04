@@ -270,3 +270,27 @@ class TestGeneratorFallback:
         content = gen.generate()
         assert "Getting Started" in content
         assert "Installation" in content
+
+
+# ── Performance regression tests ─────────────────────────────────────────
+
+
+class TestLazyLitellmImport:
+    """Availability checks must not import litellm (~10s)."""
+
+    def test_disabled_helper_never_imports_litellm(self):
+        from code2docs import llm_helper
+        from code2docs.config import LLMConfig
+
+        with patch("code2docs.llm_helper._get_litellm") as get_litellm:
+            assert LLMHelper(LLMConfig(enabled=False)).available is False
+        get_litellm.assert_not_called()
+
+    def test_enabled_availability_uses_find_spec_not_import(self):
+        from code2docs.config import LLMConfig
+
+        with patch("code2docs.llm_helper._litellm_installed", return_value=True), patch(
+            "code2docs.llm_helper._get_litellm"
+        ) as get_litellm:
+            assert LLMHelper(LLMConfig(enabled=True, model="x")).available is True
+        get_litellm.assert_not_called()
