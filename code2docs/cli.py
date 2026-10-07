@@ -25,6 +25,11 @@ class DefaultGroup(click.Group):
 @click.group(cls=DefaultGroup)
 def main() -> None:
     """code2docs — Auto-generate project documentation from source code."""
+    try:
+        from .autoupdate import check_for_updates
+        check_for_updates("code2docs")
+    except Exception:
+        pass
 
 
 @main.command()
