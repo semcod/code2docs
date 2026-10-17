@@ -112,7 +112,7 @@ class OrgReadmeGenerator:
                     data = tomllib.load(f)
                     desc = data.get("project", {}).get("description", "")
                     if desc:
-                        return self._truncate_description(desc)
+                        return self._truncate_description(desc, max_chars=300)
         except Exception:
             pass
         return ""
