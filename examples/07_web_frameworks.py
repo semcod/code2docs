@@ -96,7 +96,13 @@ def generate_api_docs_from_endpoints(project_path: str, output_dir: str = "docs/
             
             lines.append("")
     
-    return "\n".join(lines)
+    content = "\n".join(lines)
+    if output_dir and output_dir != "docs/api":
+        from pathlib import Path
+        out_path = Path(output_dir)
+        out_path.mkdir(parents=True, exist_ok=True)
+        (out_path / "api.md").write_text(content, encoding="utf-8")
+    return content
 
 
 # =============================================================================

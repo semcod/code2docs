@@ -91,7 +91,13 @@ class MkDocsGenerator:
 
     def _build_nav(self, docs_dir: Optional[str] = None) -> List:
         """Build navigation structure from docs tree and analysis."""
-        nav: List = [{"Home": "index.md"}]
+        base_dir = Path(docs_dir) if docs_dir else None
+        home_page = (
+            "index.md"
+            if base_dir is None or (base_dir / "index.md").exists() or not (base_dir / "README.md").exists()
+            else "index.md"
+        )
+        nav: List = [{"Home": home_page}]
 
         if self.config.docs.architecture:
             nav.append({"Architecture": "architecture.md"})

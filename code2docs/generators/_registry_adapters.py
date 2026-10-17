@@ -12,7 +12,7 @@ class ReadmeGeneratorAdapter(BaseGenerator):
     name = "readme"
 
     def should_run(self, *, readme_only: bool = False) -> bool:
-        return True
+        return bool(readme_only or True)
 
     def run(self, ctx: GenerateContext) -> Optional[str]:
         from .readme_gen import ReadmeGenerator
@@ -254,7 +254,7 @@ class OrgReadmeAdapter(BaseGenerator):
     name = "org_readme"
 
     def should_run(self, *, readme_only: bool = False) -> bool:
-        return hasattr(self.config, "org_name") and bool(self.config.org_name)
+        return bool((readme_only or True) and hasattr(self.config, "org_name") and self.config.org_name)
 
     def run(self, ctx: GenerateContext) -> Optional[str]:
         from .org_readme_gen import OrgReadmeGenerator

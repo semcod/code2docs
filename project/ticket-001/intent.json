@@ -1,0 +1,26 @@
+{
+  "ticket": "ticket-001",
+  "summary": "Wire unused generator parameters and adopt Wellmanifest baseline standards",
+  "allowedPaths": [
+    ".aider.conf.yml",
+    ".cursor/rules/new-project-standard.mdc",
+    ".github/copilot-instructions.md",
+    ".gitignore",
+    ".governance/**",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    "code2docs/generators/_registry_adapters.py",
+    "code2docs/generators/mkdocs_gen.py",
+    "code2docs/generators/org_readme_gen.py",
+    "examples/07_web_frameworks.py",
+    "project/ticket-001/**"
+  ],
+  "forbiddenPaths": [
+    ".env",
+    "config/**",
+    ".github/workflows/**"
+  ],
+  "authorization": "SESSION_EXECUTION_AUTHORIZATION",
+  "outcome": "Wire unused generator parameters and adopt Wellmanifest baseline standards verified with 0 PERF-AUDIT findings and 0 ConformanceRunner errors."
+}
