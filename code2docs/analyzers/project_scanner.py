@@ -20,6 +20,11 @@ class ProjectScanner:
             mode="static",
             verbose=self.config.verbose,
         )
+        # README analysis must use the same configured source boundaries as
+        # the optional export, while retaining code2llm's native defaults.
+        config.filters.exclude_patterns = list(dict.fromkeys(
+            config.filters.exclude_patterns + self.config.code2llm.exclude_patterns
+        ))
         config.filters.exclude_tests = self.config.exclude_tests
         config.filters.skip_private = self.config.skip_private
         # Keep properties and accessors visible for docs
