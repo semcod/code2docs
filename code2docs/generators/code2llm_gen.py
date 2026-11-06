@@ -183,6 +183,11 @@ class Code2LlmGenerator:
 
     def _add_exclude_patterns(self, cmd: List[str], cfg, project_path: Path) -> None:
         """Add exclude patterns from config and .gitignore."""
+        # --skip-subprojects accepts directory names, not arbitrary source
+        # globs. Forward every configured pattern through the filter option.
+        if cfg.exclude_patterns:
+            cmd.append("--exclude")
+            cmd.extend(dict.fromkeys(cfg.exclude_patterns))
         skip_dirs = self._get_config_skip_dirs(cfg)
         gitignore_patterns = parse_gitignore(project_path)
 
