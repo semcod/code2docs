@@ -760,7 +760,7 @@ automation = [{ name = "goal", marker = "python_full_version >= '3.12'", specifi
 
 [[package]]
 name = "code2llm"
-version = "0.5.183"
+version = "0.5.186"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "astroid" },
@@ -792,9 +792,9 @@ dependencies = [
     { name = "tree-sitter-typescript" },
     { name = "vulture" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1f/4f/cc02dcc83249af23138778063a2cd014ceed9e5095f4b100501e3e5110de/code2llm-0.5.183.tar.gz", hash = "sha256:89beaea4bf6596fa9fca40f33d051e57badef9df98171e5d43810a3c9d807255", size = 324640, upload-time = "2026-10-18T12:49:32.533Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9a/f1/0e4d656b4628779a1db3ef599c57fea826e74584053b741bea64377aa2be/code2llm-0.5.186.tar.gz", hash = "sha256:0df7066e2853431e4eddd1f1adbef12f8435afba9bb399044eb3fa3d07d9175b", size = 330226, upload-time = "2026-11-12T18:37:51.15Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/61/f5/080d18c789d3735dc65b626020e2f16de5e94dfc7ce19f26622b71338429/code2llm-0.5.183-py3-none-any.whl", hash = "sha256:579554631f2e332697520f2d323ffc5174fed61cc66541a369f364fbefff8314", size = 334924, upload-time = "2026-10-18T12:49:30.481Z" },
+    { url = "https://files.pythonhosted.org/packages/b2/ec/b7c63f01f0ec996f09e0ca6bef99457e4aa2d7b7503642a5b10a44d988b0/code2llm-0.5.186-py3-none-any.whl", hash = "sha256:730778bf7aa4538dcb7e2802929f37e0d5c7a8036e048005c0aac6493d27733c", size = 340193, upload-time = "2026-11-12T18:37:49.16Z" },
 ]
 
 [[package]]
